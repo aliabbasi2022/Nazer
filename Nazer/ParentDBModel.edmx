@@ -1,0 +1,881 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ParentDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ParentDB.dbo.AppCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AppCategory">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AppsName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AppsLimit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AppName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AppID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="3" />
+          <Property Name="EndTime" Type="time" Precision="3" />
+          <Property Name="Duratin" Type="time" Precision="7" />
+          <Property Name="Act" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AppsLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Type" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AppUsage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AppName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Seconds" Type="int" Nullable="false" />
+          <Property Name="Minutes" Type="int" Nullable="false" />
+          <Property Name="Hours" Type="int" Nullable="false" />
+          <Property Name="Usage" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BlockApps">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AppName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AppID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Act" Type="smallint" Nullable="false" />
+          <Property Name="Category" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="BlockUrls">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="URL" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Act" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Data">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="DataContent" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="HistoryURL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="URL" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Browser" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Category" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ParentDB.dbo.InstalledApps' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="InstalledApps">
+          <Key>
+            <PropertyRef Name="AppID" />
+            <PropertyRef Name="DisplayName" />
+            <PropertyRef Name="ChildID" />
+            <PropertyRef Name="ReciveDate" />
+          </Key>
+          <Property Name="AppID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DisplayVersion" Type="nvarchar" MaxLength="50" />
+          <Property Name="InstallDate" Type="nvarchar(max)" />
+          <Property Name="Publisher" Type="nvarchar" MaxLength="100" />
+          <Property Name="Path" Type="nvarchar(max)" />
+          <Property Name="ChildID" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ReciveDate" Type="datetime" Nullable="false" />
+          <Property Name="DisplayIcon" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="InternetUsage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="InterfaceName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ConnectionType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DeviceName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Usage" Type="float" Nullable="false" />
+          <Property Name="Seconds" Type="int" Nullable="false" />
+          <Property Name="Minutes" Type="int" Nullable="false" />
+          <Property Name="Hour" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ParentDB.dbo.Location' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="ChildID" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Longitude" />
+            <PropertyRef Name="Latitude" />
+            <PropertyRef Name="ReciveDate" />
+          </Key>
+          <Property Name="ChildID" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Longitude" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Latitude" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReciveDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ParentDB.dbo.Network' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Network">
+          <Key>
+            <PropertyRef Name="ChildID" />
+            <PropertyRef Name="DivaceName" />
+            <PropertyRef Name="ConnectionInterface" />
+            <PropertyRef Name="ModemName" />
+            <PropertyRef Name="IPv6" />
+            <PropertyRef Name="IPv4" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="ChildID" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DivaceName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ConnectionInterface" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ModemName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IPv6" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IPv4" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="smallint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ParentDB.dbo.NetworkAdaptor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="NetworkAdaptor">
+          <Key>
+            <PropertyRef Name="ChildID" />
+            <PropertyRef Name="DeviceName" />
+            <PropertyRef Name="InterfaceName" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="ChildID" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DeviceName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="InterfaceName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NetworkLimit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="3" />
+          <Property Name="EndTime" Type="time" Precision="3" />
+          <Property Name="Duration" Type="time" Precision="3" />
+          <Property Name="Act" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Process">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProcessName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProcessId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ExecutablePath" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="OSName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ParentDB.dbo.RunningApps' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RunningApps">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="StartTime" />
+          </Key>
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ScreenShot">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Picture" Type="image" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemLimit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="StartTime" Type="time" Precision="3" />
+          <Property Name="EndTime" Type="time" Precision="3" />
+          <Property Name="Duration" Type="time" Precision="3" />
+          <Property Name="Act" Type="smallint" Nullable="false" />
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Type" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemUsage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Usage" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ParentDB.dbo.UninstallOrInstall' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="UninstallOrInstall">
+          <Key>
+            <PropertyRef Name="PreventUninstall" />
+            <PropertyRef Name="PreventInstall" />
+          </Key>
+          <Property Name="PreventUninstall" Type="bit" Nullable="false" />
+          <Property Name="PreventInstall" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="URLCategury">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="URLs" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ParentDB.dbo.VPN' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VPN">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="StartVPN" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartVPN" Type="datetime" Nullable="false" />
+          <Property Name="EndVPN" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="ParentDBModelStoreContainer">
+          <EntitySet Name="AppsLimit" EntityType="Self.AppsLimit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppsLog" EntityType="Self.AppsLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppUsage" EntityType="Self.AppUsage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlockApps" EntityType="Self.BlockApps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlockUrls" EntityType="Self.BlockUrls" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Data" EntityType="Self.Data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HistoryURL" EntityType="Self.HistoryURL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InternetUsage" EntityType="Self.InternetUsage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NetworkLimit" EntityType="Self.NetworkLimit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Process" EntityType="Self.Process" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ScreenShot" EntityType="Self.ScreenShot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemLimit" EntityType="Self.SystemLimit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemLog" EntityType="Self.SystemLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemUsage" EntityType="Self.SystemUsage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="URLCategury" EntityType="Self.URLCategury" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppCategory" EntityType="Self.AppCategory" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AppCategory].[Name] AS [Name], 
+    [AppCategory].[AppsName] AS [AppsName]
+    FROM [dbo].[AppCategory] AS [AppCategory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="InstalledApps" EntityType="Self.InstalledApps" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [InstalledApps].[AppID] AS [AppID], 
+    [InstalledApps].[DisplayName] AS [DisplayName], 
+    [InstalledApps].[DisplayVersion] AS [DisplayVersion], 
+    [InstalledApps].[InstallDate] AS [InstallDate], 
+    [InstalledApps].[Publisher] AS [Publisher], 
+    [InstalledApps].[Path] AS [Path], 
+    [InstalledApps].[ChildID] AS [ChildID], 
+    [InstalledApps].[ReciveDate] AS [ReciveDate], 
+    [InstalledApps].[DisplayIcon] AS [DisplayIcon]
+    FROM [dbo].[InstalledApps] AS [InstalledApps]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Location" EntityType="Self.Location" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Location].[ChildID] AS [ChildID], 
+    [Location].[Date] AS [Date], 
+    [Location].[Longitude] AS [Longitude], 
+    [Location].[Latitude] AS [Latitude], 
+    [Location].[ReciveDate] AS [ReciveDate]
+    FROM [dbo].[Location] AS [Location]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Network" EntityType="Self.Network" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Network].[ChildID] AS [ChildID], 
+    [Network].[DivaceName] AS [DivaceName], 
+    [Network].[ConnectionInterface] AS [ConnectionInterface], 
+    [Network].[ModemName] AS [ModemName], 
+    [Network].[IPv6] AS [IPv6], 
+    [Network].[IPv4] AS [IPv4], 
+    [Network].[Status] AS [Status]
+    FROM [dbo].[Network] AS [Network]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="NetworkAdaptor" EntityType="Self.NetworkAdaptor" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [NetworkAdaptor].[ChildID] AS [ChildID], 
+    [NetworkAdaptor].[DeviceName] AS [DeviceName], 
+    [NetworkAdaptor].[InterfaceName] AS [InterfaceName], 
+    [NetworkAdaptor].[Status] AS [Status], 
+    [NetworkAdaptor].[Date] AS [Date]
+    FROM [dbo].[NetworkAdaptor] AS [NetworkAdaptor]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="RunningApps" EntityType="Self.RunningApps" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [RunningApps].[Name] AS [Name], 
+    [RunningApps].[StartTime] AS [StartTime]
+    FROM [dbo].[RunningApps] AS [RunningApps]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UninstallOrInstall" EntityType="Self.UninstallOrInstall" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UninstallOrInstall].[PreventUninstall] AS [PreventUninstall], 
+    [UninstallOrInstall].[PreventInstall] AS [PreventInstall]
+    FROM [dbo].[UninstallOrInstall] AS [UninstallOrInstall]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VPN" EntityType="Self.VPN" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VPN].[ID] AS [ID], 
+    [VPN].[StartVPN] AS [StartVPN], 
+    [VPN].[EndVPN] AS [EndVPN]
+    FROM [dbo].[VPN] AS [VPN]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ParentDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AppsLimit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AppName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AppID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Precision="3" />
+          <Property Name="EndTime" Type="Time" Precision="3" />
+          <Property Name="Duratin" Type="Time" Precision="7" />
+          <Property Name="Act" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AppsLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Type" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AppUsage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AppName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Seconds" Type="Int32" Nullable="false" />
+          <Property Name="Minutes" Type="Int32" Nullable="false" />
+          <Property Name="Hours" Type="Int32" Nullable="false" />
+          <Property Name="Usage" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BlockApp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AppName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AppID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Act" Type="Int16" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BlockUrl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Act" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Datum">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="DataContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="HistoryURL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Browser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="InternetUsage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InterfaceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ConnectionType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DeviceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Usage" Type="Double" Nullable="false" />
+          <Property Name="Seconds" Type="Int32" Nullable="false" />
+          <Property Name="Minutes" Type="Int32" Nullable="false" />
+          <Property Name="Hour" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NetworkLimit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Precision="3" />
+          <Property Name="EndTime" Type="Time" Precision="3" />
+          <Property Name="Duration" Type="Time" Precision="3" />
+          <Property Name="Act" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Process">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProcessName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProcessId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ExecutablePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="OSName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ScreenShot">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="SystemLimit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="StartTime" Type="Time" Precision="3" />
+          <Property Name="EndTime" Type="Time" Precision="3" />
+          <Property Name="Duration" Type="Time" Precision="3" />
+          <Property Name="Act" Type="Int16" Nullable="false" />
+          <Property Name="ID" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Type" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemUsage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Usage" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="URLCategury">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="URLs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AppCategory">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AppsName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="InstalledApp">
+          <Key>
+            <PropertyRef Name="AppID" />
+            <PropertyRef Name="DisplayName" />
+            <PropertyRef Name="ChildID" />
+            <PropertyRef Name="ReciveDate" />
+          </Key>
+          <Property Name="AppID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DisplayVersion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InstallDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Publisher" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ChildID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReciveDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DisplayIcon" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="ChildID" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Longitude" />
+            <PropertyRef Name="Latitude" />
+            <PropertyRef Name="ReciveDate" />
+          </Key>
+          <Property Name="ChildID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReciveDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Network">
+          <Key>
+            <PropertyRef Name="ChildID" />
+            <PropertyRef Name="DivaceName" />
+            <PropertyRef Name="ConnectionInterface" />
+            <PropertyRef Name="ModemName" />
+            <PropertyRef Name="IPv6" />
+            <PropertyRef Name="IPv4" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="ChildID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DivaceName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ConnectionInterface" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ModemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IPv6" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IPv4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NetworkAdaptor">
+          <Key>
+            <PropertyRef Name="ChildID" />
+            <PropertyRef Name="DeviceName" />
+            <PropertyRef Name="InterfaceName" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="ChildID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DeviceName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InterfaceName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="RunningApp">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="StartTime" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="UninstallOrInstall">
+          <Key>
+            <PropertyRef Name="PreventUninstall" />
+            <PropertyRef Name="PreventInstall" />
+          </Key>
+          <Property Name="PreventUninstall" Type="Boolean" Nullable="false" />
+          <Property Name="PreventInstall" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VPN">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="StartVPN" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartVPN" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndVPN" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="ParentDBEntities4" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AppsLimits" EntityType="Self.AppsLimit" />
+          <EntitySet Name="AppsLogs" EntityType="Self.AppsLog" />
+          <EntitySet Name="AppUsages" EntityType="Self.AppUsage" />
+          <EntitySet Name="BlockApps" EntityType="Self.BlockApp" />
+          <EntitySet Name="BlockUrls" EntityType="Self.BlockUrl" />
+          <EntitySet Name="Data" EntityType="Self.Datum" />
+          <EntitySet Name="HistoryURLs" EntityType="Self.HistoryURL" />
+          <EntitySet Name="InternetUsages" EntityType="Self.InternetUsage" />
+          <EntitySet Name="NetworkLimits" EntityType="Self.NetworkLimit" />
+          <EntitySet Name="Processes" EntityType="Self.Process" />
+          <EntitySet Name="ScreenShots" EntityType="Self.ScreenShot" />
+          <EntitySet Name="SystemLimits" EntityType="Self.SystemLimit" />
+          <EntitySet Name="SystemLogs" EntityType="Self.SystemLog" />
+          <EntitySet Name="SystemUsages" EntityType="Self.SystemUsage" />
+          <EntitySet Name="URLCateguries" EntityType="Self.URLCategury" />
+          <EntitySet Name="AppCategories" EntityType="Self.AppCategory" />
+          <EntitySet Name="InstalledApps" EntityType="Self.InstalledApp" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="Networks" EntityType="Self.Network" />
+          <EntitySet Name="NetworkAdaptors" EntityType="Self.NetworkAdaptor" />
+          <EntitySet Name="RunningApps" EntityType="Self.RunningApp" />
+          <EntitySet Name="UninstallOrInstalls" EntityType="Self.UninstallOrInstall" />
+          <EntitySet Name="VPNs" EntityType="Self.VPN" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ParentDBModelStoreContainer" CdmEntityContainer="ParentDBEntities4">
+          <EntitySetMapping Name="AppsLimits">
+            <EntityTypeMapping TypeName="ParentDBModel.AppsLimit">
+              <MappingFragment StoreEntitySet="AppsLimit">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AppName" ColumnName="AppName" />
+                <ScalarProperty Name="AppID" ColumnName="AppID" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Duratin" ColumnName="Duratin" />
+                <ScalarProperty Name="Act" ColumnName="Act" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppsLogs">
+            <EntityTypeMapping TypeName="ParentDBModel.AppsLog">
+              <MappingFragment StoreEntitySet="AppsLog">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppUsages">
+            <EntityTypeMapping TypeName="ParentDBModel.AppUsage">
+              <MappingFragment StoreEntitySet="AppUsage">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AppName" ColumnName="AppName" />
+                <ScalarProperty Name="Seconds" ColumnName="Seconds" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="Usage" ColumnName="Usage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlockApps">
+            <EntityTypeMapping TypeName="ParentDBModel.BlockApp">
+              <MappingFragment StoreEntitySet="BlockApps">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AppName" ColumnName="AppName" />
+                <ScalarProperty Name="AppID" ColumnName="AppID" />
+                <ScalarProperty Name="Act" ColumnName="Act" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlockUrls">
+            <EntityTypeMapping TypeName="ParentDBModel.BlockUrl">
+              <MappingFragment StoreEntitySet="BlockUrls">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Act" ColumnName="Act" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Data">
+            <EntityTypeMapping TypeName="ParentDBModel.Datum">
+              <MappingFragment StoreEntitySet="Data">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DataContent" ColumnName="DataContent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HistoryURLs">
+            <EntityTypeMapping TypeName="ParentDBModel.HistoryURL">
+              <MappingFragment StoreEntitySet="HistoryURL">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Browser" ColumnName="Browser" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InternetUsages">
+            <EntityTypeMapping TypeName="ParentDBModel.InternetUsage">
+              <MappingFragment StoreEntitySet="InternetUsage">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="InterfaceName" ColumnName="InterfaceName" />
+                <ScalarProperty Name="ConnectionType" ColumnName="ConnectionType" />
+                <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+                <ScalarProperty Name="Usage" ColumnName="Usage" />
+                <ScalarProperty Name="Seconds" ColumnName="Seconds" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Hour" ColumnName="Hour" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NetworkLimits">
+            <EntityTypeMapping TypeName="ParentDBModel.NetworkLimit">
+              <MappingFragment StoreEntitySet="NetworkLimit">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Act" ColumnName="Act" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Processes">
+            <EntityTypeMapping TypeName="ParentDBModel.Process">
+              <MappingFragment StoreEntitySet="Process">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+                <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+                <ScalarProperty Name="ExecutablePath" ColumnName="ExecutablePath" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="OSName" ColumnName="OSName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScreenShots">
+            <EntityTypeMapping TypeName="ParentDBModel.ScreenShot">
+              <MappingFragment StoreEntitySet="ScreenShot">
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemLimits">
+            <EntityTypeMapping TypeName="ParentDBModel.SystemLimit">
+              <MappingFragment StoreEntitySet="SystemLimit">
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Act" ColumnName="Act" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemLogs">
+            <EntityTypeMapping TypeName="ParentDBModel.SystemLog">
+              <MappingFragment StoreEntitySet="SystemLog">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemUsages">
+            <EntityTypeMapping TypeName="ParentDBModel.SystemUsage">
+              <MappingFragment StoreEntitySet="SystemUsage">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Usage" ColumnName="Usage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="URLCateguries">
+            <EntityTypeMapping TypeName="ParentDBModel.URLCategury">
+              <MappingFragment StoreEntitySet="URLCategury">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="URLs" ColumnName="URLs" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppCategories">
+            <EntityTypeMapping TypeName="ParentDBModel.AppCategory">
+              <MappingFragment StoreEntitySet="AppCategory">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AppsName" ColumnName="AppsName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InstalledApps">
+            <EntityTypeMapping TypeName="ParentDBModel.InstalledApp">
+              <MappingFragment StoreEntitySet="InstalledApps">
+                <ScalarProperty Name="AppID" ColumnName="AppID" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="DisplayVersion" ColumnName="DisplayVersion" />
+                <ScalarProperty Name="InstallDate" ColumnName="InstallDate" />
+                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="ChildID" ColumnName="ChildID" />
+                <ScalarProperty Name="ReciveDate" ColumnName="ReciveDate" />
+                <ScalarProperty Name="DisplayIcon" ColumnName="DisplayIcon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="ParentDBModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="ChildID" ColumnName="ChildID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="ReciveDate" ColumnName="ReciveDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Networks">
+            <EntityTypeMapping TypeName="ParentDBModel.Network">
+              <MappingFragment StoreEntitySet="Network">
+                <ScalarProperty Name="ChildID" ColumnName="ChildID" />
+                <ScalarProperty Name="DivaceName" ColumnName="DivaceName" />
+                <ScalarProperty Name="ConnectionInterface" ColumnName="ConnectionInterface" />
+                <ScalarProperty Name="ModemName" ColumnName="ModemName" />
+                <ScalarProperty Name="IPv6" ColumnName="IPv6" />
+                <ScalarProperty Name="IPv4" ColumnName="IPv4" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NetworkAdaptors">
+            <EntityTypeMapping TypeName="ParentDBModel.NetworkAdaptor">
+              <MappingFragment StoreEntitySet="NetworkAdaptor">
+                <ScalarProperty Name="ChildID" ColumnName="ChildID" />
+                <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+                <ScalarProperty Name="InterfaceName" ColumnName="InterfaceName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RunningApps">
+            <EntityTypeMapping TypeName="ParentDBModel.RunningApp">
+              <MappingFragment StoreEntitySet="RunningApps">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UninstallOrInstalls">
+            <EntityTypeMapping TypeName="ParentDBModel.UninstallOrInstall">
+              <MappingFragment StoreEntitySet="UninstallOrInstall">
+                <ScalarProperty Name="PreventUninstall" ColumnName="PreventUninstall" />
+                <ScalarProperty Name="PreventInstall" ColumnName="PreventInstall" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VPNs">
+            <EntityTypeMapping TypeName="ParentDBModel.VPN">
+              <MappingFragment StoreEntitySet="VPN">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StartVPN" ColumnName="StartVPN" />
+                <ScalarProperty Name="EndVPN" ColumnName="EndVPN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

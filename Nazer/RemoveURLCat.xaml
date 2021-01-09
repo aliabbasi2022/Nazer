@@ -1,0 +1,16 @@
+﻿<Window x:Class="UI.RemoveURLCat"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UI"
+        mc:Ignorable="d"
+        Title="RemoveURLCat" Height="436.981" Width="566.038" WindowStyle="None">
+    <Grid x:Name="GRID" Loaded="Grid_Loaded">
+        <ListBox x:Name="AllCat" HorizontalAlignment="Left" Height="216" Margin="50,156,0,0" VerticalAlignment="Top" Width="219" SelectionChanged="AllCat_SelectionChanged"/>
+        <Button x:Name="RmoveBtn" IsEnabled="False" Content="Remove" HorizontalAlignment="Left" Height="36" Margin="351,211,0,0" VerticalAlignment="Top" Width="112" Click="RmoveBtn_Click"/>
+        <TextBlock HorizontalAlignment="Left" Height="35" Margin="50,121,0,0" TextWrapping="Wrap" Text="All URLs Categoty :" VerticalAlignment="Top" Width="207" FontSize="16"/>
+        <Button Content="Cancle" HorizontalAlignment="Left" Height="43" Margin="351,270,0,0" VerticalAlignment="Top" Width="112" Click="Button_Click"/>
+
+    </Grid>
+</Window>

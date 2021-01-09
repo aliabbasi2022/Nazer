@@ -1,0 +1,533 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{90D925F5-3410-4651-853C-6511017FB65F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UI</RootNamespace>
+    <AssemblyName>UI</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>4C7974ECBDA118E879907F921A1A88A1C9540B1B</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>UI_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon 64x64.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ManagedWifi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\managedwifi.1.1.0\lib\net20\ManagedWifi.dll</HintPath>
+    </Reference>
+    <Reference Include="Nevron.Chart, Version=17.7.5.12, Culture=neutral, PublicKeyToken=2961c51bb98125d2, processorArchitecture=MSIL" />
+    <Reference Include="Nevron.Chart.Wpf, Version=17.7.5.12, Culture=neutral, PublicKeyToken=1d109cb19821cc7d, processorArchitecture=MSIL" />
+    <Reference Include="Nevron.GraphicsGL, Version=17.7.5.12, Culture=neutral, PublicKeyToken=2f17c6a71f852d32, processorArchitecture=MSIL" />
+    <Reference Include="Nevron.Nov.Barcode, Version=17.5.29.12, Culture=neutral, PublicKeyToken=b33b1a04bb5ca8ad, processorArchitecture=MSIL" />
+    <Reference Include="Nevron.Nov.Chart, Version=17.5.29.12, Culture=neutral, PublicKeyToken=b33b1a04bb5ca8ad, processorArchitecture=MSIL" />
+    <Reference Include="Nevron.Nov.Diagram, Version=17.5.29.12, Culture=neutral, PublicKeyToken=b33b1a04bb5ca8ad, processorArchitecture=MSIL" />
+    <Reference Include="Nevron.Nov.Grid, Version=17.5.29.12, Culture=neutral, PublicKeyToken=b33b1a04bb5ca8ad, processorArchitecture=MSIL" />
+    <Reference Include="Nevron.Nov.Host.Wpf, Version=17.5.29.12, Culture=neutral, PublicKeyToken=b33b1a04bb5ca8ad, processorArchitecture=MSIL" />
+    <Reference Include="Nevron.Nov.Presentation, Version=17.5.29.12, Culture=neutral, PublicKeyToken=b33b1a04bb5ca8ad, processorArchitecture=MSIL" />
+    <Reference Include="Nevron.Nov.Schedule, Version=17.5.29.12, Culture=neutral, PublicKeyToken=b33b1a04bb5ca8ad, processorArchitecture=MSIL" />
+    <Reference Include="Nevron.Nov.Text, Version=17.5.29.12, Culture=neutral, PublicKeyToken=b33b1a04bb5ca8ad, processorArchitecture=MSIL" />
+    <Reference Include="Nevron.Nov.WpfControls, Version=17.5.29.12, Culture=neutral, PublicKeyToken=b33b1a04bb5ca8ad, processorArchitecture=MSIL" />
+    <Reference Include="Nevron.Presentation, Version=17.7.5.12, Culture=neutral, PublicKeyToken=6656c5d1103e75cc, processorArchitecture=MSIL" />
+    <Reference Include="Nevron.System, Version=17.7.5.12, Culture=neutral, PublicKeyToken=6a987feae5e496fd, processorArchitecture=MSIL" />
+    <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="system.windows.controls.datavisualization.toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationClientsideProviders" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="AddBlockApp.xaml.cs">
+      <DependentUpon>AddBlockApp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppCategory.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppsLimit.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppsLog.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppUsage.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BlockApp.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BlockUrl.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Charts.cs" />
+    <Compile Include="ConnectionClass.cs" />
+    <Compile Include="DataBaseHandler.cs" />
+    <Compile Include="Datum.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DriverLoaderWithService.cs" />
+    <Compile Include="EnterAppCat.xaml.cs">
+      <DependentUpon>EnterAppCat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EnterAppInCat.xaml.cs">
+      <DependentUpon>EnterAppInCat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EnterURLCat.xaml.cs">
+      <DependentUpon>EnterURLCat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HistoryURL.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InstalledApp.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InternetUsage.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Location.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="masterDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>masterDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Network.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkAdaptor.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkLimit.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NetWorkTools.cs" />
+    <Compile Include="Packets.cs" />
+    <Compile Include="ParentClass.cs" />
+    <Compile Include="ParentDBModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ParentDBModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ParentDBModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ParentDBModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ParentDBModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ParentInstaller.cs">
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="ParentInstaller.Designer.cs">
+      <DependentUpon>ParentInstaller.cs</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Process.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RemoveURLCat.xaml.cs">
+      <DependentUpon>RemoveURLCat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RunningApp.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenShot.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenShotClass.cs" />
+    <Compile Include="SettingPage.xaml.cs">
+      <DependentUpon>SettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SIngUpPage.xaml.cs">
+      <DependentUpon>SIngUpPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SystemLimit.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SystemLog.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SystemUsage.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UninstallOrInstall.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="URLCategury.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VoiceWindow.xaml.cs">
+      <DependentUpon>VoiceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VPN.cs">
+      <DependentUpon>ParentDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AddBlockApp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EnterAppCat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EnterAppInCat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EnterURLCat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Main.xaml.cs">
+      <DependentUpon>Main.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="RemoveURLCat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SIngUpPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VoiceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="masterDataSet.xsc">
+      <DependentUpon>masterDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="masterDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>masterDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="masterDataSet.xss">
+      <DependentUpon>masterDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <EntityDeploy Include="ParentDBModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ParentDBModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ParentDBModel.edmx.diagram">
+      <DependentUpon>ParentDBModel.edmx</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="UI_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Files\Rade8-Minium-2-Network-Network.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Files\localization-icon-10214-16x16.ico" />
+    <Resource Include="Files\localization-icon-10229-16x16.ico" />
+    <Resource Include="Files\location-1.ico" />
+    <Resource Include="Files\Programs.ico" />
+    <Resource Include="Files\Aha-Soft-Large-Time-Time.ico" />
+    <Resource Include="Files\Babasse-Old-School-Time-Machine.ico" />
+    <Resource Include="Files\Hamzasaleem-Stock-Time-Machine.ico" />
+    <Resource Include="Files\player_time.ico" />
+    <Resource Include="Files\Theo-Cupent42-Itunes-Unified-Time-machine.ico" />
+    <Resource Include="Files\screenshot-red64.ico" />
+    <Resource Include="Files\screenshot-w64.ico" />
+    <Resource Include="Files\screenshot-orang64.ico" />
+    <Resource Include="Files\Arrioch-Senary-Internet-url.ico" />
+    <Resource Include="Files\if_File_URL_104210.ico" />
+    <Resource Include="Files\if_Location HTTP_50895.ico" />
+    <Resource Include="Files\if_user_318585.ico" />
+    <Resource Include="Files\Dakirby309-Simply-Styled-Run.ico" />
+    <Resource Include="Files\Oxygen-Icons.org-Oxygen-Actions-system-run.ico" />
+    <Resource Include="Files\Igh0zt-Ios7-Style-Metro-Ui-MetroUI-Apps-CCleaner.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Files\Igh0zt-Ios7-Style-Metro-Ui-MetroUI-Apps-Nero.ico" />
+    <Resource Include="Files\photo_2017-08-17_13-59-07.jpg" />
+    <Resource Include="Files\a94304e1c45d3ca3e573469ec1cae2e2.ico" />
+    <Resource Include="Files\close-icon-13603-16x16.ico" />
+    <Resource Include="Files\shop-closed.ico" />
+    <Resource Include="Files\cancel.png" />
+    <Resource Include="Files\cancelRed.png" />
+    <Resource Include="Files\iconBlack.png" />
+    <Resource Include="Files\iconRed.png" />
+    <Resource Include="Files\maximize.png" />
+    <Resource Include="Files\minimizered.png" />
+    <Resource Include="Files\standing-person-with-kid-up-in-arms.png" />
+    <Resource Include="Files\if_info-blog_46810.ico" />
+    <Resource Include="Files\folder_new.ico" />
+    <Resource Include="Files\Device-Icon.png" />
+    <Resource Include="Files\add_to_folder2_Hm8_icon.ico" />
+    <Resource Include="Files\add_to_folder_9lM_icon.ico" />
+    <Resource Include="Files\Untitled-1.ico" />
+    <Resource Include="Files\Untitled-2.ico" />
+    <Resource Include="Files\pause-64.ico" />
+    <Resource Include="Files\video-play-3-64.ico" />
+    <Resource Include="Files\add-64.ico" />
+    <Resource Include="Files\edit-8-64.ico" />
+    <Resource Include="Files\x-mark-4-64.ico" />
+    <Resource Include="Files\a_K0M_icon.ico" />
+    <Resource Include="Files\action-64.ico" />
+    <Resource Include="Files\archive_insert.ico" />
+    <Resource Include="Files\archive_remove%281%29.ico" />
+    <Resource Include="Files\Double-J-Design-Origami-Colored-Pencil-Red-document-cross.ico" />
+    <Resource Include="Files\Double-J-Design-Origami-Colored-Pencil-Red-document-plus.ico" />
+    <Resource Include="Files\if_add_1927206.ico" />
+    <Resource Include="Files\if_remove_1927216.ico" />
+    <Resource Include="Files\file_4nI_icon.ico" />
+    <Resource Include="Files\remove-icon-png-26.ico" />
+    <Resource Include="Files\circular-clock.ico" />
+    <Resource Include="Files\folder.ico" />
+    <Resource Include="Files\image.ico" />
+    <Resource Include="Files\link.ico" />
+    <Resource Include="Files\monitor_1_.ico" />
+    <Resource Include="Files\notepad.ico" />
+    <Resource Include="Files\placeholder-outline-maps-interface-tool.ico" />
+    <Resource Include="Files\puzzle-piece-outline.ico" />
+    <Resource Include="Files\speedometer-tool.ico" />
+    <Resource Include="Files\trash-can.ico" />
+    <Resource Include="Files\video-camera.ico" />
+    <Resource Include="Files\wifi.ico" />
+    <Resource Include="Files\Bokehlicia-Captiva-Browser-web.ico" />
+    <Resource Include="Files\2017-08-06.png" />
+    <Resource Include="Files\small_7282_59d5f5d538c85_0J9_icon.ico" />
+    <Resource Include="Files\134216-64.png" />
+    <Resource Include="Files\cloud-storage-uploading-option.png" />
+    <Resource Include="Files\devices.png" />
+    <Resource Include="Files\event.png" />
+    <Resource Include="Files\package.png" />
+    <Resource Include="Files\vintage-key-outline.png" />
+    <Resource Include="Files\wifi.png" />
+    <Resource Include="Files\browser.png" />
+    <Resource Include="Files\internet.png" />
+    <Resource Include="Files\216560-128.png" />
+    <Resource Include="Files\if_aws_334593.ico" />
+    <Resource Include="Files\if_dailybooth_334610.ico" />
+    <Resource Include="Files\if_location-square-social-media_764971.ico" />
+    <Resource Include="Files\if_spotify-square-social-media_764938.ico" />
+    <Resource Include="Files\1175205-64.png" />
+    <Resource Include="Files\if_Globe_99094.ico" />
+    <Resource Include="Files\if_Narrator_98813.ico" />
+    <Resource Include="Files\if_Firefox_Addons_99227.ico" />
+    <Resource Include="Files\if_Google_Places_99182.ico" />
+    <Resource Include="Files\if_Windows_Easy_Transfer_98866.ico" />
+    <Resource Include="Files\if_Email_Chat_98790.ico" />
+    <Resource Include="Files\if_Koding_98931.ico" />
+    <Resource Include="Files\if_LAN_99292.ico" />
+    <Resource Include="Files\if_Network_99229.ico" />
+    <Resource Include="Files\if_Phone_99238.ico" />
+    <Resource Include="Files\if_Microphone_2_98779.ico" />
+    <Resource Include="Files\if_Recorded_TV_98747.ico" />
+    <Resource Include="Files\if_User_Folder_99333.ico" />
+    <Resource Include="Files\if_Aperture_98841.ico" />
+    <Resource Include="Files\if_Keyboard_99179.ico" />
+    <Resource Include="Files\if_Image_-_Google_Docs_99352.ico" />
+    <Resource Include="Files\Benjigarner-Summer-Collection-Network-Web.ico" />
+    <Resource Include="Files\if_messages_1419106.ico" />
+    <Resource Include="Files\if_Mail_99204.ico" />
+    <Resource Include="Files\if_human_1216577.ico" />
+    <Resource Include="Files\1495055-64.png" />
+    <Resource Include="Files\1495056-64.png" />
+    <Resource Include="Files\if_ic_keyboard_voice_48px_352475.ico" />
+    <Resource Include="Files\if_Keyboard_100061.ico" />
+    <Resource Include="Files\if_media-record_118789.ico" />
+    <Resource Include="Files\if_mic__microphone__voice__record__audio__sound__speak_2317988.ico" />
+    <Resource Include="Files\if_keyboard_107207.ico" />
+    <Resource Include="Files\Dtafalonso-Android-Lollipop-Settings.ico" />
+    <Resource Include="Files\bridel_8gi_icon.ico" />
+    <Resource Include="Files\Logo.png" />
+    <Resource Include="icon 64x64.ico" />
+    <Resource Include="Files\BlueSetting.png" />
+    <Resource Include="Files\BlackSetting.png" />
+    <Resource Include="Files\DarkBlueSetting.png" />
+    <Content Include="ParentDBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ParentDBModel.edmx</DependentUpon>
+      <LastGenOutput>ParentDBModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ParentDBModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ParentDBModel.edmx</DependentUpon>
+      <LastGenOutput>ParentDBModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Script.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SqlServer.Express.10.5">
+      <Visible>False</Visible>
+      <ProductName>SQL Server 2008 R2 Express</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SqlServer.Express.11.0">
+      <Visible>False</Visible>
+      <ProductName>SQL Server 2012 Express</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

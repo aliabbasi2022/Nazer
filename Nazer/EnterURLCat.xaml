@@ -1,0 +1,19 @@
+﻿<Window x:Class="UI.EnterURLCat"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UI"
+        mc:Ignorable="d"
+        Title="EnterURLCat" Height="527.239" Width="711.94" Closed="Window_Closed">
+    <Grid x:Name="G1" Loaded="G1_Loaded">
+        <ListBox x:Name="AllUsedURLCat" HorizontalAlignment="Left" Height="368" Margin="27,84,0,0" VerticalAlignment="Top" Width="281" SelectionChanged="AllUsedURLCat_SelectionChanged"/>
+        <Label x:Name="DLable" Content="Domain:" HorizontalAlignment="Left" Height="28" Margin="346,99,0,0" VerticalAlignment="Top" Width="241"/>
+        <TextBox x:Name="DataTX" HorizontalAlignment="Left" Height="19" Margin="346,146,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="263"/>
+        <Button x:Name="AddBtn" Content="Add" HorizontalAlignment="Left" Height="23" Margin="346,208,0,0" VerticalAlignment="Top" Width="69" Click="AddBtn_Click"/>
+        <Button x:Name="RemoveBTn" Content="Remove" HorizontalAlignment="Left" Height="25" Margin="346,256,0,0" VerticalAlignment="Top" Width="69" Click="RemoveBTn_Click"/>
+        <Label Content="Category" HorizontalAlignment="Left" Height="50" Margin="220,10,0,0" VerticalAlignment="Top" Width="272" HorizontalContentAlignment="Center" FontSize="25"/>
+        <Button x:Name="AddURLBtn" IsEnabled="False" Content="Edit Domains " HorizontalAlignment="Left" Height="23" Margin="496,208,0,0" VerticalAlignment="Top" Width="91" Click="AddURLBtn_Click"/>
+    </Grid>
+
+</Window>
