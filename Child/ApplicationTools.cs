@@ -15,6 +15,7 @@ using System.Security.Principal;
 
 namespace Child
 {
+    //mohammadpoor
     class ApplicationTools
     {
         protected Semaphore SMAddUninstallString;
