@@ -64,11 +64,7 @@ namespace Child
                 ProPacket Temp = (ProPacket)Formater.Convert(Value, typeof(ProPacket));
                 return (Temp.ID + "," + Temp.TotalSize + "," + Temp.Type);
             }
-            //if (Value is ChildProPacket)
-            //{
-            //    ChildProPacket Temp = (ChildProPacket)Formater.Convert(Value, typeof(ChildProPacket));
-            //    return ( Temp.TotalSize + "," + Temp.Type);
-            //}
+            
             if (Value is Location)
             {
                 Location Temp = (Location)Formater.Convert(Value, typeof(Location));
@@ -282,8 +278,6 @@ namespace Child
                 Temp.Latitude = Data[0];
                 Temp.Longitude = Data[1];
                 Temp.Time = Convert.ToDateTime(Data[2]);
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -295,8 +289,6 @@ namespace Child
                 Temp.Type = Convert.ToInt16(Data[1]);
                 Temp.Time = Convert.ToDateTime(Data[2]);
                 Temp.Browser = "";
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -306,10 +298,6 @@ namespace Child
                 Apps Temp = new Apps();
                 Temp.AppName = Data[0];
                 Temp.Type = Convert.ToInt16(Data[1]);
-                //Temp.Time = Convert.ToDateTime(Data[2]);
-                //Temp.Browser = "";
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -336,10 +324,6 @@ namespace Child
                 }
                 Temp.Type = Convert.ToInt16(Data[3]);
                 Temp.Header = Data[4];
-                //Temp.Time = Convert.ToDateTime(Data[2]);
-                //Temp.Browser = "";
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -349,10 +333,6 @@ namespace Child
                 SystemStatus Temp = new SystemStatus();
                 Temp.Type = Convert.ToInt16(Data[0]);
                 Temp.Time = Data[1];
-                //Temp.Time = Convert.ToDateTime(Data[2]);
-                //Temp.Browser = "";
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -363,10 +343,6 @@ namespace Child
                 Temp.Type = Convert.ToInt16(Data[0]);
                 Temp.Command = Data[1];
                 Temp.Time = Data[2];
-                //Temp.Time = Convert.ToDateTime(Data[2]);
-                //Temp.Browser = "";
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -378,10 +354,6 @@ namespace Child
                 Temp.End = Convert.ToDateTime(Data[1]);
                 Temp.Act = Convert.ToInt16(Data[2]);
                 Temp.Id = Data[3];
-                //Temp.Time = Convert.ToDateTime(Data[2]);
-                //Temp.Browser = "";
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -395,10 +367,6 @@ namespace Child
                 Temp.Duration = Convert.ToDateTime(Data[2]) - TempTime;
                 Temp.Act = Convert.ToInt16(Data[3]);
                 Temp.Id = Data[4];
-                //Temp.Time = Convert.ToDateTime(Data[2]);
-                //Temp.Browser = "";
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -410,11 +378,6 @@ namespace Child
                 Temp.Start = Convert.ToDateTime(Data[1]);
                 Temp.End = Convert.ToDateTime(Data[2]);
                 Temp.Act = Convert.ToInt16(Data[3]);
-                //Temp.Id = Data[3];
-                //Temp.Time = Convert.ToDateTime(Data[2]);
-                //Temp.Browser = "";
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -428,11 +391,6 @@ namespace Child
                 Temp.End = Convert.ToDateTime(Data[1]) - TempTime;
                 Temp.Duration = Convert.ToDateTime(Data[3]) - TempTime;
                 Temp.Act = Convert.ToInt16(Data[4]);
-                //Temp.Id = Data[4];
-                //Temp.Time = Convert.ToDateTime(Data[2]);
-                //Temp.Browser = "";
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -443,8 +401,6 @@ namespace Child
                 Temp.IP = Data[0];
                 Temp.Port = Convert.ToInt32(Data[1]);
                 Temp.DeviceType = Convert.ToBoolean(Data[2]);
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -455,8 +411,6 @@ namespace Child
                 Temp.Name = Data[0];
                 Temp.Time = Data[1];
                 Temp.Type = Convert.ToInt16(Data[2]);
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -465,9 +419,6 @@ namespace Child
                 string[] Data = Value.Split(',');
                 UnInstall Temp = new UnInstall();
                 Temp.ParentID = Data[0];
-
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -479,8 +430,6 @@ namespace Child
                 Temp.ProcessName = Data[1];
                 Temp.Data = Data[2];
                 Temp.Time = Data[3];
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -492,8 +441,6 @@ namespace Child
                 Temp.ProcessName = Data[1];
                 Temp.Time = Data[3];
                 Temp.Data = Data[2];
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }
@@ -505,8 +452,6 @@ namespace Child
                 Temp.ProcessName = Data[2];
                 Temp.Type = Convert.ToInt16(Data[1]);
                 Temp.Time = Data[3];
-                //Temp.Version = Data[3];
-                //Temp.AppIcon = Data[4];
                 Result = (T)Convert.ChangeType(Temp, typeof(T));
                 return Result;
             }

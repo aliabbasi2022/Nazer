@@ -60,39 +60,12 @@ namespace Child
             StopWatcher.EventArrived += Name;
             StopWatcher.Start();      
         }
-        //public void FindeStartedProcess1(Action<ManagementBaseObject> Name)
-        //{
-        //    //StartWatcher.EventArrived += Name;//Send Event to This Fuction 
-        //    //StartWatcher.Start();// Start Listening for Events
-        //    Task.Run(() =>
-        //    {
-        //        while (true)
-        //        {
-        //            StartEventData = StartWatcher.WaitForNextEvent();
-        //            Name(StartEventData);
-        //        }
-        //    });
-        //
-        //}
+    
+ 
         ///// <summary>
         ///// Listen to Incoming Stop Process Event and Pass Event to Specific Function
         ///// </summary>
-        ///// <param name="Name"> Event Function Name </param>
-        //public void FindStopedProcess1(Action<ManagementBaseObject> Name)
-        //{
-        //    //StopWatcher.EventArrived += Name;
-        //    //StopWatcher.Start();
-        //    Task.Run(() =>
-        //    {
-        //        while (true)
-        //        {
-        //            StopEventData = StopWatcher.WaitForNextEvent();
-        //            Name(StopEventData);
-        //        }
-        //    });
-        //
-        //
-        //}
+
         /// <summary>
         /// return List That fill with All Process Names
         /// </summary>
@@ -133,10 +106,6 @@ namespace Child
         public Process GetSpecificProcess(int ID)
         {
             Process AllProcess = Process.GetProcessById(ID);
-            //foreach (Process Var in AllProcess)
-            //{
-            //    Proces.Add(Var);
-            //}
             return AllProcess;
         }
         public void StopRiseWatching()

@@ -32,7 +32,6 @@ namespace Child
             User32.GetWindowRect(proc.MainWindowHandle, ref rect);
             int width = rect.right - rect.left;
             int height = rect.bottom - rect.top;
-            
             var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb); // ijade yek Bitmap ba andazeE k ma mikhaym
             Graphics graphics = Graphics.FromImage(bmp);
             graphics.CopyFromScreen(rect.left, rect.top, 0, 0, new Size(width, height), CopyPixelOperation.SourceCopy);
@@ -73,7 +72,6 @@ namespace Child
             Size PicSize = new Size();
             string RegPath = @"SYSTEM\CurrentControlSet\Control\UnitedVideo\CONTROL\VIDEO";
             RegistryKey RegKey = Registry.LocalMachine;
-            //string[] D = RegKey.GetSubKeyNames();
             RegistryKey RootKey = RegKey.OpenSubKey(RegPath);
             RegPath += ("\\" +RootKey.GetSubKeyNames()[0]);
             using (Microsoft.Win32.RegistryKey key = RegKey.OpenSubKey(RegPath))
@@ -110,7 +108,6 @@ namespace Child
             //Savethe ScreenShot to my DB
             if(Type == 0)
             {
-                //bmpScreenshot.Save(Application.StartupPath + "\\Screenshot.png", ImageFormat.Png);
                 Form1.DataBaseAgent.SelectData("ScreenShot", ref Form1.DS, "ScreenShot");
                 DataRow Row = Form1.DS.Tables["ScreenShot"].NewRow();
                 Row["ScreenShot"] = imageToByteArray(bmpScreenshot);
@@ -119,15 +116,12 @@ namespace Child
                 Form1.DataBaseAgent.InsertData(Form1.DS.Tables["ScreenShot"]);
                 Form1.DS.Tables["ScreenShot"].AcceptChanges();
                 return "";
-                //
             }
             else
             {
-                //bmpScreenshot.Save("E:\\we.jpeg");
                 MemoryStream ms = new MemoryStream();
                 bmpScreenshot.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                 Result = ms.ToArray();
-                //return imageToByteArray(bmpScreenshot); 
                 return Convert.ToString(Result);
             }
         }
@@ -136,7 +130,6 @@ namespace Child
             SCSM1.WaitOne();
             MemoryStream ms = new MemoryStream();
             imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-            //var str = System.Text.Encoding.ASCII.GetString(ms.ToArray());
             SCSM1.Release();
             return "";
             

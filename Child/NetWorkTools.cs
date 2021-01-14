@@ -170,11 +170,7 @@ namespace Child
             try
             {
                 string InterFaceName = "";
-                NetworkInterface[] AV = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces();
-                //foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
-                //{
-                //    ni.NetworkInterfaceType.ToString();
-                //}
+                NetworkInterface[] AV = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces();      
                 WlanClient Client = new WlanClient();
                 try
                 {
@@ -182,7 +178,6 @@ namespace Child
                     {
                         Wlan.WlanConnectionAttributes ConnectionInfo = var.CurrentConnection;
                         String strHostName = Dns.GetHostName();
-                        // Find host by name
                         IPHostEntry iphostentry = Dns.GetHostEntry(strHostName);
                         ModemIP = iphostentry.AddressList[1].ToString();
                         if (ConnectionInfo.isState == Wlan.WlanInterfaceState.Connected)
