@@ -23,7 +23,7 @@ namespace Child
         {
             SendDataSM = new Semaphore(1, 1);
             this.DataSize = DataSize;
-            ParentRealTimeSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            ParentRealTimeSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp); //This example creates a socket that can be used to communicate on a TCP / IP based network such as the Internet.
             this.IP = IP;
             this.Port = Port;
             this.ID = ID;
@@ -52,14 +52,7 @@ namespace Child
         {
             byte[] ByteData = Encoding.Unicode.GetBytes(Data);
             int Counter = 0;
-
-            //Counter +=ParentRealTimeSocket.Send(ByteData);
             ParentRealTimeSocket.SendFile("E:\\we.jpeg");
-            //while (ByteData.Length >= Counter)
-            //{
-            //    Counter += 
-            //}
-            //SendDataSM.Release();
         }
     }
 }
