@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
+using System.Data.SqlClient; //The System . Data . Sql Client  name space is the . NET Data Provider for SQL Server.
 using System.Data;
 using System.Threading;
 using System.Runtime.InteropServices;
@@ -41,7 +41,7 @@ namespace Child
             }
             set
             {
-                //ConnectiosIndex = value;
+                
                 SM.WaitOne();
                 if ((value > NumberOfConnections ) || (ConnectiosIndex >= NumberOfConnections -1 ))
                 {
@@ -211,7 +211,6 @@ namespace Child
                 SqlDataAdapter DA = new SqlDataAdapter(FreeCommand);
                 SqlCommandBuilder Command = new SqlCommandBuilder(DA);
                 DA.InsertCommand = Command.GetInsertCommand(true);
-                //DA.UpdateCommand = Command.GetUpdateCommand(true);
                 DA.Update(Table);
                 InSM.Release();
                 return true;
@@ -233,8 +232,6 @@ namespace Child
                 FreeCommand.CommandText = ("Select * From " + Table.TableName);
                 SqlDataAdapter DA = new SqlDataAdapter(FreeCommand);
                 SqlCommandBuilder Command = new SqlCommandBuilder(DA);
-                //DA.InsertCommand = Command.GetInsertCommand(true);
-                //DA.DeleteCommand = Command.GetDeleteCommand(true);
                 DA.UpdateCommand = Command.GetUpdateCommand(true);
                 DA.Update(Table);
                 UpSM.Release();
@@ -254,10 +251,6 @@ namespace Child
         public void InsertBulkData(string DestinationTable , DataTable SourceTable)
         {
             int Index = ConnectionsIndex;
-            //SqlBulkCopy Bulk = new SqlBulkCopy(Connectios[Index], SqlBulkCopyOptions.TableLock | SqlBulkCopyOptions.FireTriggers | SqlBulkCopyOptions.UseInternalTransaction, null);
-            //Bulk.DestinationTableName = DestinationTable;
-            //SourceTable.AcceptChanges();
-            //Bulk.WriteToServer(SourceTable);
             using (SqlBulkCopy bulkCopy =
                            new SqlBulkCopy(Connectios[Index]))
             {
@@ -275,9 +268,9 @@ namespace Child
                 }
                 finally
                 {
-                    // Close the SqlDataReader. The SqlBulkCopy
-                    // object is automatically closed at the end
-                    // of the using block.
+                    /* Close the SqlDataReader. The SqlBulkCopy
+                     object is automatically closed at the end
+                     of the using block.*/
                     
                 }
             }
@@ -453,7 +446,6 @@ namespace Child
                 SqlCommand Commands = new SqlCommand();
                 Commands.Connection = Connectios[Index];
                 Commands.CommandText = Command;
-                //object DSs = Commands.ExecuteScalar();
                 return (Commands.ExecuteScalar());
             }
             catch(Exception E)
