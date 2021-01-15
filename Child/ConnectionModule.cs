@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
+using System.Net.Sockets;//Precise control of network access
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,14 +27,12 @@ namespace Child
                 NetState = value;
             }
         }
-        //string CurrentVersion;
         string ProcessName;
 
         public ConnectionModule(string IP, int Port,  string ProcessName)
         {
             this.IP = IP;
             PortNumber = Port;
-            //this.CurrentVersion = CurrentVersion;
             this.ProcessName = ProcessName;
         }
 
@@ -74,7 +72,7 @@ namespace Child
             {
                 byte[] IncommingData = new byte[1024 * 2];
                 DataStream.Read(IncommingData, 0, IncommingData.Length);
-                Result = Encoding.Unicode.GetString(IncommingData);
+                Result = Encoding.Unicode.GetString(IncommingData); //Decodes a range of bytes from a byte array into a string.
                 Result = Result.Replace("/0", "");
             }
             catch(Exception E)
