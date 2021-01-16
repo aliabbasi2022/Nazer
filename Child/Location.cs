@@ -9,11 +9,11 @@ using System.Net;
 using System.IO;
 using System.Xml;
 using System.Collections.Specialized;
-using Microsoft.Win32;
-using System.Diagnostics;
-using System.Security.Principal;
-using System.Management;
-using System.Device.Location;
+using Microsoft.Win32;//Provides two types of classes: those that handle events raised by the operating system and those that manipulate the system registry.
+using System.Diagnostics; //Provides classes that allow you to interact with system processes, event logs, and performance counters.
+using System.Security.Principal; //Defines a principal object that represents the security context under which code is running.
+using System.Management; //Provides access to a rich set of management information and management events about the system
+using System.Device.Location;//Allows application developers to easily access the computer's location by using a single API
 
 namespace Child
 {
@@ -44,10 +44,10 @@ namespace Child
                                 if (LocationStatus != "Allow")
                                 {
                                     ProcessStartInfo StartInfo = new ProcessStartInfo("cmd.exe");
-                                    StartInfo.UseShellExecute = true;
-                                    StartInfo.Arguments = ("/C reg add  \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\DeviceAccess\\Global\\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}\" /v \"Value\" /d \"Allow\" /f");
-                                    StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                                    StartInfo.Verb = "runas";
+                                    StartInfo.UseShellExecute = true;//Gets or sets a value indicating whether to use the operating system shell to start the process.
+                                    StartInfo.Arguments = ("/C reg add  \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\DeviceAccess\\Global\\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}\" /v \"Value\" /d \"Allow\" /f");//Gets or sets the set of command-line arguments to use when starting the application.
+                                    StartInfo.WindowStyle = ProcessWindowStyle.Hidden; //Hide Windows processing
+                                    StartInfo.Verb = "runas";//This will set it to run as an administrator
                                     Process process = new Process();
                                     process.StartInfo = StartInfo;
                                     process.Start();
@@ -83,10 +83,10 @@ namespace Child
         public void TurnOnWiFi()
         {
             ProcessStartInfo StartInfo = new ProcessStartInfo("cmd.exe");
-            StartInfo.UseShellExecute = true;
-            StartInfo.Arguments = ("/C netsh interface set interface \"Wi-Fi\" enabled");
-            StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            StartInfo.Verb = "runas";
+            StartInfo.UseShellExecute = true;//Gets or sets a value indicating whether to use the operating system shell to start the process.
+            StartInfo.Arguments = ("/C netsh interface set interface \"Wi-Fi\" enabled");//Gets or sets the set of command-line arguments to use when starting the application.
+            StartInfo.WindowStyle = ProcessWindowStyle.Hidden;//Hide Windows processing
+            StartInfo.Verb = "runas";//This will set it to run as an administrator
             Process process = new Process();
             process.StartInfo = StartInfo;
             process.Start();
