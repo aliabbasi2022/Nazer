@@ -9,8 +9,8 @@ using System.Drawing; //nameSpace of Bitmap
 using System.Threading;
 using System.Runtime.InteropServices; // nameSpace of dll
 using System.Drawing.Imaging; // nameSpace of PixelFprmat
-using Microsoft.Win32;
-using System.IO;
+using Microsoft.Win32;//Provides two types of classes: those that handle events raised by the operating system and those that manipulate the system registry.
+using System.IO;//Contains types that allow reading and writing to files and data streams, and types that provide basic file and directory support.
 using System.Data.SqlClient;
 using System.Data;
 
