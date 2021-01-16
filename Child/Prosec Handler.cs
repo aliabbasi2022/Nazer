@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Management;
-using System.Diagnostics;
+using System.Management;//Provides access to a rich set of management information and management events about the system, 
+using System.Diagnostics;//Provides classes that allow you to interact with system processes, event logs, and performance counters.
 
 
 namespace Child
@@ -22,19 +22,6 @@ namespace Child
         {
             StartWatcher = new ManagementEventWatcher();
             StopWatcher = new ManagementEventWatcher();
-            //string StartqueryString = 
-            //"SELECT TargetInstance.Name FROM __InstanceDeletionEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_Process'";// Query that connect to system data base that store all Process and return 
-            //// edge when new process is coming
-            //// The dot in the scope means use the current machine
-            //string StopqueryString =
-            //"SELECT TargetInstance.Name FROM __InstanceDeletionEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_Process'";// Query that connect to system data base that store all Process and return 
-            //ManagementScope scope = new ManagementScope(@"\\.\root\CIMV2");
-            //// Create a watcher and listen for events
-            //StartWatcher = new ManagementEventWatcher(StartqueryString) ;
-            //StopWatcher = new ManagementEventWatcher(StopqueryString);
-            //StartWatcher.Scope = scope;
-            //StopWatcher.Scope = scope;
-            //Other Way 
             // ---------------Start --------------
             WqlEventQuery StartQuery = new WqlEventQuery("__InstanceCreationEvent", new TimeSpan(0, 0, 1), "TargetInstance isa \"Win32_Process\"");
             WqlEventQuery StopQuery = new WqlEventQuery("__InstanceDeletionEvent", new TimeSpan(0, 0, 1), "TargetInstance isa \"Win32_Process\"");
