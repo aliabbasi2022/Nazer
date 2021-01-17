@@ -7,9 +7,9 @@ using Accord.Video.DirectShow;
 using Accord.Video.FFMPEG;
 using System.Management;
 using Accord.Video;
-using System.Threading;
+using System.Threading;//Provides classes and interfaces that enable multithreaded programming. 
 using System.Drawing.Imaging;
-using System.Windows.Forms;
+using System.Windows.Forms;//Contains classes for creating Windows-based applications that take full advantage of the rich user interface features available in the Microsoft Windows operating system.
 using System.Drawing;
 
 namespace Child
@@ -61,8 +61,8 @@ namespace Child
                 }
                 catch { }
 
-                //Create NewFrame event handler
-                //(This one triggers every time a new frame/image is captured
+                /*Create NewFrame event handler
+                 (This one triggers every time a new frame/image is captured*/
                 videoSource.NewFrame += new Accord.Video.NewFrameEventHandler(videoSource_NewFrame);
 
                 
@@ -73,18 +73,15 @@ namespace Child
         /// </summary>
         public Webcam(Accord.Video.NewFrameEventHandler Handler)
         {
-            //ImageBox = Target;
             Runing = false;
             LastStatus = false;
             PictureSM = new Semaphore(1, 1);
             videosources = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-
             //Check if atleast one video source is available
             if (videosources != null)
             {
                 //For example use first video device. You may check if this is your webcam.
                 videoSource = new VideoCaptureDevice(videosources[0].MonikerString);
-
                 try
                 {
                     //Check if the video device provides a list of supported resolutions
@@ -103,10 +100,9 @@ namespace Child
                 }
                 catch { }
 
-                //Create NewFrame event handler
-                //(This one triggers every time a new frame/image is captured
+                /*Create NewFrame event handler
+                (This one triggers every time a new frame/image is captured*/
                 videoSource.NewFrame += new Accord.Video.NewFrameEventHandler(Handler);
-
 
             }
         }
@@ -115,12 +111,10 @@ namespace Child
         /// </summary>
         public Webcam()
         {
-            //ImageBox = Target;
             Runing = false;
             LastStatus = false;
             PictureSM = new Semaphore(1, 1);
             videosources = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-
             //Check if atleast one video source is available
             if (videosources != null)
             {
@@ -145,11 +139,9 @@ namespace Child
                 }
                 catch { }
 
-                //Create NewFrame event handler
-                //(This one triggers every time a new frame/image is captured
-                //videoSource.NewFrame += new Accord.Video.NewFrameEventHandler(Handler);
-
-
+                /*Create NewFrame event handler
+                 (This one triggers every time a new frame/image is captured
+                 videoSource.NewFrame += new Accord.Video.NewFrameEventHandler(Handler);*/
             }
         }
         /// <summary>
@@ -160,10 +152,8 @@ namespace Child
         {
             Runing = false;
             LastStatus = false;
-            //ImageBox = Target;
             PictureSM = new Semaphore(1, 1);
             FilterInfoCollection videosources = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-
             //Check if atleast one video source is available
             if (videosources != null)
             {
@@ -188,11 +178,9 @@ namespace Child
                 }
                 catch { }
 
-                //Create NewFrame event handler
-                //(This one triggers every time a new frame/image is captured
+                /*Create NewFrame event handler
+                 (This one triggers every time a new frame/image is captured*/
                 videoSource.NewFrame += new Accord.Video.NewFrameEventHandler(videoSource_NewFrame);
-
-
             }
         }
         /// <summary>
@@ -201,7 +189,6 @@ namespace Child
         public void StartWebCam()
         {
             Runing = true;
-            //LastStatus = true;
             videoSource.Start();
         }
         /// <summary>
@@ -211,8 +198,8 @@ namespace Child
         /// <param name="eventArgs"></param>
         private void videoSource_NewFrame(object sender, Accord.Video.NewFrameEventArgs eventArgs)
         {
-            //Cast the frame as Bitmap object and don't forget to use ".Clone()" otherwise
-            //you'll probably get access violation exceptions
+            /*Cast the frame as Bitmap object and don't forget to use ".Clone()" otherwise
+              you'll probably get access violation exceptions*/
             ((PictureBox)(ImageBox)).BackgroundImage = (Bitmap)eventArgs.Frame.Clone();
         }
         /// <summary>
@@ -243,17 +230,9 @@ namespace Child
             if (!videoSource.IsRunning)
             {
                 StartWebCam();
-                //Thread.Sleep(500);
-                //if(LastStatus == false)
-                //{
-                //    videoSource.Stop();
-                //}
                 
             }
             PictureSM = new Semaphore(1, 1);
-            //PictureSM.WaitOne();
-            //PictureSM.WaitOne();
-            //return Picture;
         }
 
         private void VideoSource_Picture(object sender, NewFrameEventArgs eventArgs)
@@ -262,11 +241,8 @@ namespace Child
             {
                 StopWebCam();
             }
-            //videoSource.NewFrame -= VideoSource_Picture;
             Picture = (Bitmap)eventArgs.Frame.Clone();
             CallBackFunction.Start(Picture);
-            //PictureSM.Release();
-            //videoSource.Stop();
         }
     }
 }
