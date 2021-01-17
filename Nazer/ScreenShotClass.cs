@@ -99,7 +99,6 @@ namespace UI
             //Savethe ScreenShot to my DB
             if(Type == 0)
             {
-                //bmpScreenshot.Save(Application.StartupPath + "\\Screenshot.png", ImageFormat.Png);
                 Main.ScreenShotSemaphore.WaitOne();
                 MainWindow.DataBaseAgent.SelectData("ScreenShot", ref MainWindow.DS, "ScreenShot");
                 DataRow Row = MainWindow.DS.Tables["ScreenShot"].NewRow();
@@ -110,7 +109,6 @@ namespace UI
                 MainWindow.DS.Tables["ScreenShot"].AcceptChanges();
                 Main.ScreenShotSemaphore.Release();
                 return "";
-                //
             }
             else
             {
