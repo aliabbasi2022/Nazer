@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Sockets;
+using System.Net;//Provides a simple programming interface for many of the protocols used on networks today.
+using System.Net.Sockets;//Provides a managed implementation of the Windows Sockets (Winsock) interface for developers who need to tightly control access to the network.
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,14 +27,12 @@ namespace SpareWF
                 NetState = value;
             }
         }
-        //string CurrentVersion;
         string ProcessName;
 
         public ConnectionModule(string IP, int Port,  string ProcessName)
         {
             this.IP = IP;
             PortNumber = Port;
-            //this.CurrentVersion = CurrentVersion;
             this.ProcessName = ProcessName;
         }
 
@@ -74,7 +72,7 @@ namespace SpareWF
             {
                 byte[] IncommingData = new byte[1024 * 2];
                 DataStream.Read(IncommingData, 0, IncommingData.Length);
-                Result = Encoding.Unicode.GetString(IncommingData);
+                Result = Encoding.Unicode.GetString(IncommingData);// decodes a sequence of bytes into a string.
                 Result = Result.Replace("/0", "");
             }
             catch(Exception E)
