@@ -30,7 +30,6 @@ namespace Child
         protected string AppsPathRegistryKeyString32 = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";// location of registry that contain All  applicatins .exe file path. 
         protected string AppsPathRegistryKeyString64 = @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\App Paths\OneNote.exe";
         protected List<string> AppsIconRegLocation; // List of registry location that can find Applicatins details.
-
         private List<List<string>> PathRegistryKeyList; // list of registry keys that each thread must search in its to find Specific Data.
         private List<Thread> PathThreadsList; // list of threads that work on find Applications .exe file path
         private List<Thread> IconThreadsList; // list of threads that work on find Application icons

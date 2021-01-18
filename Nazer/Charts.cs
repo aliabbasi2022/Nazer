@@ -55,7 +55,6 @@ namespace UI
                     {
                         Degree -= 0.0000001;
                     }
-                    //double Degree = Math.PI + TotalAngel;
                     if (Degree > Math.PI)
                     {
                         LargeArc.IsLargeArc = true;
@@ -159,9 +158,7 @@ namespace UI
             scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
             AllTagsSP.Uid = "AllTagsSP";
             AllTagsSP.MinHeight = OuterRaduse;
-            //AllTagsSV.MaxWidth = OuterRaduse;
             AllTagsSP.MinWidth = 10;
-            //AllTagsSP.MaxHeight = 50;
             scrollViewer.Content = AllTagsSP;
             scrollViewer.MaxHeight = 200;
             Background.Children.Add(scrollViewer);
@@ -199,7 +196,6 @@ namespace UI
                     SelectedStatus[ListElementIndex] = true;
                     AllPaths[ListElementIndex] = ListElement;
                     TargetBorder.BorderBrush = new SolidColorBrush(Colors.Red);
-                    //TargetBorder.BorderThickness = new Thickness(1);
                     TargetSP.Children[ListElementIndex] = TargetBorder;
                     Target.Fill = new SolidColorBrush(SelectColor);
                     Target.MouseLeave -= SlicePath_MouseLeave;
@@ -213,7 +209,6 @@ namespace UI
                     StackPanel TargetSP = (StackPanel)NewBackground.Children.Cast<UIElement>().First(x => x.Uid == "AllTagsSP");
                     Border TargetBorder = (Border)TargetSP.Children[ListElementIndex];
                     TargetBorder.BorderBrush = new SolidColorBrush(Colors.Transparent);
-                    //TargetBorder.BorderThickness = new Thickness(1);
                     TargetSP.Children[ListElementIndex] = TargetBorder;
                     Target.Fill = new SolidColorBrush(ListElement.Color);
                     OldBrush = new SolidColorBrush(ListElement.Color);
