@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Management;
-using System.Net.NetworkInformation;
-using System.Security.Principal;
+using System.Net.NetworkInformation;//Provides access to network traffic data, network address information, and notification of address changes for the local computer
+using System.Security.Principal;//Defines a principal object that represents the security context under which code is running.
 using System.Text;
 using NativeWifi;
 using System.Threading.Tasks;
-using System.Net;
-using Microsoft.Win32;
+using System.Net;//Provides a simple programming interface for many of the protocols used on networks today.
+using Microsoft.Win32;//Provides two types of classes: those that handle events raised by the operating system and those that manipulate the system registry.
 
 namespace UI
 {
@@ -33,7 +33,7 @@ namespace UI
         public void SetEventOnVPN(EventArrivedEventHandler Handler)
         {
             string keyPath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Internet Settings";
-            var currentUser = WindowsIdentity.GetCurrent();
+            var currentUser = WindowsIdentity.GetCurrent();//Returns a WindowsIdentity object that represents the current Windows user.
             var query = new WqlEventQuery(string.Format(
             "SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\\\{1}' AND ValueName='{2}'",
             currentUser.User.Value, keyPath.Replace("\\", "\\\\"), "ProxyEnable"));
@@ -111,7 +111,7 @@ namespace UI
         public void Enable(string interfaceName)
         {
             ProcessStartInfo StartInfo = new ProcessStartInfo("cmd.exe");
-            StartInfo.UseShellExecute = true;
+            StartInfo.UseShellExecute = true;//Gets or sets a value indicating whether to use the operating system shell to start the process.
             StartInfo.Arguments = ("/C netsh interface set interface " + '"' + interfaceName + '"' + " enable");
             StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             StartInfo.Verb = "runas";
@@ -127,7 +127,7 @@ namespace UI
         public void Disable(string interfaceName)
         {
             ProcessStartInfo StartInfo = new ProcessStartInfo("cmd.exe");
-            StartInfo.UseShellExecute = true;
+            StartInfo.UseShellExecute = true;////Gets or sets a value indicating whether to use the operating system shell to start the process.
             StartInfo.Arguments = ("/C netsh interface set interface " + '"' + interfaceName + '"' + " disable");
             StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             StartInfo.Verb = "runas";
@@ -154,26 +154,9 @@ namespace UI
                 foreach (WlanClient.WlanInterface var in Client.Interfaces)
                 {
                     Wlan.WlanConnectionAttributes ConnectionInfo = var.CurrentConnection;
-                    String strHostName = Dns.GetHostName();
-                    // Find host by name
+                    String strHostName = Dns.GetHostName();//Gets the DNS information for the specified DNS host name.
                     IPHostEntry iphostentry = Dns.GetHostEntry(strHostName);
-                    ModemIP = iphostentry.AddressList.First(x=>x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && x.GetAddressBytes()[0] == (byte)192).ToString();
-                    //if (ConnectionInfo.isState == Wlan.WlanInterfaceState.Connected)
-                    //{
-                    //    foreach (NetworkInterface Inter in AV)
-                    //    {
-                    //        if ((Inter.Name.Contains(var.InterfaceName) == true) && (Inter.Description.Contains(var.InterfaceDescription) == true))
-                    //        {
-                    //
-                    //            InterFaceName = ConnectionInfo.profileName + " : " + Inter.Name + " : " + Inter.Description;
-                    //            foreach (UnicastIPAddressInformation ip in Inter.GetIPProperties().UnicastAddresses)
-                    //            {
-                    //                InterFaceName += (" $ " + ip.Address.ToString());
-                    //            }
-                    //            
-                    //        }
-                    //    }
-                    //}
+                    ModemIP = iphostentry.AddressList.First(x=>x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && x.GetAddressBytes()[0] == (byte)192).ToString(); 
                 }
                 return ModemIP;
             }

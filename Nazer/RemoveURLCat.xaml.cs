@@ -9,7 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using System.Windows.Media.Imaging;//Provides types that are used to encode and decode bitmap images.
 using System.Windows.Shapes;
 using System.Data;
 
@@ -57,11 +57,9 @@ namespace UI
             InfoImage0.HorizontalAlignment = HorizontalAlignment.Left;
             InfoImage0.Margin = new Thickness(10, 0, 0, 0);
             GRID.Children.Add(InfoImage0);
-            //Grid.SetRow(InfoImage1, 0);
             TextBlock InfoTb0 = new TextBlock();
             InfoTb0.Text = "To remove Catrgory Please Select One of Them in list and click Remove button";
             InfoTb0.FontSize = 16;
-            //InfoTb2.FontFamily = new FontFamily("Freestyle Script");
             InfoTb0.VerticalAlignment = VerticalAlignment.Top;
             InfoTb0.HorizontalAlignment = HorizontalAlignment.Left;
             InfoTb0.Foreground = new SolidColorBrush(Colors.Black);

@@ -7,15 +7,15 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
+using System.Windows.Input;//Provides types to support the Windows Presentation Foundation (WPF) input system. 
+using System.Windows.Media;//Provides types that enable integration of rich media
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using System.Data;
-using System.Data.SqlClient;
-using System.Threading;
+using System.Data.SqlClient;//The System.Data.SqlClient namespace is the .NET Data Provider for SQL Server.
+using System.Threading;//Provides classes and interfaces that enable multithreaded programming.
 using System.IO;
 
 namespace UI
@@ -43,22 +43,7 @@ namespace UI
             }
             DS = new DataSet();
             DataBaseAgent.SelectData("Data", ref DS, "Data");
-            //DataBaseAgent.SelectData("InstalledApps", ref DS, "InstalledApps");
-            //DataBaseAgent.SelectData("AppUsage", ref DS, "AppUsage");
-            //DataBaseAgent.SelectData("RunningApps", ref DS, "RunningApps");
-            //DataBaseAgent.SelectData("BlockUrls", ref DS, "BlockUrls");
-            //DataBaseAgent.SelectData("HistoryURL", ref DS, "HistoryURL");
-            //DataBaseAgent.SelectData("URLCategury", ref DS, "URLCategury");
-            //DataBaseAgent.SelectData("SystemLimit", ref DS, "SystemLimit");
-            //DataBaseAgent.SelectData("NetworkAdaptor", ref DS, "NetworkAdaptor");
-            //DataBaseAgent.SelectData("Network", ref DS, "Network");
-            //DataBaseAgent.SelectData("VPN", ref DS, "VPN");
-            //DataBaseAgent.SelectData("AppsLimit", ref DS, "AppsLimit");
-            //DataBaseAgent.SelectData("NetworkLimit", ref DS, "NetworkLimit");
-            //DataBaseAgent.SelectData("Location", ref DS, "Location");
-            //DataBaseAgent.SelectData("AppsLog", ref DS, "AppsLog");
-            //DataBaseAgent.SelectData("AppCategory", ref DS, "AppCategory");
-            
+             
             if (DS.Tables["Data"].Rows.Count == 0)
             {
                 DataRow Row = DS.Tables["Data"].NewRow();
@@ -147,7 +132,6 @@ namespace UI
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            //Thread.Sleep(1000);
             Login.IsEnabled = false;
             Mouse.OverrideCursor = Cursors.Wait;
             try
@@ -180,8 +164,6 @@ namespace UI
                 {
                     Monitor.Exit(Connection.ParentSocket);
                 }
-                
-                //MessageBox.Show(E.Message);
             }
             
         }
@@ -189,7 +171,6 @@ namespace UI
         private void Connection_LoginEventHandler(object sender, string e)
         {
             Result.Content = "";
-            //Monitor.Enter(Connection.ParentSocket);
             if (DS.Tables["Data"].Rows[5]["DataContent"].ToString() == "1")
             {
                 switch(e)
@@ -225,33 +206,6 @@ namespace UI
                             });
                         };break;
                 }
-                /*if (e == "True")
-                {
-                    RegistryKey Key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_BROWSER_EMULATION", RegistryKeyPermissionCheck.ReadWriteSubTree);
-                    Key.SetValue("UI.exe", "11001", RegistryValueKind.DWord);
-                    MyMain = new Main();
-                    this.Close();
-                    Login.IsEnabled = false;
-                    Mouse.OverrideCursor = null;
-                    MyMain.ShowDialog();
-
-                }
-                else
-                {
-                    
-                    Result.Dispatcher.Invoke(() =>
-                    {
-                        Result.Content = "Username or Password is incorrect !!!";
-                        Result.Foreground = new SolidColorBrush(Colors.Red);
-                        Login.IsEnabled = true;
-                        Mouse.OverrideCursor = null;
-                    });
-                    
-                }*/
-                //System.Security.AccessControl.RegistrySecurity Sec = new System.Security.AccessControl.RegistrySecurity();
-               
-                //Key.SetValue("UI.exe", "00002af9", RegistryValueKind.DWord);
-
             }
 
             else 
@@ -282,7 +236,6 @@ namespace UI
                 }
 
             }
-            //Monitor.Exit(Connection.ParentSocket);
         }
 
         string Hash(string password)

@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
+using System.Threading;//Provides classes and interfaces that enable multithreaded programming.
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Net.Sockets;
+using System.Net.Sockets;//interface for developers who need to tightly control access to the network.
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Security.Cryptography;
+using System.Security.Cryptography;//Provides cryptographic services, including secure encoding and decoding of data,
 using System.IO;
 
 namespace UI
@@ -24,17 +24,6 @@ namespace UI
     public partial class SIngUpPage : Window
     {
         FieldStatus[] DataStatus = new FieldStatus[11];
-        // 0 First name
-        // 1 Last name
-        // 2 Country
-        // 3 Sex
-        // 4 Email
-        // 5 Phone
-        // 6 Username
-        // 7 Birth Date
-        // 8 Password
-        // 9 Confirm Password
-        // 10 Agreement
         ConnectionClass Connection;
         string Password = "@bridleAdmin$0013579#برایدل علی مهدوی";
         byte[] PassBytes;
@@ -113,8 +102,6 @@ namespace UI
         {
             if (FirstNameTB.Text != "First Name" && FirstNameTB.Text != "")
             {
-                //FirstNameTB.Text = "";
-                //FirstNameTB.Foreground = new SolidColorBrush(Colors.Black);
                 DataStatus[0] = FieldStatus.Correct;
             }
         }
@@ -145,8 +132,6 @@ namespace UI
         {
             if (LastNameTB.Text != "Last Name" && LastNameTB.Text != "")
             {
-                //FirstNameTB.Text = "";
-                //FirstNameTB.Foreground = new SolidColorBrush(Colors.Black);
                 DataStatus[1] = FieldStatus.Correct;
             }
         }
@@ -174,8 +159,6 @@ namespace UI
         {
             if (EmailTB.Text != "Email" && EmailTB.Text != "")
             {
-                //FirstNameTB.Text = "";
-                //FirstNameTB.Foreground = new SolidColorBrush(Colors.Black);
                 DataStatus[4] = FieldStatus.Correct;
             }
         }
@@ -204,8 +187,6 @@ namespace UI
         {
             if (UserNameTB.Text != "Username" && EmailTB.Text != "")
             {
-                //FirstNameTB.Text = "";
-                //FirstNameTB.Foreground = new SolidColorBrush(Colors.Black);
                 DataStatus[6] = FieldStatus.Correct;
             }
         }
@@ -234,8 +215,6 @@ namespace UI
         {
             if (SexTB.Text != "Sex" && SexTB.Text != "")
             {
-                //FirstNameTB.Text = "";
-                //FirstNameTB.Foreground = new SolidColorBrush(Colors.Black);
                 DataStatus[3] = FieldStatus.Correct;
             }
         }
@@ -264,8 +243,6 @@ namespace UI
         {
             if (CountryTB.Text != "Country" && CountryTB.Text != "")
             {
-                //FirstNameTB.Text = "";
-                //FirstNameTB.Foreground = new SolidColorBrush(Colors.Black);
                 DataStatus[2] = FieldStatus.Correct;
             }
         }
@@ -294,8 +271,6 @@ namespace UI
         {
             if (PhoneNumberTB.Text != "Phone" && PhoneNumberTB.Text != "")
             {
-                //FirstNameTB.Text = "";
-                //FirstNameTB.Foreground = new SolidColorBrush(Colors.Black);
                 DataStatus[5] = FieldStatus.Correct;
             }
         }
@@ -324,8 +299,6 @@ namespace UI
         {
             if (BirthDateDP.Text != "Birth Date" && BirthDateDP.Text != "")
             {
-                //FirstNameTB.Text = "";
-                //FirstNameTB.Foreground = new SolidColorBrush(Colors.Black);
                 DataStatus[7] = FieldStatus.Correct;
             }
         }
@@ -429,7 +402,6 @@ namespace UI
                 Packet.ProPacket ProData = new Packet.ProPacket();
                 ProData = Pack.ToPacket<Packet.ProPacket>(Data.PPacket);
                 string RegisterRecivedID = ProData.ID;
-                //RemainingData = ProData.TotalSize;
                 short Type = ProData.Type;
                 if (Type == (short)Packet.PacketType.RegisterResult)
                 {
@@ -449,8 +421,8 @@ namespace UI
         {
             byte[] encryptedBytes = null;
 
-            // Set your salt here, change it to meet your flavor:
-            // The salt bytes must be at least 8 bytes.
+            /* Set your salt here, change it to meet your flavor:
+               The salt bytes must be at least 8 bytes.*/
             byte[] saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 68, 17, 95, 61, 13, 83, 107, 111 };
 
             using (MemoryStream ms = new MemoryStream())
@@ -462,7 +434,6 @@ namespace UI
                     var key = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 1000);
                     AES.Key = key.GetBytes(AES.KeySize / 8);
                     AES.IV = key.GetBytes(AES.BlockSize / 8);
-                    //AES.Padding = PaddingMode.None;
                     AES.Mode = CipherMode.ECB;
 
                     using (var cs = new CryptoStream(ms, AES.CreateEncryptor(), CryptoStreamMode.Write))
@@ -481,8 +452,8 @@ namespace UI
         {
             byte[] decryptedBytes = null;
 
-            // Set your salt here, change it to meet your flavor:
-            // The salt bytes must be at least 8 bytes.
+            /* Set your salt here, change it to meet your flavor:
+              The salt bytes must be at least 8 bytes.*/
             byte[] saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 68, 17, 95, 61, 13, 83, 107, 111 };
 
             using (MemoryStream ms = new MemoryStream())
@@ -495,7 +466,6 @@ namespace UI
                     var key = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 1000);
                     AES.Key = key.GetBytes(AES.KeySize / 8);
                     AES.IV = key.GetBytes(AES.BlockSize / 8);
-                    //AES.Padding = PaddingMode.None;
                     AES.Mode = CipherMode.ECB;
 
                     using (var cs = new CryptoStream(ms, AES.CreateDecryptor(), CryptoStreamMode.Write))

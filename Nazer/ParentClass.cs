@@ -32,7 +32,7 @@ namespace UI
             ParentSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPHostEntry HostInfo = Dns.Resolve(ConnIP);
             IPAddress Address = HostInfo.AddressList[0];
-            IPEndPoint Point = new IPEndPoint(Address, Port);
+            IPEndPoint Point = new IPEndPoint(Address, Port);//Represents a network endpoint as an IP address and a port number.
             Point.Create(new SocketAddress(AddressFamily.InterNetwork));
             ParentSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             ParentSocket.Bind(Point);
