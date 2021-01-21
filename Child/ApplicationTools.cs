@@ -9,7 +9,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.Win32;
+using Microsoft.Win32;//mohammadpoor
 using System.Management;
 using System.Security.Principal;
 

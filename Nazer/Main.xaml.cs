@@ -16,8 +16,6 @@ using System.Data.SqlClient;
 using System.Data;
 using Microsoft.Win32;
 using System.Windows.Navigation;//Provides types that support navigation, including navigating between windows and navigation journaling.
-using System.Windows.Controls.DataVisualization;
-using System.Windows.Controls.DataVisualization.Charting;
 using System.Timers;
 using System.Windows.Controls.Primitives;
 using System.Reflection;//Contains types that retrieve information about assemblies, modules, members, parameters, and other entities in managed code by examining their metadata
