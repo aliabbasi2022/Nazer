@@ -2,20 +2,20 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.ComponentModel;//Provides the base implementation for the IComponent interface and enables object sharing between applications.
 using System.Data;
-using System.Data.SqlClient;
-using System.Device.Location;
-using System.Diagnostics;
-using System.Drawing;
+using System.Data.SqlClient;//The System.Data.SqlClient namespace is the .NET Data Provider for SQL Server.
+using System.Device.Location;//Allows application developers to easily access the computer's location by using a single API.
+using System.Diagnostics;//Provides classes that allow you to interact with system processes, event logs, and performance counters.
+using System.Drawing;//Provides access to GDI+ basic graphics functionality.
 using System.IO;
 using System.Management;
 using System.Net;
-using System.Security.Principal;
+using System.Security.Principal;//Defines a principal object that represents the security context under which code is running.
 using System.Text;
-using System.Threading;
+using System.Threading;//Provides classes and interfaces that enable multithreaded programming.
 using System.Threading.Tasks;
-using System.Timers;
+using System.Timers;//Generates an event after a set interval, with an option to generate recurring events.
 using System.Windows.Automation;
 using System.Windows.Forms;
 
@@ -26,7 +26,6 @@ namespace Child
         public static Process_Handler ProcessHandler;
         NetWorkTools NetWork;
         Location MyPlace;
-        //AutoUpdateClass Updater;
         ApplicationTools AppTools;
         ScreenShotClass ScreenShot;
         Browsers BrowserDataController;
@@ -167,11 +166,8 @@ namespace Child
             }
 
             Enter = new Semaphore(1, 1);
-            //Enter.WaitOne();
             Connection = new ConnectionClass(DS.Tables["Data"].Rows[1]["DataContent"].ToString(), DS.Tables["Data"].Rows[0]["DataContent"].ToString(), 1024 * 4, 3);
             Connection.LoginEventHandler += Connection_LoginEventHandler;
-            
-
             //STV();
 
         }
@@ -180,13 +176,11 @@ namespace Child
         {
             if (e == "Fail")
             {
-                //DS.Tables["Data"].Rows[2]["DataContent"] = ChildIDTxt.Text;
-                //DS.Tables["Data"].Rows[3]["DataContent"] = ParentIDTxt.Text;
-                //Connection = new ConnectionClass(DS.Tables["Data"].Rows[1]["DataContent"].ToString(), "127.0.0.1", 1024 * 4, 3, MessageRecived);
+
             }
             else
             {
-                //Enter.Release();
+              
                 this.Visible = false;
                 this.Size = new Size(0, 0);
                 this.WindowState = FormWindowState.Minimized;
@@ -244,10 +238,6 @@ namespace Child
 
                 VoiceThread = Thread.CurrentThread;
                 VoiceAgent = new VoiceRecordercs();
-                //VoiceAgent.StartRecording();
-                //Thread.Sleep(5 * 1000);
-                //string TimeName = "\\" + DateTime.Now.Millisecond.ToString();
-                //VoiceAgent.StopRecording(@"E:\"+Application.StartupPath.Split('\')[0], "\\TTTTT", "mp3");
                 BrowserDataController = new Browsers();
                 System2Timer = new List<MyTimer>();
                 App2Timer = new List<MyTimer>();
@@ -257,11 +247,7 @@ namespace Child
                 System3Timer = new List<MyTimer3>();
                 NetWork2Timer = new List<MyTimer>();
                 AllNetWorkAdaptors = new List<string>();
-
-
                 DataBaseAgent.SelectData("RecivedCommands", ref DS, "RecivedCommands");
-
-                //DS.Tables["RecivedCommands"].RowChanged += MessageRecived;
                 DataBaseAgent.SelectData("MessageLog", ref DS, "MessageLog");
                 DataBaseAgent.SelectData("MessageLogRemaining", ref DS, "MessageLogRemaining");
                 DS.Tables["MessageLog"].Clear();
@@ -272,27 +258,7 @@ namespace Child
                     DataBaseAgent.SelectData("AppsBlock", ref DS, "AppsBlock");
                     DataBaseAgent.SelectData("BlockURL", ref DS, "BlockURL");
                     DataBaseAgent.SelectData("NetworkLimit", ref DS, "NetworkLimit");
-                    //DataBaseAgent.SelectData("SystemLimit", ref DS, "SystemLimit");
-                    //if (DS.Tables["AppLimit"].Rows.Count == 0)
-                    //{
-                    //    DS.Tables.Remove("AppLimit");
-                    //}
-                    //if (DS.Tables["AppsBlock"].Rows.Count == 0)
-                    //{
-                    //    DS.Tables.Remove("AppsBlock");
-                    //}
-                    //if (DS.Tables["BlockURL"].Rows.Count == 0)
-                    //{
-                    //    DS.Tables.Remove("BlockURL");
-                    //}
-                    //if (DS.Tables["NetworkLimit"].Rows.Count == 0)
-                    //{
-                    //    DS.Tables.Remove("NetworkLimit");
-                    //}
-                    //if (DS.Tables["SystemLimit"].Rows.Count == 0)
-                    //{
-                    //    DS.Tables.Remove("SystemLimit");
-                    //}
+                  
                 });
                 string T = DateTime.Now.ToString();
                 NewDay.Interval = 2 * 3600 * 1000;//2h
@@ -313,7 +279,6 @@ namespace Child
                         DS.Tables["Data"].Rows.Add(Row);
                         DataBaseAgent.InsertData(DS.Tables["Data"]);
                     }
-                    //Connection = new ConnectionClass(DS.Tables["Data"].Rows[1]["DataContent"].ToString(), "127.0.0.1", 1024 * 4, 3, MessageRecived);
                 }
                 );
 
@@ -326,9 +291,7 @@ namespace Child
                         try
                         {
                             DateTime TempTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, ((TimeSpan)var["StatTime"]).Hours, ((TimeSpan)var["StatTime"]).Minutes, ((TimeSpan)var["StatTime"]).Seconds);
-                            //DateTime TempDate = Convert.ToDateTime(var["StartTime"]);
                             DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, TempTime.Hour, TempTime.Minute, TempTime.Second);
-                            //TempDate = Convert.ToDateTime(var["EndTime"]);
                             DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, ((TimeSpan)var["EndTime"]).Hours, ((TimeSpan)var["EndTime"]).Minutes, ((TimeSpan)var["EndTime"]).Seconds);
                             if (DateTime.Now.CompareTo(Start) >= 0 && (DateTime.Now.CompareTo(End) <= 0))
                             {
@@ -338,15 +301,7 @@ namespace Child
                                         {
                                             DoSystem((short)var["Act"]);
                                         }; break;
-                                    //case (short)Packet.SystemLimitAct.ShoutDownWithError:
-                                    //    {
-                                    //        DialogResult Result = MessageBox.Show("Your Usage Time has Expire ", "Parent Message", MessageBoxButtons.OK);
-                                    //        if (Result == DialogResult.OK || Result != DialogResult.OK)
-                                    //        {
-                                    //            DoSystem((short)var["Act"]);
-                                    //        }
-                                    //        DoSystem((short)var["Act"]);
-                                    //    }; break;
+                                   
                                     case (short)Packet.SystemLimitAct.Sleep:
                                         {
                                             DoSystem((short)var["Act"]);
@@ -409,10 +364,6 @@ namespace Child
                     }
                 }
                 );
-                //Updater = new AutoUpdateClass();
-                //Updater.IncommingProcess = ProcessIncoming;
-                //Updater.OutcommingProcess = ProcessOutcoming;
-                //Updater.Start(DS.Tables["Data"].Rows[0]["DataContent"].ToString(), 89898, "v1.0.0", "SpareWF", Process.GetCurrentProcess().MainModule.FileName);
                 ProcessHandler.FindeStartedProcess(ProcessIncoming);
                 ProcessHandler.FindStopedProcess(ProcessOutcoming);
                 NetWork.SetEventOnVPN(VPNChange);
@@ -478,10 +429,7 @@ namespace Child
                         AppTools.GetAllApps();
                         DataBaseAgent.InsertBulkData("InstalledApps", DS.Tables["InstalledApps"]);
                     }
-                    //DataBaseAgent.InsertData(DS.Tables["InstalledApps"]);
                     DS.Tables.Remove("InstalledApps");
-                    //DS.Tables["InstalledApps"].AcceptChanges();
-                    //DS.Tables.Remove("InstalledApps");
                 }
                 );
                 SendRemainingData();
@@ -495,10 +443,6 @@ namespace Child
                 Packet Pack = new Packet();
                 string TimeName = DateTime.Now.Millisecond.ToString();
                 VoiceAgent.StopRecording(@"E:\", TimeName, "ogg");
-                //if (DS.Tables["Data"].Rows[11]["DataContent"].ToString() == "VoiceRun")
-                //{
-                //    VoiceAgent.StartRecording();
-                //}
                 string Voice = Convert.ToBase64String(File.ReadAllBytes(@"E:\" + TimeName + ".ogg"));
                 Packet.ProPacket ProVoice = new Packet.ProPacket();
                 Packet.RecordVoice VoiceData = new Packet.RecordVoice();
@@ -533,9 +477,6 @@ namespace Child
                     DataBaseAgent.InsertData(DS.Tables["MessageLogRemaining"]);
                 }
             }));
-
-
-
 
         }
         private void webCamFriam(object sender, NewFrameEventArgs eventArgs)
@@ -581,7 +522,6 @@ namespace Child
                     MPacket.PPacket = ProDataStr;
                     MPacket.Data = DataStr;
                     Connection.SendToServer(Pack.ToString(MPacket));
-                    //Connection.SendToServer(DataStr);
                     Connection.SendDataSM.Release();
                 }
                 else
@@ -611,7 +551,6 @@ namespace Child
             SCPack.ProcessName = Convert.ToBase64String(PicData);
             SCPack.Time = DateTime.Now.ToString();
             string DataPic = Pack.ToString(SCPack);
-            //int A = Data.Length;
             Packet.ProPacket ProData = new Packet.ProPacket();
             ProData.ID = DS.Tables["Data"].Rows[2]["DataContent"].ToString();
             ProData.Type = (short)Packet.PacketType.WebCam;
@@ -620,10 +559,8 @@ namespace Child
             if (Connection.ConnectionIsAlive == true)
             {
                 Connection.SendFileDataSM.WaitOne();
-                //NS.Write(Encoding.Unicode.GetBytes(ProDataStr) , 0, Encoding.Unicode.GetBytes(ProDataStr).Length);
                 Connection.SendFIleToServer(ProDataStr);
                 Thread.Sleep(500);
-                //NS.Write(PicData, 0, PicData.Length);
                 Connection.SendFIleToServer(DataPic);
                 Connection.SendFileDataSM.Release();
             }
@@ -634,7 +571,6 @@ namespace Child
                 Row["ProPack"] = ProDataStr;
                 Row["Data"] = DataPic;
                 Row["Date"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
-                //Row["ID"] = MainCore.DataBaseAgent.ExequteWithCommandScaler("Select NEWID()").ToString();
                 DS.Tables["MessageLogRemaining"].Rows.Add(Row);
                 DataBaseAgent.InsertData(DS.Tables["MessageLogRemaining"]);
             }
@@ -693,12 +629,7 @@ namespace Child
                 {
                     foreach (DataRow Row in DS.Tables["MessageLogRemaining"].Rows)
                     {
-                        //Connection.SendDataSM.WaitOne();
-                        //Connection.SendToServer(Row["ProPack"].ToString());
-                        //Connection.SendToServer(Row["Data"].ToString());
-                        //Connection.SendDataSM.Release();
-                        //DS.Tables["MessageLogRemaining"].Rows.Remove(Row);
-                        //DataBaseAgent.UpdateData(DS.Tables["MessageLogRemaining"]);
+                       
 
                     }
                 }
@@ -818,13 +749,8 @@ namespace Child
                 Row["EndTime"] = Start;
                 DataBaseAgent.InsertData(DS.Tables["SystemLimit"]);
                 Finded.TimeWatcher.Stop();
-                //Finded.TimeWatcher.Elapsed -= BeforSystemLimitElipced;
-                //Finded.TimeWatcher.Elapsed += EndSystemLimitElipced;
                 Finded.TimeWatcher.Interval = (DateTime.Now - Start).TotalMinutes;
                 Finded.TimeWatcher.Start();
-                //DataBaseAgent.SelectData("SystemLimit", ref DS, "*","SystemLimit" , ID,"ID");
-                //DS.Tables.Remove("SystemLimitAct");
-                //System2Timer.Remove(System2Timer.Find(x => x.TimeWatcher == Target));
                 DoSystem((short)Row["Act"]);
             }
             catch (Exception EE)
@@ -843,67 +769,9 @@ namespace Child
                 Finded.STW.Stop();
                 Row["Remaining"] = ((TimeSpan)Row["Duration"] - Finded.STW.Elapsed).TotalMinutes;
                 DataBaseAgent.InsertData(DS.Tables["SystemLimit"]);
-                //Finded.TimeWatcher.Elapsed -= BeforSystemLimitElipced;
-                //Finded.TimeWatcher.Elapsed += EndSystemLimitElipced;
-                //Finded.TimeWatcher.Interval = (DateTime.Now - Start).TotalMinutes;
-                //Finded.TimeWatcher.Start();
-
-                //DataBaseAgent.SelectData("SystemLimit", ref DS, "*","SystemLimit" , ID,"ID");
-                //DS.Tables.Remove("SystemLimitAct");
-                //System2Timer.Remove(System2Timer.Find(x => x.TimeWatcher == Target));
                 DoSystem((short)Row["Act"]);
             }
         }
-
-        //private void EndSystemLimitElipced(object sender, ElapsedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        System.Timers.Timer Target = sender as System.Timers.Timer;
-        //        MyTimer Finded = System2Timer.Find(x => x.TimeWatcher == Target);
-        //        DataRow Row = DS.Tables["SystemLimit"].Rows.Find(Finded.ID);
-        //        DateTime TempDate = (DateTime)Row["StartTime"];
-        //        DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 1, TempDate.Hour, TempDate.Minute, TempDate.Second);
-        //        Row["StartTime"] = Start;
-        //        TempDate = (DateTime)Row["EndTime"];
-        //        Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 1, TempDate.Hour, TempDate.Minute, TempDate.Second);
-        //        Row["EndTime"] = Start;
-        //        DS.Tables["SystemLimit"].AcceptChanges();
-        //        Finded.TimeWatcher.Stop();
-        //        Finded.TimeWatcher.Elapsed -= BeforSystemLimitElipced;
-        //        Finded.TimeWatcher.Elapsed += EndSystemLimitElipced;
-        //        Finded.TimeWatcher.Interval = (DateTime.Now - Start).TotalMinutes;
-        //        Finded.TimeWatcher.Start();
-        //
-        //        //DataBaseAgent.SelectData("SystemLimit", ref DS, "*","SystemLimit" , ID,"ID");
-        //        //DS.Tables.Remove("SystemLimitAct");
-        //        //System2Timer.Remove(System2Timer.Find(x => x.TimeWatcher == Target));
-        //        //DoSystem(DS.Tables["SystemLimit"].Rows[0]["Act"].ToString());
-        //    }
-        //    catch (Exception EE)
-        //    {
-        //        System.Timers.Timer Target = sender as System.Timers.Timer;
-        //        MyTimer3 Finded = System3Timer.Find(x => x.TimeWatcher == Target);
-        //        DataRow Row = DS.Tables["SystemLimit"].Rows.Find(Finded.ID);
-        //        DateTime TempDate = (DateTime)Row["StartTime"];
-        //        DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 1, TempDate.Hour, TempDate.Minute, TempDate.Second);
-        //        Row["StartTime"] = Start;
-        //        TempDate = (DateTime)Row["EndTime"];
-        //        Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 1, TempDate.Hour, TempDate.Minute, TempDate.Second);
-        //        Row["EndTime"] = Start;
-        //        DS.Tables["SystemLimit"].AcceptChanges();
-        //        Finded.TimeWatcher.Stop();
-        //        Finded.TimeWatcher.Elapsed -= BeforSystemLimitElipced;
-        //        Finded.TimeWatcher.Elapsed += EndSystemLimitElipced;
-        //        Finded.TimeWatcher.Interval = (DateTime.Now - Start).TotalMinutes;
-        //        Finded.TimeWatcher.Start();
-        //
-        //        //DataBaseAgent.SelectData("SystemLimit", ref DS, "*","SystemLimit" , ID,"ID");
-        //        //DS.Tables.Remove("SystemLimitAct");
-        //        //System2Timer.Remove(System2Timer.Find(x => x.TimeWatcher == Target));
-        //        //DoSystem(DS.Tables["SystemLimit"].Rows[0]["Act"].ToString());
-        //    }
-        //}
         public void RunMs()
         {
             MessageRecived(Type, ReData, ReID);
@@ -911,7 +779,6 @@ namespace Child
         }
         public void MessageRecived(short Type, string Data, string ID)
         {
-            //if (Lock == false)
             try
             {
                 {
@@ -967,7 +834,6 @@ namespace Child
                                                     Packet.MainPacket MPacket = new Packet.MainPacket();
                                                     MPacket.PPacket = ProData;
                                                     MPacket.Data = DataVoice;
-                                                    //Connection.SendToServer(ProData);
                                                     Thread.Sleep(100);
                                                     Connection.SendToServer(Pack.ToString(MPacket));
                                                     Connection.SendFileDataSM.Release();
@@ -986,7 +852,6 @@ namespace Child
                                                     DataBaseAgent.InsertData(DS.Tables["MessageLogRemaining"]);
                                                 }
                                             });
-
 
                                         }
 
@@ -1009,7 +874,6 @@ namespace Child
                                         if (WebcamAgent.Runing == false)
                                         {
                                             WebcamAgent = new Webcam();
-                                            //WebcamAgent.StartWebCam();
 
                                         }
                                         if (Pac.Type == (short)Packet.WebCamType.Picture)
@@ -1110,7 +974,6 @@ namespace Child
 
                                             DataBaseAgent.SelectData("BlockURL", ref DS, "BlockURL");
                                             DataRow Row = DS.Tables["BlockURL"].NewRow();
-                                            //DS.Tables.Remove("BlockURLAd");
                                             string[] UR = Pac.Address.Split('$');
                                             Row["URL"] = UR[0];
                                             Row["Act"] = Pac.Type;
@@ -1119,7 +982,6 @@ namespace Child
                                             Monitor.Exit(NewID);
                                             Row["Redirect"] = UR[1];
                                             DS.Tables["BlockURL"].Rows.Add(Row);
-                                            //DS.Tables["BlockURL"].AcceptChanges();
                                             DataBaseAgent.InsertData(DS.Tables["BlockURL"]);
                                         }; break;
                                     case (short)Packet.URLType.BlockWithError:
@@ -1138,7 +1000,6 @@ namespace Child
                                     case (short)Packet.URLType.Disable:
                                         {
                                             DataBaseAgent.ExequteWithCommand("Delete From BlockURL where URL ='" + Pac.Address + "'");
-                                            //DS.Tables.Remove("BlockURL");
                                         }; break;
                                 }
                                 ////$$$$$$$$$$$$$$$$$$$$$$
@@ -1166,7 +1027,6 @@ namespace Child
                                         {
                                             try
                                             {
-                                                //DataBaseAgent.SelectData("AppsBlock", ref DS, "AppsBlock");
                                                 DataRow BlockRow = DS.Tables["AppsBlock"].NewRow();
 
                                                 BlockRow["AppName"] = Row["DisplayName"];
@@ -1175,11 +1035,8 @@ namespace Child
                                                 Monitor.Enter(NewID);
                                                 BlockRow["ID"] = DataBaseAgent.ExequteWithCommandScaler("Select NewID()");
                                                 Monitor.Exit(NewID);
-                                                //DataBaseAgent.SelectData("AppsBlock", ref DS, "AppsBlock");
                                                 DS.Tables["AppsBlock"].Rows.Add(BlockRow);
-                                                //DS.Tables["AppsBlock"].AcceptChanges();
                                                 DataBaseAgent.InsertData(DS.Tables["AppsBlock"]);
-                                                //DS.Tables.Remove("AppsBlock");
                                             }
                                             catch (Exception E)
                                             {
@@ -1189,17 +1046,6 @@ namespace Child
                                         }; break;
                                     case (short)Packet.AppsType.RemoveBlock:
                                         {
-                                            //DataBaseAgent.SelectData("AppsBlock", ref DS, "AppsBlock");
-                                            //DataRow BlockRow = DS.Tables["AppsBlockAd"].NewRow();
-                                            //DS.Tables.Remove("AppsBlockAd");
-                                            //BlockRow["AppName"] = Row["AppName"];
-                                            ////BlockRow["AppID"] = Row["AppID"];
-                                            //BlockRow["Act"] = Pac.Type;
-                                            //BlockRow["ID"] = DataBaseAgent.ExequteWithCommandScaler("Select NewID()");
-                                            //DataBaseAgent.SelectData("AppsBlock", ref DS, "AppsBlock");
-                                            //DS.Tables["AppsBlock"].Rows.Add(BlockRow);
-                                            ////DS.Tables["AppsBlock"].AcceptChanges();
-                                            //DataBaseAgent.InsertData(DS.Tables["AppsBlock"]);
                                             DataBaseAgent.ExequteWithCommand("Delete From AppsBlock where AppName ='" + Pac.AppName.ToString() + "'");
 
                                         }; break;
@@ -1219,10 +1065,6 @@ namespace Child
                                         {
                                             Process Target = new Process();
                                             Target = ProcessHandler.GetSpecificProcess(Convert.ToInt32(Pac.AppName.Split('-')[2]));
-                                            //foreach (Process var in Target.FindAll(x => x.ProcessName == Pac.AppName.Split('-')[0].Replace(".exe", "")))
-                                            //{
-                                            //    var.Kill();
-                                            //}
                                             Target.Kill();
                                         }; break;
                                     case (short)Packet.AppsType.Run:
@@ -1248,38 +1090,16 @@ namespace Child
                                     case (short)Packet.ScrrenShotType.OneTime:
                                         {
                                             Connection.TakeScreenShot();
-                                            //string Pic = ScreenShot.FullScreenShot(1);
-                                            //Packet.ScrrenShot SC = new Packet.ScrrenShot();
-                                            //SC.Picture = Pic;
-                                            //SC.Type = (short)Packet.ScrrenShotType.OneTime;
-                                            //SC.End = DateTime.Now;
-                                            //SC.Start = SC.End;
-                                            //Packet.ProPacket ProSC = new Packet.ProPacket();
-                                            //ProSC.ID = DS.Tables["Data"].Rows[2]["DataContent"].ToString();
-                                            //ProSC.Type = (short)Packet.PacketType.ScrrenShot;
-                                            //string Data = Pack.ToString(SC);
-                                            //ProSC.TotalSize = Encoding.Unicode.GetBytes(Data).Length;
-                                            //string ProData = Pack.ToString(ProSC);
-                                            //Connection.SendDataSM.WaitOne();
-                                            //Connection.SendToServer(ProData);
-                                            //Connection.SendToServer(Data);
-                                            //Connection.SendDataSM.Release();
                                         }; break;
                                     case (short)Packet.ScrrenShotType.Sequence:
                                         {
                                             TimeWatcher.Interval = Convert.ToDouble(Pac.Header);
                                             TimeWatcher.Elapsed += TimeWatcher_Elapsed;
-                                            //TimeWatcher.AutoReset = true;
                                             Remainning = (Pac.End - Pac.Start).TotalDays;
 
                                         }; break;
-                                    //case (short)Packet.ScrrenShotType.Counter:
-                                    //    {
-                                    //
-                                    //    }break;
                                     case (short)Packet.ScrrenShotType.RealTime:
                                         {
-                                            //Connection.RealTimeMonitoring()
                                         }; break;
                                 }
 
@@ -1307,10 +1127,6 @@ namespace Child
                                         {
                                             DoSystem(Pac.Type);
                                         }; break;
-                                    //case (short)Packet.SystemStatusType.Hiber:
-                                    //    {
-                                    //        DoSystem("Hibernation");
-                                    //    }; break;
                                     case (short)Packet.SystemStatusType.Sleep:
                                         {
                                             DoSystem(Pac.Type);
@@ -1375,12 +1191,7 @@ namespace Child
                                         }; break;
                                     case (short)Packet.NetworkCommandsType.DisableWithTime:
                                         {
-                                            //string[] TimeTemp = Pac.Command.Split('$');
-                                            //DateTime TempDate = Convert.ToDateTime(TimeTemp[3]);
-                                            //DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, TempDate.Hour, TempDate.Minute, TempDate.Second);
-                                            //TempDate = Convert.ToDateTime(TimeTemp[2]);
-                                            //DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, TempDate.Hour, TempDate.Minute, TempDate.Second);
-                                            try
+                                             try
                                             {
 
                                                 DataBaseAgent.ExequteWithCommand(("delete From Networklimit where ID = '" + Pac.Command + "'"));
@@ -1391,10 +1202,7 @@ namespace Child
                                                         DS.Tables["Networklimit"].Rows.Remove(var);
                                                     }
                                                 }
-                                                //SqlCommand Command = new SqlCommand();
-                                                //Command.Connection = new SqlConnection(DataBaseAgent.ConnectionString);
-                                                //Command.CommandText = ("DELETE FROM Networklimit WHERE ID = '" + DS.Tables["NetworkLimitDis"].Rows[0]["ID"] + "'");
-                                                //Command.ExecuteNonQuery();
+
                                             }
                                             catch (Exception rr)
                                             {
@@ -1423,13 +1231,9 @@ namespace Child
                                                 Row["Start"] = Pac.Start;
                                                 Row["End"] = Pac.End;
                                                 Row["ID"] = Pac.Id;
-                                                Row["Act"] = (short)Packet.SystemLimitAct.ShutDown;
-                                                //DS.Tables.Remove("SystemLimitAd");
-                                                //DataBaseAgent.SelectData("SystemLimit", ref DS, "SystemLimitAd");
+                                                Row["Act"] = (short)Packet.SystemLimitAct.ShutDown;   
                                                 DS.Tables["SystemLimit"].Rows.Add(Row);
-                                                //DS.Tables["SystemLimit"].AcceptChanges();
                                                 DataBaseAgent.InsertData(DS.Tables["SystemLimit"]);
-                                                //DS.Tables.Remove("SystemLimit");
                                             }
                                             catch (Exception R)
                                             {
@@ -1492,11 +1296,8 @@ namespace Child
                                                 Row["ID"] = Pac.Id;
                                                 Row["Act"] = (short)Pac.Act;
                                                 Row["Duration"] = Pac.Duration;
-                                                //DS.Tables.Remove("SystemLimitAd");
-                                                //DataBaseAgent.SelectData("SystemLimit", ref DS, "SystemLimitAd");
                                                 DS.Tables["SystemLimit"].Rows.Add(Row);
                                                 DataBaseAgent.InsertData(DS.Tables["SystemLimit"]);
-                                                //DS.Tables.Remove("SystemLimit");
                                             }
                                             catch (Exception R)
                                             {
@@ -1573,12 +1374,8 @@ namespace Child
                                                 Row["End"] = Pac.End;
                                                 Row["ID"] = Pac.AppName;
                                                 Row["Act"] = (short)Packet.AppLimitAct.Close;
-                                                //DS.Tables.Remove("AppLimitAd");
-                                                //DataBaseAgent.SelectData("AppLimit", ref DS, "AppLimitAd");
                                                 DS.Tables["AppLimit"].Rows.Add(Row);
-                                                //DS.Tables["AppLimit"].AcceptChanges();
                                                 DataBaseAgent.InsertData(DS.Tables["AppLimit"]);
-                                                //DS.Tables.Remove("AppLimit");
                                             }
                                             catch (Exception R)
                                             {
@@ -1642,11 +1439,8 @@ namespace Child
                                                 Row["End"] = Pac.End;
                                                 Row["AppID"] = Pac.AppName;
                                                 Row["Act"] = (short)Packet.AppLimitAct.CloseWithError;
-                                                //DS.Tables.Remove("AppLimitAd");
-                                                //DataBaseAgent.SelectData("AppLimit", ref DS, "AppLimitAd");
                                                 DS.Tables["AppLimit"].Rows.Add(Row);
                                                 DataBaseAgent.InsertData(DS.Tables["AppLimit"]);
-                                                //DS.Tables.Remove("AppLimit");
                                             }
                                             catch (Exception R)
                                             {
@@ -1708,11 +1502,8 @@ namespace Child
                                                 Row["ID"] = Pac.AppName.Split('-')[0];
                                                 Row["AppName"] = Pac.AppName.Split('-')[1];
                                                 Row["Act"] = (short)Packet.AppLimitAct.Close;
-                                                //DS.Tables.Remove("AppLimitAd");
-                                                //DataBaseAgent.SelectData("AppLimit", ref DS, "AppLimitAd");
                                                 DS.Tables["AppLimit"].Rows.Add(Row);
                                                 DataBaseAgent.InsertData(DS.Tables["AppLimit"]);
-                                                //DS.Tables.Remove("AppLimit");
                                             }
                                             catch (Exception R)
                                             {
@@ -1783,11 +1574,8 @@ namespace Child
                                                 Row["EndTime"] = Pac.End;
                                                 Row["AppID"] = Pac.AppName;
                                                 Row["Act"] = (short)Packet.AppLimitAct.CloseWithError;
-                                                //DS.Tables.Remove("AppLimitAd");
-                                                //DataBaseAgent.SelectData("AppLimit", ref DS, "AppLimitAd");
                                                 DS.Tables["AppLimit"].Rows.Add(Row);
                                                 DataBaseAgent.InsertData(DS.Tables["AppLimit"]);
-                                                //DS.Tables.Remove("AppLimit");
                                             }
                                             catch (Exception R)
                                             {
@@ -1824,11 +1612,6 @@ namespace Child
 
                                         }; break;
                                 }
-                                //NewRow["Act"] = Pac.Act;
-                                //NewRow["Start"] = Pac.Start;
-                                //NewRow["End"] = Pac.End;
-                                //NewRow["AppName"] = Pac.AppName;
-                                //NewRow["Duration"] = Pac.Duration;
 
                             }; break;
                         case (short)Packet.PacketType.RealTimeMonitor:
@@ -1876,15 +1659,9 @@ namespace Child
                 MyTimer3 TargetInstance = System3Timer.Find(x => x.TimeWatcher == Target);
                 string ID = TargetInstance.ID;
                 TargetInstance.STW.Stop();
-                //if (DS.Tables.Contains("SystemLimit") == false)
-                //{
-                //    DataBaseAgent.SelectData("SystemLimit", ref DS, "*", "SystemLimitTarget", ID, "ID");
-                //}
                 DataRow Row = DS.Tables["SystemLimit"].Rows.Find(ID);
                 Row["Remaining"] = 0;
-
                 DataBaseAgent.InsertData(DS.Tables["SystemLimit"]);
-                //DS.Tables.Remove("SystemLimitTarget");
                 System3Timer.Remove(TargetInstance);
                 DoSystem((short)Row["Act"]);
 
@@ -1909,7 +1686,6 @@ namespace Child
                 Finded.TimeWatcher.Interval = ((DateTime)Row["EndTime"] - (DateTime)Row["StartTime"]).TotalMinutes;
                 Finded.TimeWatcher.Start();
                 NetWork.Disable(Row["Name"].ToString());
-                //NetWork2Timer.Remove(NetWork2Timer.Find(x => x.TimeWatcher == Target));
             }
             catch (Exception E)
             {
@@ -1925,9 +1701,7 @@ namespace Child
                 NetWork.Disable(Row["Name"].ToString());
                 Finded.STW.Stop();
                 Row["Remaining"] = Finded.Duration.Interval - Finded.STW.Elapsed.TotalMinutes;
-
                 DataBaseAgent.InsertData(DS.Tables["NetworkLimit"]);
-                //Network3Timer.Remove(Network3Timer.Find(x => x.TimeWatcher == Target));
             }
 
 
@@ -1952,8 +1726,6 @@ namespace Child
                 Finded.TimeWatcher.Elapsed -= EndNetworkLimitElipced;
                 Finded.TimeWatcher.Interval = (DateTime.Now - Start).TotalMinutes;
                 Finded.TimeWatcher.Start();
-                //NetWork.Disable(Row["Name"].ToString());
-                //NetWork2Timer.Remove(NetWork2Timer.Find(x => x.TimeWatcher == Target));
             }
             catch (Exception E)
             {
@@ -2030,19 +1802,6 @@ namespace Child
 
         public void Initial()
         {
-            //SqlCommand Command = new SqlCommand("Select COUNT(*) From InstalledApp");
-            //int Number = (int)Command.ExecuteScalar();
-            //if (Number == 0)
-            //{
-            //    SqlDataAdapter DA = new SqlDataAdapter("Select * From InstalledApp", DataBaseAgent.ConnectionString);
-            //    DA.Fill(DS);
-            //    AppTools.GetAllApps();
-            //}
-            //else
-            //{
-            //    SqlDataAdapter DA = new SqlDataAdapter("Select * From InstalledApp", DataBaseAgent.ConnectionString);
-            //    DA.Fill(DS);
-            //}
             Task.Run(() =>
             {
                 CheckForInternetConnection();
@@ -2060,8 +1819,6 @@ namespace Child
                 {
                     throw new Exception("has Change");
                 }
-
-
             }
             catch (Exception ee)
             {
@@ -2128,7 +1885,6 @@ namespace Child
                         MPacket.PPacket = ProPackData;
                         MPacket.Data = Data;
                         Connection.SendToServer(Pack.ToString(MPacket));
-                        //Connection.SendToServer(Data);
                         Connection.SendDataSM.Release();
                     }
                     else
@@ -2214,12 +1970,10 @@ namespace Child
 
                     LogRow["Send"] = 0;
                     MeesageAdd.WaitOne();
-                    //LogRow["ID"] = DataBaseAgent.ExequteWithCommandScaler("Select NEWID()");
                     LogRow["Date"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
                     Thread.Sleep(10);
                     DS.Tables["MessageLog"].Rows.Add(LogRow);
                     MeesageAdd.Release();
-                    //DS.Tables["MessageLog"].AcceptChanges();
                     DataBaseAgent.InsertData(DS.Tables["MessageLog"]);
                     if (Connection.ConnectionIsAlive == true)
                     {
@@ -2279,7 +2033,6 @@ namespace Child
                     MeesageAdd.WaitOne();
                     Row["Date"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
                     Thread.Sleep(10);
-                    //Row["ID"] = DataBaseAgent.ExequteWithCommandScaler("Select NEWID()");
                     DS.Tables["MessageLog"].Rows.Add(Row);
                     MeesageAdd.Release();
                     DataBaseAgent.InsertData(DS.Tables["MessageLog"]);
@@ -2337,7 +2090,6 @@ namespace Child
                     MeesageAdd.WaitOne();
                     Row["Date"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
                     Thread.Sleep(10);
-                    //Row["ID"] = DataBaseAgent.ExequteWithCommandScaler("Select NEWID()");
                     DS.Tables["MessageLog"].Rows.Add(Row);
                     MeesageAdd.Release();
                     DataBaseAgent.InsertData(DS.Tables["MessageLog"]);
@@ -2349,7 +2101,6 @@ namespace Child
                         MPacket.PPacket = ProPackData;
                         MPacket.Data = Data;
                         Connection.SendToServer(Pack.ToString(MPacket));
-                        //Connection.SendToServer(Data);
                         Connection.SendDataSM.Release();
                     }
                     else
@@ -2364,9 +2115,6 @@ namespace Child
                         MeesageAdd.Release();
                         DataBaseAgent.InsertData(DS.Tables["MessageLogRemaining"]);
                     }
-                    //DataBaseAgent.SelectData("NetworkLimit", ref DS, "*", "NetworkLimitConnected", var, "Name");
-                    //NetWork.Disable(DS.Tables["NetworkLimitConnected"].Rows[0]["Name"].ToString());
-                    //DS.Tables.Remove("NetworkLimitConnected");
                 }
             }
             ConnectAdaptor = false;
@@ -2401,7 +2149,6 @@ namespace Child
             MeesageAdd.WaitOne();
             Row["Date"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
             Thread.Sleep(10);
-            //Row["ID"] = DataBaseAgent.ExequteWithCommandScaler("Select NEWID()");
             DS.Tables["MessageLog"].Rows.Add(Row);
             MeesageAdd.Release();
             DataBaseAgent.InsertData(DS.Tables["MessageLog"]);
@@ -2413,7 +2160,6 @@ namespace Child
                 MPacket.PPacket = ProPackData;
                 MPacket.Data = Data;
                 Connection.SendToServer(Pack.ToString(MPacket));
-                //Connection.SendToServer(Data);
                 Connection.SendDataSM.Release();
             }
             else
@@ -2513,7 +2259,6 @@ namespace Child
             MeesageAdd.WaitOne();
             Row["Date"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
             Thread.Sleep(10);
-            //Row["ID"] = DataBaseAgent.ExequteWithCommandScaler("Select NEWID()");
             DS.Tables["MessageLog"].Rows.Add(Row);
             MeesageAdd.Release();
             DataBaseAgent.InsertData(DS.Tables["MessageLog"]);
@@ -2539,12 +2284,7 @@ namespace Child
                 MeesageAdd.Release();
                 DataBaseAgent.InsertData(DS.Tables["MessageLogRemaining"]);
             }
-            //MessageBox.Show(((ManagementBaseObject)e.NewEvent
-            //    ["TargetInstance"])["Name"].ToString() + " - " + ((ManagementBaseObject)e.NewEvent
-            //    ["TargetInstance"])["ExecutablePath"] + " - " + ((ManagementBaseObject)e.NewEvent
-            //    ["TargetInstance"])["ProcessId"] + " - " + ((ManagementBaseObject)e.NewEvent
-            //    ["TargetInstance"])["OSName"] + " - " + ((ManagementBaseObject)e.NewEvent
-            //    ["TargetInstance"])["TerminationDate"]);
+
         }
 
         private void ProcessIncoming(object sender, EventArrivedEventArgs e)
@@ -2593,7 +2333,6 @@ namespace Child
             Task.Run(() =>
             {
 
-                //DataBaseAgent.SelectData("AppsBlock", ref DS, "*", "AppsBlockFind", ProceName, "AppName");
                 try
                 {
                     PSM.WaitOne();
@@ -2614,8 +2353,6 @@ namespace Child
 
                 }
                 PSM.Release();
-                //DS.Tables.Remove("AppsBlockFind");
-
 
             });
             Task.Run(() =>
@@ -2714,8 +2451,6 @@ namespace Child
                 MeesageAdd.WaitOne();
                 Row["Date"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
                 Thread.Sleep(10);
-                //string SS = Convert.ToString(DataBaseAgent.ExequteWithCommandScaler("Select NEWID()"));
-                //Row["ID"] = DataBaseAgent.ExequteWithCommandScaler("Select NEWID()");
                 DS.Tables["MessageLog"].Rows.Add(Row);
                 MeesageAdd.Release();
                 DataBaseAgent.InsertData(DS.Tables["MessageLog"]);
@@ -2728,7 +2463,6 @@ namespace Child
                     MPacket.Data = Data;
 
                     Connection.SendToServer(Pack.ToString(MPacket));
-                    //Connection.SendToServer(Data);
                     Connection.SendDataSM.Release();
                 }
                 else
@@ -2743,12 +2477,6 @@ namespace Child
                     MeesageAdd.Release();
                     DataBaseAgent.InsertData(DS.Tables["MessageLogRemaining"]);
                 }
-                //MessageBox.Show(((ManagementBaseObject)e.NewEvent
-                //["TargetInstance"])["Name"].ToString() + " - " + ((ManagementBaseObject)e.NewEvent
-                //["TargetInstance"])["ExecutablePath"] + " - " + ((ManagementBaseObject)e.NewEvent));
-                //["TargetInstance"])["ProcessId"] + " - " + ((ManagementBaseObject)e.NewEvent
-                //["TargetInstance"])["OSName"] + " - " + ((ManagementBaseObject)e.NewEvent
-                //["TargetInstance"])["CreationDate"]);
 
             });
             try
@@ -2796,17 +2524,11 @@ namespace Child
                 MyTimer3 TargetInstance = App3Timer.Find(x => x.TimeWatcher == Target);
                 string ID = TargetInstance.ID;
                 TargetInstance.STW.Reset();
-                //if (DS.Tables.Contains("AppLimit") == false)
-                //{
-                //    DataBaseAgent.SelectData("AppLimit", ref DS, "*", "AppsTarget", ID, "ID");
-                //}
                 DataRow Row = DS.Tables["AppLimit"].Rows.Find(ID);
                 Row["Remaining"] = 0;
-                //DS.Tables["AppLimit"].AcceptChanges();
                 DataBaseAgent.InsertData(DS.Tables["AppLimit"]);
-                //DS.Tables.Remove("SystemLimitTarget");
                 App3Timer.Remove(TargetInstance);
-                switch (Row["Act"])
+                switch ((short)Row["Act"])
                 {
                     case (short)Packet.AppLimitAct.Close:
                         {
@@ -2838,8 +2560,6 @@ namespace Child
 
                         }; break;
                 }
-                //DoSystem(DS.Tables["AppLimit"].Rows[0]["Act"]);
-
             }
             catch (Exception EE)
             {
@@ -2860,7 +2580,7 @@ namespace Child
                 Finded.TimeWatcher.Elapsed -= BeforAppLimitElipced;
                 Finded.TimeWatcher.Elapsed += EndAppLimitElipced;
                 Finded.TimeWatcher.Start();
-                switch (Row["Act"])
+                switch ((short)Row["Act"])
                 {
                     case (short)Packet.AppLimitAct.Close:
                         {
@@ -2904,7 +2624,7 @@ namespace Child
                 Finded.TimeWatcher.Elapsed -= BeforAppLimitElipced;
                 Finded.TimeWatcher.Elapsed += EndAppLimitElipced;
                 Finded.TimeWatcher.Start();
-                switch (Row["Act"])
+                switch ((short) Row["Act"])
                 {
                     case (short)Packet.AppLimitAct.Close:
                         {
@@ -2937,7 +2657,7 @@ namespace Child
                         }; break;
                 }
             }
-            //DoSystem(DS.Tables["AppsLimit"].Rows[0]["Act"].ToString());
+          
         }
 
         private void EndAppLimitElipced(object sender, ElapsedEventArgs e)
@@ -2959,7 +2679,7 @@ namespace Child
                 Finded.TimeWatcher.Elapsed -= EndAppLimitElipced;
                 Finded.TimeWatcher.Interval = (DateTime.Now - Start).TotalMinutes;
                 Finded.TimeWatcher.Start();
-                switch (Row["Act"])
+                switch ((short)Row["Act"])
                 {
                     case (short)Packet.AppLimitAct.Close:
                         {
@@ -3010,7 +2730,7 @@ namespace Child
                 Finded.TimeWatcher.Elapsed += BeforAppLimitElipced;
                 Finded.TimeWatcher.Elapsed -= EndAppLimitElipced;
                 Finded.TimeWatcher.Start();
-                switch (Row["Act"])
+                switch ((short)Row["Act"])
                 {
                     case (short)Packet.AppLimitAct.Close:
                         {
@@ -3083,11 +2803,7 @@ namespace Child
                 AppTools.FindSpecificAppAndInsertData(Registry.CurrentUser, DS.Tables["Data"].Rows[8]["DataContent"].ToString());
             }
             DataBaseAgent.UpdateData(DS.Tables["Data"]);
-            //AppTools.FindSpecificAppAndInsertData(Registry.LocalMachine, DS.Tables["Data"].Rows[10]["DataContent"].ToString());
-            //if (DS.Tables["Data"].Rows[9]["DataContent"].ToString() != "")
-            //{
-            //    AppTools.FindSpecificAppAndInsertData(Registry.CurrentUser, DS.Tables["Data"].Rows[10]["DataContent"].ToString());
-            //}
+        
             Process.GetCurrentProcess().Kill();
         }
 
@@ -3096,8 +2812,7 @@ namespace Child
             Packet Pack = new Packet();
             try
             {
-
-                //MyPlace.SetLocation(e.Position);
+                
                 if ((DS.Tables["Location"].Rows.Count > 0) && ((Convert.ToDateTime(DS.Tables["Location"].Rows[DS.Tables["Location"].Rows.Count - 1]["Date"]) - DateTime.Now).TotalMinutes > 10))
                 {
                     if (DS.Tables.Contains("Location") == false)
@@ -3110,7 +2825,6 @@ namespace Child
                     Row["Date"] = e.Position.Timestamp.DateTime;
                     DS.Tables["Location"].Rows.Add(Row);
                     DataBaseAgent.InsertData(DS.Tables["Location"]);
-                    //DS.Tables.Remove("Location");
                     Packet.ProPacket ProLocation = new Packet.ProPacket();
                     Packet.Location LocationPack = new Packet.Location();
                     ProLocation.ID = DS.Tables["Data"].Rows[2]["DataContent"].ToString();
@@ -3138,7 +2852,6 @@ namespace Child
                         MPacket.Data = Data;
 
                         Connection.SendToServer(Pack.ToString(MPacket));
-                        //Connection.SendToServer(Data);
                         Connection.SendDataSM.Release();
                     }
                     else
@@ -3207,7 +2920,6 @@ namespace Child
                         MPacket.Data = Data;
 
                         Connection.SendToServer(Pack.ToString(MPacket));
-                        //Connection.SendToServer(Data);
                         Connection.SendDataSM.Release();
                     }
                     else
@@ -3223,7 +2935,7 @@ namespace Child
                         DataBaseAgent.InsertData(DS.Tables["MessageLogRemaining"]);
                     }
 
-                    //MRow["Send"] = 1;
+
                     DataBaseAgent.UpdateData(DS.Tables["MessageLog"]);
 
                 }
@@ -3247,7 +2959,6 @@ namespace Child
                     Row["Date"] = DateTime.Now;
                     DS.Tables["Location"].Rows.Add(Row);
                     DataBaseAgent.InsertData(DS.Tables["Location"]);
-                    //DS.Tables.Remove("Location");
                     Packet.ProPacket ProLocation = new Packet.ProPacket();
                     Packet.Location LocationPack = new Packet.Location();
                     ProLocation.ID = DS.Tables["Data"].Rows[2]["DataContent"].ToString();
@@ -3258,7 +2969,6 @@ namespace Child
                     string Data = Pack.ToString(LocationPack);
                     DataRow MRow = DS.Tables["MessageLog"].NewRow();
                     MRow["Data"] = Data;
-
                     MRow["Send"] = 0;
                     MeesageAdd.WaitOne();
                     MRow["Date"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
@@ -3296,7 +3006,6 @@ namespace Child
             }
             if (MyPlace.TurnOFF == true)
             {
-                //NetWork.Disable("Wi-Fi");
                 MyPlace.TurnOFF = false;
             }
 
@@ -3341,7 +3050,6 @@ namespace Child
                         e.Cancel = true;
                     }; break;
             }
-            //base.OnFormClosing(e);
         }
 
         public void CheckForInternetConnection()
@@ -3352,8 +3060,6 @@ namespace Child
                 client.OpenRead("http://google.com/");
                 InternetConnection = true;
                 SendRemainingData();
-                //DataBaseAgent.SelectData("NetworkLimit", ref DS, "NetworkLimit");
-
                 Packet Pack = new Packet();
                 Packet.ProPacket ProConnection = new Packet.ProPacket();
                 Packet.NetworkStatus ConnectionPack = new Packet.NetworkStatus();
@@ -3374,7 +3080,6 @@ namespace Child
                     MPacket.Data = Data;
 
                     Connection.SendToServer(Pack.ToString(MPacket));
-                    //Connection.SendToServer(Data);
                     Connection.SendDataSM.Release();
                 }
                 else
@@ -3398,8 +3103,6 @@ namespace Child
                 {
                     foreach (MyTimer3 var in Network3Timer)
                     {
-                        //DataBaseAgent.SelectData("NetworkLimit", ref DS, "*", "NetworkLimitAct", ID, "ID");
-                        //NetWork.Disable(DS.Tables["NetworkLimit"].Rows[0]["Name"].ToString());
                         var.STW.Stop();
                         DS.Tables["NetworkLimit"].Rows.Find(var.ID)["Remaining"] = var.Duration.Interval - var.STW.Elapsed.TotalMinutes;
 
@@ -3425,7 +3128,6 @@ namespace Child
                         MPacket.Data = Data;
 
                         Connection.SendToServer(Pack.ToString(MPacket));
-                        //Connection.SendToServer(Data);
                         Connection.SendDataSM.Release();
                     }
                     else
@@ -3463,7 +3165,6 @@ namespace Child
                         {
                             case (short)Packet.NetworkCommandsType.Disable:
                                 {
-                                    //string Conn = NetWork.GetConnectionInterfaceName();
                                     NetWork.Disable(var["Name"].ToString());
                                 }; break;
                         }
@@ -3502,13 +3203,7 @@ namespace Child
 
                         }
                     }
-                    //using (var client = new WebClient())
-                    //{
-                    //    using (client.OpenRead("http://google.com/"))
-                    //    {
-                    //        InternetConnection = true;
-                    //    }
-                    //}
+
                 }
             }
             catch (Exception E)
@@ -3526,14 +3221,8 @@ namespace Child
                 MyTimer3 TargetInstance = Network3Timer.Find(x => x.TimeWatcher == Target);
                 string ID = TargetInstance.ID;
                 TargetInstance.STW.Stop();
-                //if (DS.Tables.Contains("AppsLimit") == false)
-                //{
-                //    DataBaseAgent.SelectData("AppsLimit", ref DS, "*", "AppsTarget", ID, "ID");
-                //}
                 DS.Tables["NetworkLimit"].Rows.Find(ID)["Remaining"] = 0;
-                //DS.Tables["NetworkLimit"].AcceptChanges();
                 DataBaseAgent.InsertData(DS.Tables["NetworkLimit"]);
-                //DS.Tables.Remove("SystemLimitTarget");
                 Network3Timer.Remove(TargetInstance);
                 NetWork.Disable(ConnectedToInternetInterface.Split(':')[1]);
 
@@ -3619,7 +3308,6 @@ namespace Child
                 MPacket.Data = Data;
 
                 Connection.SendToServer(Pack.ToString(MPacket));
-                //Connection.SendToServer(Data);
                 Connection.SendDataSM.Release();
             }
             else
@@ -3683,7 +3371,6 @@ namespace Child
             MeesageAdd.WaitOne();
             URLRow["Date"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
             Thread.Sleep(10);
-            //URLRow["ID"] = DataBaseAgent.ExequteWithCommandScaler("Select NEWID()");
             DS.Tables["MessageLog"].Rows.Add(URLRow);
             MeesageAdd.Release();
             DataBaseAgent.InsertData(DS.Tables["MessageLog"]);
@@ -3694,9 +3381,7 @@ namespace Child
                 Packet.MainPacket MPacket = new Packet.MainPacket();
                 MPacket.PPacket = ProPackData;
                 MPacket.Data = Data;
-
                 Connection.SendToServer(Pack.ToString(MPacket));
-                //Connection.SendToServer(Data);
                 Connection.SendDataSM.Release();
             }
             else
@@ -3759,8 +3444,6 @@ namespace Child
             MeesageAdd.WaitOne();
             URLRow["Date"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
             Thread.Sleep(10);
-
-            //URLRow["ID"] = DataBaseAgent.ExequteWithCommandScaler("Select NEWID()");
             DS.Tables["MessageLog"].Rows.Add(URLRow);
             MeesageAdd.Release();
             DataBaseAgent.InsertData(DS.Tables["MessageLog"]);
@@ -3773,7 +3456,6 @@ namespace Child
                 MPacket.Data = Data;
 
                 Connection.SendToServer(Pack.ToString(MPacket));
-                //Connection.SendToServer(Data);
                 Connection.SendDataSM.Release();
             }
             else
@@ -3836,7 +3518,6 @@ namespace Child
             MeesageAdd.WaitOne();
             URLRow["Date"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
             Thread.Sleep(10);
-            //URLRow["ID"] = DataBaseAgent.ExequteWithCommandScaler("Select NEWID()");
             DS.Tables["MessageLog"].Rows.Add(URLRow);
             MeesageAdd.Release();
             DataBaseAgent.InsertData(DS.Tables["MessageLog"]);
@@ -3847,9 +3528,7 @@ namespace Child
                 Packet.MainPacket MPacket = new Packet.MainPacket();
                 MPacket.PPacket = ProPackData;
                 MPacket.Data = Data;
-
                 Connection.SendToServer(Pack.ToString(MPacket));
-                //Connection.SendToServer(Data);
                 Connection.SendDataSM.Release();
             }
             else
@@ -3930,7 +3609,6 @@ namespace Child
                 URLRow["Data"] = Data;
                 URLRow["Send"] = 0;
                 MeesageAdd.WaitOne();
-                //URLRow["ID"] = DataBaseAgent.ExequteWithCommandScaler("Select NEWID()");
                 URLRow["Date"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
                 Thread.Sleep(10);
                 DS.Tables["MessageLog"].Rows.Add(URLRow);
@@ -3943,9 +3621,7 @@ namespace Child
                     Packet.MainPacket MPacket = new Packet.MainPacket();
                     MPacket.PPacket = ProPackData;
                     MPacket.Data = Data;
-
                     Connection.SendToServer(Pack.ToString(MPacket));
-                    //Connection.SendToServer(Data);
                     Connection.SendDataSM.Release();
                 }
                 else
@@ -3973,63 +3649,21 @@ namespace Child
         {
             try
             {
-                // Validate arguments / initial setup
-                //if (value == null)
-                //    throw new ArgumentNullException(
-                //        "String parameter must not be null.");
-                //
-                //if (element == null)
-                //    throw new ArgumentNullException(
-                //        "AutomationElement parameter must not be null");
-                //
-                // A series of basic checks prior to attempting an insertion.
-                //
-                // Check #1: Is control enabled?
-                // An alternative to testing for static or read-only controls 
-                // is to filter using 
-                // PropertyCondition(AutomationElement.IsEnabledProperty, true) 
-                // and exclude all read-only text controls from the collection.
-                //if (!element.Current.IsEnabled)
-                //{
-                //    throw new InvalidOperationException(
-                //        "The control with an AutomationID of "
-                //        + element.Current.AutomationId.ToString()
-                //        + " is not enabled.\n\n");
-                //}
-
-                // Check #2: Are there styles that prohibit us 
-                //           from sending text to this control?
-                //if (!element.Current.IsKeyboardFocusable)
-                //{
-                //    throw new InvalidOperationException(
-                //        "The control with an AutomationID of "
-                //        + element.Current.AutomationId.ToString()
-                //        + "is read-only.\n\n");
-                //}
-
-
-                // Once you have an instance of an AutomationElement,  
-                // check if it supports the ValuePattern pattern.
                 object valuePattern = null;
 
-                // Control does not support the ValuePattern pattern 
-                // so use keyboard input to insert content.
-                //
-                // NOTE: Elements that support TextPattern 
-                //       do not support ValuePattern and TextPattern
-                //       does not support setting the text of 
-                //       multi-line edit or document controls.
-                //       For this reason, text input must be simulated
-                //       using one of the following methods.
-                //       
+                /* Control does not support the ValuePattern pattern 
+                    so use keyboard input to insert content.
+                    NOTE: Elements that support TextPattern 
+                         do not support ValuePattern and TextPattern
+                         does not support setting the text of 
+                         multi-line edit or document controls.
+                         For this reason, text input must be simulated
+                         using one of the following methods.*/
+                        
                 if (!element.TryGetCurrentPattern(
                     ValuePattern.Pattern, out valuePattern))
                 {
-                    //feedbackText.Append("The control with an AutomationID of ")
-                    //    .Append(element.Current.AutomationId.ToString())
-                    //    .Append(" does not support ValuePattern.")
-                    //    .AppendLine(" Using keyboard input.\n");
-                    //
+                    
                     // Set focus for input functionality and begin.
                     element.SetFocus();
 
@@ -4047,11 +3681,6 @@ namespace Child
                 // use the SetValue method to insert content.
                 else
                 {
-                    //feedbackText.Append("The control with an AutomationID of ")
-                    //    .Append(element.Current.AutomationId.ToString())
-                    //    .Append((" supports ValuePattern."))
-                    //    .AppendLine(" Using ValuePattern.SetValue().\n");
-
                     // Set focus for input functionality and begin.
                     element.SetFocus();
 
@@ -4061,15 +3690,14 @@ namespace Child
             }
             catch (ArgumentNullException exc)
             {
-                //feedbackText.Append(exc.Message);
+
             }
             catch (InvalidOperationException exc)
             {
-                //feedbackText.Append(exc.Message);
+
             }
             finally
             {
-                //Feedback(feedbackText.ToString());
             }
         }
 
@@ -4080,270 +3708,7 @@ namespace Child
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //if (DS.Tables["Data"].Rows[5]["DataContent"].ToString() == "0")
-            //{
-            //    //DS.Tables["Data"].Rows[2]["DataContent"] = ChildIDTxt.Text;
-            //    //DS.Tables["Data"].Rows[3]["DataContent"] = ParentIDTxt.Text;
-            //    //Connection = new ConnectionClass(DS.Tables["Data"].Rows[1]["DataContent"].ToString(), "127.0.0.1", 1024 * 4, 3, MessageRecived);
-            //}
-            //else
-            //{
-            //    Sturtup = new ManagementEventWatcher();
-            //    SturtupDisableOrEnable = new ManagementEventWatcher();
-            //    NewDay = new System.Timers.Timer();
-            //    MeesageAdd = new Semaphore(1, 1);
-            //    RegistryKey add = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            //    Run = add;
-            //    add.SetValue("WindowsAgent", Application.ExecutablePath.ToString());
-            //    //add = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            //    //add.SetValue("WindowsAgentSpare", Application.StartupPath.ToString() + "\\" + "SpareWF.exe");
-            //    //try
-            //    //{
-            //    //    string Data = add.GetValue("WindowsAgentSpare").ToString();
-            //    //}
-            //    //catch(Exception e)
-            //    //{
-            //    //    add.SetValue("WindowsAgentSpare",  Application.StartupPath.ToString() + "\\" + "SpareWF.exe" );
-            //    //    ProcessStartInfo StartInfo = new ProcessStartInfo(Application.StartupPath.ToString() + "\\" + "SpareWF.exe");
-            //    //    StartInfo.UseShellExecute = true;
-            //    //    StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            //    //    StartInfo.Verb = "runas";
-            //    //    Process process = new Process();
-            //    //    process.StartInfo = StartInfo;
-            //    //    process.Start();
-            //    //}
-            //    SetEventOnSturtup(SturtupChange);
-            //    SetEventOnSturtupDiaableOrEnable(DisableOrEnableChange);
-            //    SMUN = new Semaphore(1, 1);
-            //    ProcessHandler = new Process_Handler();
-            //    NetWork = new NetWorkTools();
-            //    ScreenShot = new ScreenShotClass();
-            //    MyPlace = new Location();
-            //    AppTools = new ApplicationTools();
-            //    BrowserDataController = new Browsers();
-            //
-            //    System2Timer = new List<MyTimer>();
-            //    App2Timer = new List<MyTimer>();
-            //    App3Timer = new List<MyTimer3>();
-            //    System3Timer = new List<MyTimer3>();
-            //    Network3Timer = new List<MyTimer3>();
-            //    System3Timer = new List<MyTimer3>();
-            //    NetWork2Timer = new List<MyTimer>();
-            //    AllNetWorkAdaptors = new List<string>();
-            //
-            //
-            //    DataBaseAgent.SelectData("RecivedCommands", ref DS, "RecivedCommands");
-            //    DataBaseAgent.SelectData("MessageLogRemaining", ref DS, "MessageLogRemaining");
-            //    DS.Tables["RecivedCommands"].RowChanged += MessageRecived;
-            //    DataBaseAgent.SelectData("MessageLog", ref DS, "MessageLog");
-            //    DS.Tables["MessageLog"].Clear();
-            //    Task.Run(() =>
-            //    {
-            //
-            //        DataBaseAgent.SelectData("AppLimit", ref DS, "AppLimit");
-            //        DataBaseAgent.SelectData("AppsBlock", ref DS, "AppsBlock");
-            //        DataBaseAgent.SelectData("BlockURL", ref DS, "BlockURL");
-            //        DataBaseAgent.SelectData("NetworkLimit", ref DS, "NetworkLimit");
-            //        DataBaseAgent.SelectData("SystemLimit", ref DS, "SystemLimit");
-            //        //if (DS.Tables["AppLimit"].Rows.Count == 0)
-            //        //{
-            //        //    DS.Tables.Remove("AppLimit");
-            //        //}
-            //        //if (DS.Tables["AppsBlock"].Rows.Count == 0)
-            //        //{
-            //        //    DS.Tables.Remove("AppsBlock");
-            //        //}
-            //        //if (DS.Tables["BlockURL"].Rows.Count == 0)
-            //        //{
-            //        //    DS.Tables.Remove("BlockURL");
-            //        //}
-            //        //if (DS.Tables["NetworkLimit"].Rows.Count == 0)
-            //        //{
-            //        //    DS.Tables.Remove("NetworkLimit");
-            //        //}
-            //        //if (DS.Tables["SystemLimit"].Rows.Count == 0)
-            //        //{
-            //        //    DS.Tables.Remove("SystemLimit");
-            //        //}
-            //    });
-            //    string T = DateTime.Now.ToString();
-            //    NewDay.Interval = 2 * 3600 * 1000;//2h
-            //    NewDay.Elapsed += NewDay_Elapsed;
-            //    NewDay.Start();
-            //
-            //    Task.Run(() =>
-            //    {
-            //        try
-            //        {
-            //            DS.Tables["Data"].Rows[6]["DataContent"] = DateTime.Now.ToString();
-            //            DataBaseAgent.UpdateData(DS.Tables["Data"]);
-            //        }
-            //        catch (Exception E)
-            //        {
-            //            DataRow Row = DS.Tables["Data"].NewRow();
-            //            Row["DataContent"] = DateTime.Now.ToString();
-            //            DS.Tables["Data"].Rows.Add(Row);
-            //            DataBaseAgent.InsertData(DS.Tables["Data"]);
-            //        }
-            //        //Connection = new ConnectionClass(DS.Tables["Data"].Rows[1]["DataContent"].ToString(), "127.0.0.1", 1024 * 4, 3, MessageRecived);
-            //    }
-            //    );
-            //
-            //    Task.Run(() =>
-            //    {
-            //        DataBaseAgent.SelectData("SystemLimit", ref DS, "SystemLimit");
-            //        foreach (DataRow var in DS.Tables["SystemLimit"].Rows)
-            //        {
-            //            DateTime TempDate = Convert.ToDateTime(var["StartTime"]);
-            //            DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, TempDate.Hour, TempDate.Minute, TempDate.Second);
-            //            TempDate = Convert.ToDateTime(var["EndTime"]);
-            //            DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, TempDate.Hour, TempDate.Minute, TempDate.Second);
-            //            if (DateTime.Now.CompareTo(Start) >= 0 && (DateTime.Now.CompareTo(End) <= 0))
-            //            {
-            //                switch ((short)var["Act"])
-            //                {
-            //                    case (short)Packet.SystemLimitAct.ShutDown:
-            //                        {
-            //                            DoSystem((short)var["Act"]);
-            //                        }; break;
-            //                    case (short)Packet.SystemLimitAct.ShoutDownWithError:
-            //                        {
-            //                            DialogResult Result = MessageBox.Show("Your Usage Time has Expire ", "Parent Message", MessageBoxButtons.OK);
-            //                            if (Result == DialogResult.OK || Result != DialogResult.OK)
-            //                            {
-            //                                DoSystem((short)var["Act"]);
-            //                            }
-            //                            DoSystem((short)var["Act"]);
-            //                        }; break;
-            //                    case (short)Packet.SystemLimitAct.Sleep:
-            //                        {
-            //                            DoSystem((short)var["Act"]);
-            //                        }; break;
-            //                    case (short)Packet.SystemLimitAct.Reboot:
-            //                        {
-            //                            DoSystem((short)var["Act"]);
-            //                        }; break;
-            //                    case (short)Packet.SystemLimitAct.Logoff:
-            //                        {
-            //                            DoSystem((short)var["Act"]);
-            //                        }; break;
-            //                    case (short)Packet.SystemLimitAct.Lock:
-            //                        {
-            //                            DoSystem((short)var["Act"]);
-            //                        }; break;
-            //                }
-            //
-            //                break;
-            //            }
-            //            else
-            //            {
-            //                if (DateTime.Now.CompareTo(Start) <= 0)
-            //                {
-            //                    try
-            //                    {
-            //                        MyTimer3 TimeWatcher = new MyTimer3();
-            //                        System.Timers.Timer Target = new System.Timers.Timer((Start - DateTime.Now).TotalHours);
-            //                        System.Timers.Timer Duration = new System.Timers.Timer((double)var["Duration"]);
-            //                        Target.Elapsed += BeforSystemLimitElipced;
-            //                        Duration.Elapsed += Duration_Elapsed;
-            //                        Target.Start();
-            //                        TimeWatcher.STW = new Stopwatch();
-            //                        TimeWatcher.STW.Start();
-            //                        TimeWatcher.TimeWatcher = Target;
-            //                        TimeWatcher.ID = var["ID"].ToString();
-            //                        TimeWatcher.Duration = Duration;
-            //                        System3Timer.Add(TimeWatcher);
-            //                    }
-            //                    catch (Exception E)
-            //                    {
-            //                        MyTimer TimeWatcher = new MyTimer();
-            //                        System.Timers.Timer Target = new System.Timers.Timer((Start - DateTime.Now).TotalHours);
-            //                        Target.Elapsed += BeforSystemLimitElipced;
-            //                        Target.Start();
-            //                        TimeWatcher.TimeWatcher = Target;
-            //                        TimeWatcher.ID = var["ID"].ToString();
-            //                        System2Timer.Add(TimeWatcher);
-            //                    }
-            //
-            //                }
-            //            }
-            //        }
-            //    }
-            //    );
-            //
-            //    ProcessHandler.FindeStartedProcess(ProcessIncoming);
-            //    ProcessHandler.FindStopedProcess(ProcessOutcoming);
-            //    NetWork.SetEventOnVPN(VPNChange);
-            //    NetWork.SetEventOnIP(IPChange);
-            //    NetWork.SetEventOnConnections(Connect, DisConnect);
-            //    NetWork.GetAllAdapter(ref AllNetWorkAdaptors);
-            //    Task.Run(() =>
-            //    {
-            //        Thread.Sleep(1000);
-            //        Packet Pack = new Packet();
-            //        foreach (string Var in AllNetWorkAdaptors)
-            //        {
-            //            Packet.NetworkStatus NetAdaptor = new Packet.NetworkStatus();
-            //            Packet.ProPacket NetPro = new Packet.ProPacket();
-            //            NetAdaptor.Data = Var;
-            //            NetAdaptor.Time = DateTime.Now;
-            //            NetAdaptor.Type = (short)Packet.NetworkStatusType.Connected;
-            //            string Data = Pack.ToString(NetAdaptor);
-            //            NetPro.ID = DS.Tables["Data"].Rows[2]["DataContent"].ToString();
-            //            NetPro.Type = (short)Packet.PacketType.NetworkStatusNow;
-            //            NetPro.TotalSize = Encoding.Unicode.GetBytes(Data).Length;
-            //            string ProData = Pack.ToString(NetPro);
-            //            if (Connection.ConnectionIsAlive == true)
-            //            {
-            //                Connection.SendDataSM.WaitOne();
-            //                Connection.SendToServer(ProData);
-            //                Connection.SendToServer(Data);
-            //                Connection.SendDataSM.Release();
-            //            }
-            //            else
-            //            {
-            //                DataRow RRow = DS.Tables["MessageLogRemaining"].NewRow();
-            //                RRow["ProPack"] = ProData;
-            //                RRow["Data"] = Data;
-            //                RRow["ID"] = DataBaseAgent.ExequteWithCommandScaler("Select NEWID()");
-            //                DS.Tables["MessageLogRemaining"].Rows.Add(RRow);
-            //                DataBaseAgent.InsertData(DS.Tables["MessageLogRemaining"]);
-            //            }
-            //        }
-            //
-            //
-            //    });
-            //    Initial();
-            //    MyPlace.PositionEvent(PositionChanged);
-            //    MyPlace.SetEventOnLocationService(LocationStatsChange);
-            //    ConnectedToInternetInterface = NetWork.GetConnectionInterfaceName();
-            //    BrowserDataController.Chrome(ChromeHandler);
-            //    BrowserDataController.FireFox(firefoxHandler);
-            //    BrowserDataController.IE(IEHandler);
-            //    BrowserDataController.Opera(OperaHandler);
-            //    BrowserDataController.Edge(EdgeHandler);
-            //
-            //
-            //    Task.Run(() =>
-            //    {
-            //        MyPlace.StartLocating();
-            //        Thread.Sleep(1000);
-            //        DataBaseAgent.SelectData("InstalledApps", ref DS, "InstalledApps");
-            //        if (DS.Tables["InstalledApps"].Rows.Count == 0)
-            //        {
-            //            AppTools.GetAllApps();
-            //            DataBaseAgent.InsertBulkData("InstalledApps", DS.Tables["InstalledApps"]);
-            //        }
-            //        //DataBaseAgent.InsertData(DS.Tables["InstalledApps"]);
-            //        DS.Tables.Remove("InstalledApps");
-            //        //DS.Tables["InstalledApps"].AcceptChanges();
-            //        //DS.Tables.Remove("InstalledApps");
-            //    }
-            //    );
-            //    SendRemainingData();
-            //}
-
-
+       
         }
 
         public static string Generator()
@@ -4386,7 +3751,7 @@ namespace Child
             {
                 if (Connection.Result == "UserName")
                 {
-                    StatusLab.Invoke(() Delegate { })
+                   // StatusLab.Invoke(() Delegate { })
                     StatusLab.Text = "Parent ID is incorrect or Child ID is Used Before";
                 }
             }
@@ -4443,7 +3808,6 @@ namespace Child
 
                 DataBaseAgent.SelectData("RecivedCommands", ref DS, "RecivedCommands");
                 DataBaseAgent.SelectData("MessageLogRemaining", ref DS, "MessageLogRemaining");
-                //DS.Tables["RecivedCommands"].RowChanged += MessageRecived;
                 DataBaseAgent.SelectData("MessageLog", ref DS, "MessageLog");
                 DS.Tables["MessageLog"].Clear();
                 Task.Run(() =>
@@ -4453,27 +3817,7 @@ namespace Child
                     DataBaseAgent.SelectData("AppsBlock", ref DS, "AppsBlock");
                     DataBaseAgent.SelectData("BlockURL", ref DS, "BlockURL");
                     DataBaseAgent.SelectData("NetworkLimit", ref DS, "NetworkLimit");
-                    //DataBaseAgent.SelectData("SystemLimit", ref DS, "SystemLimit");
-                    //if (DS.Tables["AppLimit"].Rows.Count == 0)
-                    //{
-                    //    DS.Tables.Remove("AppLimit");
-                    //}
-                    //if (DS.Tables["AppsBlock"].Rows.Count == 0)
-                    //{
-                    //    DS.Tables.Remove("AppsBlock");
-                    //}
-                    //if (DS.Tables["BlockURL"].Rows.Count == 0)
-                    //{
-                    //    DS.Tables.Remove("BlockURL");
-                    //}
-                    //if (DS.Tables["NetworkLimit"].Rows.Count == 0)
-                    //{
-                    //    DS.Tables.Remove("NetworkLimit");
-                    //}
-                    //if (DS.Tables["SystemLimit"].Rows.Count == 0)
-                    //{
-                    //    DS.Tables.Remove("SystemLimit");
-                    //}
+                   
                 });
                 string T = DateTime.Now.ToString();
                 NewDay.Interval = 2 * 3600 * 1000;//2h
@@ -4494,8 +3838,8 @@ namespace Child
                         DS.Tables["Data"].Rows.Add(Row);
                         DataBaseAgent.InsertData(DS.Tables["Data"]);
                     }
-                    //Connection = new ConnectionClass(DS.Tables["Data"].Rows[1]["DataContent"].ToString(), "127.0.0.1", 1024 * 4, 3, MessageRecived);
-                }
+
+               }
                 );
 
                 Task.Run(() =>
@@ -4506,9 +3850,8 @@ namespace Child
                         try
                         {
                             DateTime TempTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, ((TimeSpan)var["StatTime"]).Hours, ((TimeSpan)var["StatTime"]).Minutes, ((TimeSpan)var["StatTime"]).Seconds);
-                            //DateTime TempDate = Convert.ToDateTime(var["StartTime"]);
                             DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, TempTime.Hour, TempTime.Minute, TempTime.Second);
-                            //TempDate = Convert.ToDateTime(var["EndTime"]);
+                           
                             DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, ((TimeSpan)var["EndTime"]).Hours, ((TimeSpan)var["EndTime"]).Minutes, ((TimeSpan)var["EndTime"]).Seconds);
                             if (DateTime.Now.CompareTo(Start) >= 0 && (DateTime.Now.CompareTo(End) <= 0))
                             {
@@ -4518,15 +3861,6 @@ namespace Child
                                         {
                                             DoSystem((short)var["Act"]);
                                         }; break;
-                                    //case (short)Packet.SystemLimitAct.ShoutDownWithError:
-                                    //    {
-                                    //        DialogResult Result = MessageBox.Show("Your Usage Time has Expire ", "Parent Message", MessageBoxButtons.OK);
-                                    //        if (Result == DialogResult.OK || Result != DialogResult.OK)
-                                    //        {
-                                    //            DoSystem((short)var["Act"]);
-                                    //        }
-                                    //        DoSystem((short)var["Act"]);
-                                    //    }; break;
                                     case (short)Packet.SystemLimitAct.Sleep:
                                         {
                                             DoSystem((short)var["Act"]);
@@ -4589,10 +3923,6 @@ namespace Child
                     }
                 }
                 );
-                //Updater = new AutoUpdateClass();
-                //Updater.IncommingProcess = ProcessIncoming;
-                //Updater.OutcommingProcess = ProcessOutcoming;
-                //Updater.Start(DS.Tables["Data"].Rows[0]["DataContent"].ToString(), 89898, "v1.0.0", "SpareWF", Process.GetCurrentProcess().MainModule.FileName);
                 ProcessHandler.FindeStartedProcess(ProcessIncoming);
                 ProcessHandler.FindStopedProcess(ProcessOutcoming);
                 NetWork.SetEventOnVPN(VPNChange);
@@ -4623,7 +3953,6 @@ namespace Child
                             MPacket.Data = Data;
 
                             Connection.SendToServer(Pack.ToString(MPacket));
-                            //Connection.SendToServer(Data);
                             Connection.SendDataSM.Release();
                         }
                         else
@@ -4661,10 +3990,7 @@ namespace Child
                         AppTools.GetAllApps();
                         DataBaseAgent.InsertBulkData("InstalledApps", DS.Tables["InstalledApps"]);
                     }
-                    //DataBaseAgent.InsertData(DS.Tables["InstalledApps"]);
                     DS.Tables.Remove("InstalledApps");
-                    //DS.Tables["InstalledApps"].AcceptChanges();
-                    //DS.Tables.Remove("InstalledApps");
                 }
                 );
                 SendRemainingData();

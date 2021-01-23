@@ -962,7 +962,6 @@ namespace UI
                         MainTemp.Children.Add(border);
                        
                         Button Uninstall = new Button();
-                        //Uninstall.Content = " Uninstall";
                         ImageBrush Image = new ImageBrush();
                         Image.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/Igh0zt-Ios7-Style-Metro-Ui-MetroUI-Apps-CCleaner.ico"));
                         Uninstall.Background = Image;
@@ -1656,7 +1655,6 @@ namespace UI
                         RemoveWebImage.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/trash-can.ico"));
                         RemoveWebImageBtn.Background = RemoveWebImage;
                         RemoveWebImageBtn.Uid = "RemoveWebImageBtn";
-                        //RemoveWebImageBtn.IsEnabled = false;
                         RemoveWebImageBtn.Click += RemoveWebImageClick;
                         RemoveWebImageBtn.Margin = new Thickness(50, 820, 20, 15);
                         RemoveWebImageBtn.HorizontalAlignment = HorizontalAlignment.Left;
@@ -5650,7 +5648,7 @@ namespace UI
             Grid MainTemp = (Grid)Target.Parent;
             TextBlock textBlock = (TextBlock)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "LimitaionTypeTxt");
             MainTemp.Children.Remove(MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "ShowLimitList"));
-            switch (Target.SelectedItem)
+            switch (Target.SelectedItem.ToString())
             {
                 
                 case "System Limitaion":
