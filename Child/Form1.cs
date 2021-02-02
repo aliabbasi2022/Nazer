@@ -186,6 +186,105 @@ namespace Child
             }
             else
             {
+                if (Form1.DS.Tables["Data"].Rows[5]["DataContent"].ToString() == "0")
+                {
+                    //SingSM.WaitOne();
+                    //Packet.ChildSingup Sing = new Packet.ChildSingup();
+                    //Sing.ID = Form1.DS.Tables["Data"].Rows[2]["DataContent"].ToString();
+                    //Sing.Parents = Form1.DS.Tables["Data"].Rows[3]["DataContent"].ToString();
+                    //Sing.Mac = "MAC";
+                    //Packet.ProPacket ProSing = new Packet.ProPacket();
+                    //ProSing.ID = Sing.ID;
+                    //ProSing.Type = (short)Packet.PacketType.ChildSingup;
+                    //string Data = Pack.ToString(Sing);
+                    //ProSing.TotalSize = Encoding.Unicode.GetBytes(Data).Length;
+                    //string ProData = Pack.ToString(ProSing);
+                    //Packet.MainPacket MPacket = new Packet.MainPacket();
+                    //MPacket.PPacket = ProData;
+                    //MPacket.Data = Data;
+
+                    //SendToServer(Pack.ToString(MPacket));
+                    //int NumberOfData = ChildSocket.Receive(ReciveData);
+                    //Result = Encoding.Unicode.GetString(AES_Decrypt(ReciveData.Take(NumberOfData).ToArray(), PassBytes));
+                    //Result = Result.Replace("\0", "");
+                    string Result = "OK";
+                    if (Result == "OK" || Result == "True")
+                    {
+                        Form1.DS.Tables["Data"].Rows[5].BeginEdit();
+                        Form1.DS.Tables["Data"].Rows[5]["DataContent"] = "1";
+                        Form1.DS.Tables["Data"].Rows[5].EndEdit();
+                        //Form1.DS.Tables["Data"].Rows.RemoveAt(5);
+                        //Form1.DS.Tables["Data"].Rows.InsertAt(Row, 5);
+                        Form1.DataBaseAgent.UpdateData(Form1.DS.Tables["Data"]);
+                        //SendIdentifyData(Form1.DS.Tables["Data"].Rows[2]["DataContent"].ToString(), Form1.DS.Tables["Data"].Rows[3]["DataContent"].ToString());
+                        //ReciveData = new byte[ReciveData.Length];
+                        //NumberOfData = ChildSocket.Receive(ReciveData);
+                        //IdentifyResult = Encoding.Unicode.GetString(AES_Decrypt(ReciveData.Take(NumberOfData).ToArray(), PassBytes));
+                        //IdentifyResult = IdentifyResult.Replace("\0", "");
+                        //if (IdentifyResult == "True")
+                        //{
+                        //    SignUpEventHandler(this, "OK");
+                        //    LoginEventHandler(this, "OK");
+                        //    try
+                        //    {
+                        //        ChildFileSocket.BeginConnect(IP, 8803, ConnectFileEvent, ChildFileSocket);
+                        //        //ChildFileSocket.Connect(IP, Port);
+                        //        ConnectionIsAlive = true;
+                        //        PreapringRecive();
+                        //    }
+                        //    catch (Exception E)
+                        //    {
+                        //        //ChildFileSocket.BeginConnect(IP, Port, ConnectFileEvent, ChildSocket);
+                        //    }
+                        //
+                        //}
+                        //else
+                        //{
+                        //    SignUpEventHandler(this, "Fail");
+                        //    LoginEventHandler(this, "Fail");
+                        //    ChildSocket.Close();
+                        //}
+                        //SendDataSM.Release();
+
+                    }
+                    //else
+                    //{
+                    //    SignUpEventHandler(this, "Fail");
+                    //    LoginEventHandler(this, "Fail");
+                    //}
+                    //SingSM.Release();
+                }
+                else
+                {
+                    Thread.Sleep(100);
+                    //SendIdentifyData(Form1.DS.Tables["Data"].Rows[2]["DataContent"].ToString(), Form1.DS.Tables["Data"].Rows[3]["DataContent"].ToString());
+                    //ReciveData = new byte[ReciveData.Length];
+                    //int Number = ChildSocket.Receive(ReciveData);
+                    //Array.Resize(ref ReciveData, Number);
+                    //IdentifyResult = Encoding.Unicode.GetString(AES_Decrypt(ReciveData.Take(Number).ToArray(), PassBytes));
+                    //IdentifyResult = IdentifyResult.Replace("\0", "");
+                    //if (IdentifyResult == "True")
+                    //{
+                    //    try
+                    //    {
+                    //        ChildFileSocket.BeginConnect(IP, 8803, ConnectFileEvent, ChildFileSocket);
+                    //        //ChildFileSocket.Connect(IP, Port);
+                    //        ConnectionIsAlive = true;
+                    //        PreapringRecive();
+                    //    }
+                    //    catch (Exception E)
+                    //    {
+                    //        //ChildFileSocket.BeginConnect(IP, Port, ConnectFileEvent, ChildSocket);
+                    //    }
+                    //
+                    //}
+                    //else
+                    //{
+                    //    ChildSocket.Close();
+                    //}
+                    //SendDataSM.Release();
+
+                }
                 //Enter.Release();
                 this.Visible = false;
                 this.Size = new Size(0, 0);
