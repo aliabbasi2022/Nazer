@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net.Sockets;
-using System.Net;
+using System.Net.Sockets;//Provides a managed implementation of the Windows Sockets (Winsock) interface for developers who need to tightly control access to the network.
+using System.Net;//Provides a simple programming interface for many of the protocols used on networks today.
 using System.IO;
 
 
@@ -20,7 +20,6 @@ namespace UI
         string ProPack = "";
         int RemainingData;
         int RecivedNumber;
-        //int RealTimePort;
         public ParentClass(Socket ChildSocket, int Size)
         {
             this.ParentSocket = ChildSocket;
@@ -33,7 +32,7 @@ namespace UI
             ParentSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPHostEntry HostInfo = Dns.Resolve(ConnIP);
             IPAddress Address = HostInfo.AddressList[0];
-            IPEndPoint Point = new IPEndPoint(Address, Port);
+            IPEndPoint Point = new IPEndPoint(Address, Port);//Represents a network endpoint as an IP address and a port number.
             Point.Create(new SocketAddress(AddressFamily.InterNetwork));
             ParentSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             ParentSocket.Bind(Point);
@@ -51,7 +50,7 @@ namespace UI
                 if((RecivedNumber == 0) || (Temp == ""))
                 {
                     MemoryStream ms = new MemoryStream(Encoding.Unicode.GetBytes(PacketData));
-                    System.Drawing.Image returnImage = System.Drawing.Image.FromStream(ms);
+                    System.Drawing.Image returnImage = System.Drawing.Image.FromStream(ms);//Creates an Image from the specified data stream.
                     ShowPicture(returnImage);
                 }
                 else
@@ -64,13 +63,8 @@ namespace UI
             {
 
             }
-            //ParentSocket.BeginReceive(RecivedData, 0, RecivedData.Length, SocketFlags.None, Recived, ParentSocket);
         }
 
-        //public void SendToDataBase(string Data ,string  ID , DateTime Time)
-        //{
-        //
-        //}
         public void ShowPicture(System.Drawing.Image Picture)
         {
 

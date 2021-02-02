@@ -3,35 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
+using System.Threading;//Provides classes and interfaces that enable multithreaded programming.
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
+using System.Windows.Input;//Provides types to support the Windows Presentation Foundation (WPF) input system. 
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Media.Imaging;//Provides types that are used to encode and decode bitmap images.
+using System.Windows.Shapes;//Provides access to a library of shapes that can be used in Extensible Application Markup Language (XAML) or code.
 using System.Data.SqlClient;
 using System.Data;
 using Microsoft.Win32;
-//
-
-using System.Windows.Navigation;
-
-//using Xceed;
-//using Xceed.Utils;
-//using Xceed.Wpf;
-//using Xceed.Wpf.Toolkit;
-//using Xceed.Wpf.DataGrid;
-using System.Windows.Controls.DataVisualization;
-using System.Windows.Controls.DataVisualization.Charting;
-//using Nevron;
-//using Nevron.Nov.Chart;
-//using Nevron.Chart.Wpf;
+using System.Windows.Navigation;//Provides types that support navigation, including navigating between windows and navigation journaling.
 using System.Timers;
 using System.Windows.Controls.Primitives;
-using System.Reflection;
+using System.Reflection;//Contains types that retrieve information about assemblies, modules, members, parameters, and other entities in managed code by examining their metadata
 using System.IO;
 using System.ComponentModel.DataAnnotations;
 
@@ -55,7 +42,6 @@ namespace UI
         public static int PageNumber = -1;
         Color MouseEnterPic;
         public static BlockApp SelctedToAdd;
-        //public static ListBox ShowData;
         public static Image ScreenShotImage;
         public static Image WebcamImage;
         public static MediaPlayer MP;
@@ -69,7 +55,6 @@ namespace UI
         List<object> MoreUrls;
         List<object> HistoryApps;
         List<object> MoreApps;
-        //ListView LimitList;
         public static ParameterizedThreadStart UpDateUIData;
         TextBlock PageTitle;
         ColorList CategoryAppAppList;
@@ -190,9 +175,7 @@ namespace UI
             }
             MouseButtonEventArgs E = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
             E.RoutedEvent = StackPanel.MouseLeftButtonDownEvent;
-            //Dashboard_0.RaiseEvent(E);
             Disp = this.Dispatcher;
-            //SV.ApplyTemplate();
             BITIM = new BitmapImage();
             MainWindow.DataBaseAgent.ExequteWithCommand("delete From RunningApps");
             LastSeenSemaphore = new Semaphore(1, 1);
@@ -241,7 +224,6 @@ namespace UI
             E.RoutedEvent = StackPanel.MouseLeftButtonDownEvent;
             Dashboard_0.RaiseEvent(E);
             Disp = this.Dispatcher;
-            //SV.ApplyTemplate();
             BITIM = new BitmapImage();
             RunningAppsSemaphore.WaitOne();
             MainWindow.DataBaseAgent.ExequteWithCommand("delete From RunningApps");
@@ -250,12 +232,8 @@ namespace UI
 
         private void ChildsCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //ComboBox Target = sender as ComboBox;
-            //ChildsCombo.SelectedItem.ToString() = ((Label)Target.Children[1]).Content;
-            //image.Source = ((Image)Target.Children[0]).Source;
             MouseButtonEventArgs E = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
             E.RoutedEvent = StackPanel.MouseLeftButtonDownEvent;
-            //ChildsSV.Children[0].RaiseEvent(new RoutedEventArgs( MouseLeftButtonDownEvent));
             if(LasSelectMenu != null)
             {
                 ((UIElement)LasSelectMenu).RaiseEvent(E);
@@ -293,7 +271,6 @@ namespace UI
         {
 
             MainWindow.DataBaseAgent.ExequteWithCommand("Delete From RunningApps");
-            //PWindow.Close();
         }
         void Test(int Input)
         {
@@ -321,7 +298,6 @@ namespace UI
                     }
                 }
 
-                //Target.Background = null;
             }
             SelectedTab = PageNumber;
             switch (PageNumber)
@@ -344,7 +320,6 @@ namespace UI
                         };
                         string[] UrliBrifData = { "devices.png", "wifi.png", "cloud-storage-uploading-option.png", "vintage-key-outline.png", "package.png", "event.png" };
                         Border Bord = new Border();
-                        //Bord.Width = 1100;
                         Bord.Height = 100;
                         Bord.VerticalAlignment = VerticalAlignment.Top;
                         
@@ -390,7 +365,6 @@ namespace UI
                         DeviceInfo.HorizontalAlignment = HorizontalAlignment.Left;
                         DeviceInfo.Margin = new Thickness(10, 20, 20, 20);
                         DeviceInfo.Uid = "DeviceInfoUID";
-                        //DeviceInfo.ShowGridLines = true;
                         Bord.Child = DeviceInfo;
                         MainDataGrid.Children.Add(Bord);
                         int k = 0;
@@ -472,14 +446,6 @@ namespace UI
                         BrifePanel.Width = 1400;
                         k = 0;
                         string[] TableNames = { "HistoryURL", "Location", "InstalledApps", "ScreenShot", "VPN", "WebCamTable", "Keys","Voice","Process", "CallLog", "SMSLog", "Contact" };
-                        //string TabData = "";
-                        //for (int i = 0; i < TableNames.Length; i++)
-                        //{
-                        //    TabData += (TableNames[i] + ",");
-                        //}
-                        //TabData = TabData.Remove(TabData.Length - 1, 1);
-                        //MainWindow.DataBaseAgent.SelectDataWithCommand("Select Count(*) From " + TabData + " where ChildID = '" + ChildsCombo.SelectedItem.ToString() + "'",
-                        //    ref MainWindow.DS , "BrifeData");
                         int ChildCount = (int)MainWindow.DataBaseAgent.ExequteWithCommandScaler("Select Count(*) From (Select ChildID From LastSeen Group by ChildID) as T");
                         if(ChildCount < ChildsCombo.Items.Count)
                         {
@@ -519,7 +485,6 @@ namespace UI
                             }
                             catch (Exception E)
                             {
-                                //Count = (long)MainWindow.DS.Tables["LastSeen"].Rows.Find(TableNames[2])[1];
                             }
                             
                             NewLogs[i] = (int)MainWindow.DataBaseAgent.ExequteWithCommandScaler("Select Count(*) From " + TableNames[i] + " where ChildID = '" + ChildsCombo.SelectedItem.ToString() + "'");
@@ -548,8 +513,7 @@ namespace UI
                                 
                             }
                         }
-                        //MainWindow.DS.Tables.Remove("LastSeen");
-                        //MainWindow.DataBaseAgent.SelectDataWithCommand("Select * From LastSeen where ChildID = '" + ChildsCombo.SelectedItem.ToString() + "'", ref MainWindow.DS, "LastSeen");
+                        
                         for (int i = 0; i < TableNames.Length; i++)
                         {
                             DataRow Row;
@@ -562,18 +526,10 @@ namespace UI
                             MainWindow.DataBaseAgent.UpdateTable(MainWindow.DS.Tables["LastSeen"], Row,false);
 
                         }
-                        //MainWindow.DS.Tables["LastSeen"].AcceptChanges();
-                        //MainWindow.DataBaseAgent.UpdateData(MainWindow.DS.Tables["LastSeen"]);
+
                         MainWindow.DS.Tables.Remove("LastSeen");
                         LastSeenSemaphore.Release();
                         MainDataGrid.Children.Add(BrifePanel);
-                        //RectDataWindows Test = new RectDataWindows();
-                        //Border TargetB = Test.Initial("Data Name", "20", "50", new Uri(@"pack://application:,,,/UI;component/Files/if_File_URL_104210.ico"));
-                        //TargetB.VerticalAlignment = VerticalAlignment.Top;
-                        //TargetB.HorizontalAlignment = HorizontalAlignment.Left;
-                        ////TargetB.Margin = new Thickness(0, 0, 0, 0);
-                        //BrifePanel.Children.Add(TargetB);
-                        //MainDataGrid.Children.Add(BrifePanel);
                         WrapPanel OtherOptionsPanel = new WrapPanel();
                         OtherOptionsPanel.VerticalAlignment = VerticalAlignment.Top;
                         OtherOptionsPanel.HorizontalAlignment = HorizontalAlignment.Left;
@@ -604,7 +560,6 @@ namespace UI
                         URLSepratorLine.VerticalAlignment = VerticalAlignment.Top;
                         URLSepratorLine.HorizontalAlignment = HorizontalAlignment.Left;
                         URLSepratorLine.Margin = new Thickness(15, 10, 0, 0);
-                        //URLSepratorLine.Fill = new SolidColorBrush(Colors.Black);
                         URLSepratorLine.Stroke = new SolidColorBrush(Colors.LightGray);
                         URLSepratorLine.Opacity = 70;
                         URLSepratorLine.StrokeThickness = 1;
@@ -612,9 +567,6 @@ namespace UI
                         URLSepratorLine.Y1 = 10;
                         URLSepratorLine.X2 = 570;
                         URLSepratorLine.Y2 = 10;
-                        //URLSepratorLine.Opacity = 70;
-                        //URLSepratorLine.Height = 50;
-                        //URLSepratorLine.Width = 50;
                         StackPanel URLSP = new StackPanel();
                         URLSP.VerticalAlignment = VerticalAlignment.Top;
                         URLSP.HorizontalAlignment = HorizontalAlignment.Left;
@@ -660,7 +612,6 @@ namespace UI
                         MainWindow.DS.Tables.Remove("HistoryURL");
                         HistoryURLSemaphore.Release();
                         URLBG.Child = URLsWrap;
-                        //URLBG.Margin = new Thickness(0, 5, 0, 0);
                         URLBG.VerticalAlignment = VerticalAlignment.Top;
                         URLBG.HorizontalAlignment = HorizontalAlignment.Left;
                         OtherOptionsPanel.Children.Add(URLBG);
@@ -689,7 +640,6 @@ namespace UI
                         LocationSepratorLine.VerticalAlignment = VerticalAlignment.Top;
                         LocationSepratorLine.HorizontalAlignment = HorizontalAlignment.Left;
                         LocationSepratorLine.Margin = new Thickness(15, 10, 0, 0);
-                        //LocationSepratorLinene.Fill = new SolidColorBrush(Colors.Black);
                         LocationSepratorLine.Stroke = new SolidColorBrush(Colors.LightGray);
                         LocationSepratorLine.Opacity = 70;
                         LocationSepratorLine.StrokeThickness = 1;
@@ -709,36 +659,13 @@ namespace UI
                         LocationBrowser.Height = 290;
                         LocationBrowser.Loaded += LocationBrowser_Loaded;
                         LocationBrowser.LoadCompleted += LocationBrowser_LoadCompleted;
-                        
-                        //Thread WebBrowserThread = new Thread(() =>
-                        //{
-                        //    
-                        //    
-                        //    
-                        //});
+
                         LocationWrap.Children.Add(LocationBrowser);
                         LocationBG.Child = LocationWrap;
                         OtherOptionsPanel.Children.Add(LocationBG);
-                        //WebBrowserThread.SetApartmentState(ApartmentState.STA);
-                        //WebBrowserThread.Start();
-                        //Task.Run(() =>
-                        //{
-                        //    LocationBrowser = new WebBrowser();
-                        //    WrapPanel LocationWrap = new WrapPanel();
-                        //    LocationWrap.Background = new SolidColorBrush(Colors.Transparent);
-                        //    LocationWrap.Children.Add(LocationTitleImage);
-                        //    LocationWrap.Children.Add(LocationTitleImageTB);
-                        //    LocationWrap.Children.Add(LocationSepratorLine);
-                        //    LocationBrowser.Margin = new Thickness(20, 10, 0, 0);
-                        //    LocationBrowser.VerticalAlignment = VerticalAlignment.Top;
-                        //    LocationBrowser.HorizontalAlignment = HorizontalAlignment.Left;
-                        //    LocationBrowser.Width = 570;
-                        //    LocationBrowser.Height = 290;
+                       
                         //    LocationBrowser.Source = new Uri("https://www.google.com/maps");
-                        //    LocationWrap.Children.Add(LocationBrowser);
-                        //    LocationBG.Child = LocationWrap;
-                        //});
-                        //OtherOptionsPanel.Children.Add(LocationBG);
+
                         Border ScreenShotBG = new Border();
                         ScreenShotBG.Background = new SolidColorBrush(Colors.White);
                         ScreenShotBG.Width = 610;
@@ -765,7 +692,6 @@ namespace UI
                         ScreenSepratorLine.VerticalAlignment = VerticalAlignment.Top;
                         ScreenSepratorLine.HorizontalAlignment = HorizontalAlignment.Left;
                         ScreenSepratorLine.Margin = new Thickness(15, 10, 0, 0);
-                        //ScreenSepratorLinenene.Fill = new SolidColorBrush(Colors.Black);
                         ScreenSepratorLine.Stroke = new SolidColorBrush(Colors.LightGray);
                         ScreenSepratorLine.Opacity = 70;
                         ScreenSepratorLine.StrokeThickness = 1;
@@ -851,7 +777,6 @@ namespace UI
                         WebCamSepratorLine.VerticalAlignment = VerticalAlignment.Top;
                         WebCamSepratorLine.HorizontalAlignment = HorizontalAlignment.Left;
                         WebCamSepratorLine.Margin = new Thickness(15, 10, 0, 0);
-                        //WebCamSepratorLinenenene.Fill = new SolidColorBrush(Colors.Black);
                         WebCamSepratorLine.Stroke = new SolidColorBrush(Colors.LightGray);
                         WebCamSepratorLine.Opacity = 70;
                         WebCamSepratorLine.StrokeThickness = 1;
@@ -909,78 +834,7 @@ namespace UI
                         WebCamWrap.Children.Add(WebPicGalery);
                         WebCamBG.Child = WebCamWrap;
                         OtherOptionsPanel.Children.Add(WebCamBG);
-                        //Border SMSLogBG = new Border();
-                        //SMSLogBG.Background = new SolidColorBrush(Colors.White);
-                        //SMSLogBG.Width = 610;
-                        //SMSLogBG.Height = 370;
-                        //SMSLogBG.Margin = new Thickness(20, 0, 0, 20);
-                        //WrapPanel SMSLogWrap = new WrapPanel();
-                        //SMSLogWrap.Background = new SolidColorBrush(Colors.Transparent);
-                        //Image SMSLogTitleImage = new Image();
-                        //SMSLogTitleImage.Width = 15;
-                        //SMSLogTitleImage.Height = 15;
-                        //SMSLogTitleImage.Source = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/if_messages_1419106.ico"));
-                        //SMSLogTitleImage.HorizontalAlignment = HorizontalAlignment.Left;
-                        //SMSLogTitleImage.VerticalAlignment = VerticalAlignment.Top;
-                        //SMSLogTitleImage.Margin = new Thickness(20, 16, 0, 0);
-                        //TextBlock SMSLogTitleImageTB = new TextBlock();
-                        //SMSLogTitleImageTB.Text = "Recent SMS";
-                        //SMSLogTitleImageTB.Foreground = new SolidColorBrush(Colors.Black);
-                        //SMSLogTitleImageTB.FontSize = 12;
-                        //SMSLogTitleImageTB.FontWeight = FontWeights.Bold;
-                        //SMSLogTitleImageTB.HorizontalAlignment = HorizontalAlignment.Left;
-                        //SMSLogTitleImageTB.VerticalAlignment = VerticalAlignment.Top;
-                        //SMSLogTitleImageTB.Margin = new Thickness(5, 15, 0, 0);
-                        //Line SMSLogSepratorLine = new Line();
-                        //SMSLogSepratorLine.VerticalAlignment = VerticalAlignment.Top;
-                        //SMSLogSepratorLine.HorizontalAlignment = HorizontalAlignment.Left;
-                        //SMSLogSepratorLine.Margin = new Thickness(15, 10, 0, 0);
-                        ////SMSLogSepratorLinenenenene.Fill = new SolidColorBrush(Colors.Black);
-                        //SMSLogSepratorLine.Stroke = new SolidColorBrush(Colors.LightGray);
-                        //SMSLogSepratorLine.Opacity = 70;
-                        //SMSLogSepratorLine.StrokeThickness = 1;
-                        //SMSLogSepratorLine.X1 = 5;
-                        //SMSLogSepratorLine.Y1 = 10;
-                        //SMSLogSepratorLine.X2 = 570;
-                        //SMSLogSepratorLine.Y2 = 10;
-                        //StackPanel SMSSP = new StackPanel();
-                        //SMSSP.VerticalAlignment = VerticalAlignment.Top;
-                        //SMSSP.HorizontalAlignment = HorizontalAlignment.Left;
-                        //SMSSP.MinHeight = 300;
-                        //SMSSP.MaxHeight = 300;
-                        //SMSSP.Width = 560;
-                        //SMSSP.Margin = new Thickness(20, 10, 0, 0);
-                        //SMSLogWrap.Children.Add(SMSLogTitleImage);
-                        //SMSLogWrap.Children.Add(SMSLogTitleImageTB);
-                        //SMSLogWrap.Children.Add(SMSLogSepratorLine);
-                        //for (int i = 0; i < 10; i++)
-                        //{
-                        //    DockPanel SPBord = new DockPanel();
-                        //    SPBord.Background = new SolidColorBrush(Color.FromArgb(100, 230, 230, 230));
-                        //    SPBord.Height = 22;
-                        //    SPBord.Width = 560;
-                        //    SPBord.Margin = new Thickness(0, 7, 0, 0);
-                        //    Image SMSImage = new Image();
-                        //    SMSImage.Source = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/if_Mail_99204.ico"));
-                        //    SMSImage.Width = 20;
-                        //    SMSImage.Height = 20;
-                        //    SMSImage.Margin = new Thickness(0, 2, 0, 0);
-                        //    SMSImage.VerticalAlignment = VerticalAlignment.Top;
-                        //    SMSImage.HorizontalAlignment = HorizontalAlignment.Left;
-                        //    Label SMSLab = new Label();
-                        //    SMSLab.Margin = new Thickness(17, -2, 0, 0);
-                        //    SMSLab.VerticalAlignment = VerticalAlignment.Top;
-                        //    SMSLab.HorizontalAlignment = HorizontalAlignment.Left;
-                        //    SMSLab.Foreground = new SolidColorBrush(Colors.Blue);
-                        //    SMSLab.Content = i.ToString();
-                        //    SMSLab.FontSize = 12;
-                        //    SPBord.Children.Add(SMSImage);
-                        //    SPBord.Children.Add(SMSLab);
-                        //    SMSSP.Children.Add(SPBord);
-                        //}
-                        //SMSLogWrap.Children.Add(SMSSP);
-                        //SMSLogBG.Child = SMSLogWrap;
-                        //OtherOptionsPanel.Children.Add(SMSLogBG);
+                    
                         MainDataGrid.Children.Add(OtherOptionsPanel);
                         DeviceInfoGrid = DeviceInfo;
                         ((TextBlock)((Border)DeviceInfo.Children.Cast<UIElement>().First(x => x.Uid == "DeviceNameTXT")).Child).Text = "Descktop";
@@ -1108,7 +962,6 @@ namespace UI
                         MainTemp.Children.Add(border);
                        
                         Button Uninstall = new Button();
-                        //Uninstall.Content = " Uninstall";
                         ImageBrush Image = new ImageBrush();
                         Image.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/Igh0zt-Ios7-Style-Metro-Ui-MetroUI-Apps-CCleaner.ico"));
                         Uninstall.Background = Image;
@@ -1124,20 +977,16 @@ namespace UI
                         Uninstall.Loaded += Uninstall_Loaded;
                         Uninstall.MinHeight = 60;
                         Uninstall.Uid = "UninstallInstallAppBtn";
-                        
-                        //Grid.SetRow(Uninstall, 0);
+
                         TextBlock InfoTb1 = new TextBlock();
                         InfoTb1.Text = "Please select one of Applications then click the front button ...";
                         InfoTb1.FontSize = 16;
-                        //InfoTb1.FontFamily = new FontFamily("Gabriola");
                         InfoTb1.VerticalAlignment = VerticalAlignment.Top;
                         InfoTb1.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoTb1.Foreground = new SolidColorBrush(Colors.Black);
                         InfoTb1.Margin = new Thickness(50, 35, 0, 0);
                         MainTemp.Children.Add(InfoTb1);
                         MainTemp.Children.Add(Uninstall);
-                        //Grid.SetRow(InfoTb1, 0);
-                        //InstalledApp.View = InstalledAppGV;
                         Expander MoreApp = new Expander();
                         MoreApp.HorizontalAlignment = HorizontalAlignment.Left;
                         MoreApp.VerticalAlignment = VerticalAlignment.Top;
@@ -1145,9 +994,6 @@ namespace UI
                         MoreApp.Expanded += MoreApp_Expanded;
                         MoreApp.Collapsed += MoreApp_Collapsed;
                         MoreApp.Margin = new Thickness(30, 10 , 0, 20);
-                        MainTemp.Children.Add(MoreApp);
-                        
-                        //Grid.SetRow(MoreApp, 0);
                         
                         foreach (System.Data.DataRow Row in MainWindow.DS.Tables["InstalledApps"].Rows)
                         {
@@ -1161,7 +1007,6 @@ namespace UI
                         }
                         MainWindow.DS.Tables.Remove("InstalledApps");
                         InstalledAppsSemaphore.Release();
-                        //PageTitle.Text = "Application";
                     }
                     break;
                 case 2:
@@ -1194,17 +1039,14 @@ namespace UI
                         InfoImage0.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoImage0.Margin = new Thickness(30, 20, 0, 0);
                         MainTemp.Children.Add(InfoImage0);
-                        //Grid.SetRow(InfoImage0, 0);
                         TextBlock InfoTb0 = new TextBlock();
                         InfoTb0.Text = "You can show and Control Limits on Network , Application and System usage ";
                         InfoTb0.FontSize = 16;
-                        //InfoTb2.FontFamily = new FontFamily("Freestyle Script");
                         InfoTb0.VerticalAlignment = VerticalAlignment.Top;
                         InfoTb0.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoTb0.Foreground = new SolidColorBrush(Colors.Black);
                         InfoTb0.Margin = new Thickness(50, 45, 0, 0);
                         MainTemp.Children.Add(InfoTb0);
-                        //Grid.SetRow(InfoTb0, 0);
                         Image InfoImage1 = new System.Windows.Controls.Image();
                         InfoImage1.Source = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/if_info-blog_46810.ico"));
                         InfoImage1.Width = 30;
@@ -1213,17 +1055,14 @@ namespace UI
                         InfoImage1.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoImage1.Margin = new Thickness(30, 90, 0, 0);
                         MainTemp.Children.Add(InfoImage1);
-                        //Grid.SetRow(InfoImage1, 0);
                         TextBlock InfoTb1 = new TextBlock();
                         InfoTb1.Text = "First choose Limit Type then you can show Limitaions in that ";
                         InfoTb1.FontSize = 16;
-                        //InfoTb2.FontFamily = new FontFamily("Freestyle Script");
                         InfoTb1.VerticalAlignment = VerticalAlignment.Top;
                         InfoTb1.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoTb1.Foreground = new SolidColorBrush(Colors.Black);
                         InfoTb1.Margin = new Thickness(50, 120, 0, 0);
                         MainTemp.Children.Add(InfoTb1);
-                        //Grid.SetRow(InfoTb1, 0);
                         LimitList = new ColorList();
                         Size ItemSize = new Size(0, 25);
                         Size ListSize = new Size(600, 0);
@@ -1245,16 +1084,7 @@ namespace UI
                         {
                             MainWindow.DS.Tables.Remove("SystemLimit");
                         }
-                        //GridView LimitGV = new GridView();
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "Name", DisplayMemberBinding = new Binding("ID") });
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "Start Time", DisplayMemberBinding = new Binding("StartTime") });
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "End Time", DisplayMemberBinding = new Binding("EndTime") });
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "Duration", DisplayMemberBinding = new Binding("Duration") });
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "Action", DisplayMemberBinding = new Binding("Act") });
 
-                        //MainTemp.Children.Add(border);
-                        //Grid.SetRow(LimitList, 0);
-                        //Grid.SetColumn(LimitList, 0);
                         ComboBox LimitTypeCombo = new ComboBox();
                         TextBlock LimitTypeBlock = new TextBlock();
                         
@@ -1291,7 +1121,7 @@ namespace UI
                         MoreLimitExpander.Collapsed += MoreLimitExpander_Collapsed;
                         MoreLimitExpander.Expanded += MoreLimitExpander_Expanded;
                         MainTemp.Children.Add(MoreLimitExpander);
-                        //PageTitle.Text = "Time Limits";
+     
                         
                     }
                     break;
@@ -1331,45 +1161,34 @@ namespace UI
                         InfoImage1.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoImage1.Margin = new Thickness(-180, 80, 0, 0);
                         MainTemp.Children.Add(InfoImage1);
-                        //Grid.SetRow(InfoImage1, 0);
                         TextBlock InfoTb1 = new TextBlock();
                         InfoTb1.Text = "You can show location of your child in this Page For visit history of locatons Please Expand \"History\"";
                         InfoTb1.FontSize = 16;
-                        //InfoTb2.FontFamily = new FontFamily("Freestyle Script");
+
                         InfoTb1.VerticalAlignment = VerticalAlignment.Top;
                         InfoTb1.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoTb1.Foreground = new SolidColorBrush(Colors.Black);
                         InfoTb1.Margin = new Thickness(-150, 105, 0, 0);
                         MainTemp.Children.Add(InfoTb1);
-                        //Border GoogleBorder = new Border();
-
                         WebBrowser GoogleMap = new WebBrowser();
                         GoogleMap.Margin = new Thickness(30, 30, 30, 0);
-                        //GoogleMap.HorizontalAlignment = HorizontalAlignment.Left;
-                        //GoogleMap.VerticalAlignment = VerticalAlignment.Top;
                         GoogleMap.Uid = "Google";
-                        //GoogleMap.Width = 600;
                         GoogleMap.Height = 500;
                         GoogleMap.Source = new Uri("https://www.google.com/maps");
                         GoogleMap.LoadCompleted += GoogleMap_LoadCompleted;
-                        //GoogleBorder.Child = GoogleMap;
                         MainTemp.Children.Add(GoogleMap);
                         History = new Expander();
                         History.Header = "History";
-                        //Grid.SetRow(History, 1);
                         History.Margin = new Thickness(30, 10, 0, 20);
                         History.VerticalAlignment = VerticalAlignment.Top;
                         History.Expanded += ExpanderHistoryClick;
                         History.Collapsed += ExpanderHistoryClick;
                         MainTemp.Children.Add(History);
-                        //PageTitle.Text = "Locations";
-                        //MainDataGrid.Margin = new Thickness(0, 55, 0, 0);
                     }
                     break;
                 case 4:
                     {
                         NewLogs[8] = 0;
-                        //Grid4.Visibility = Visibility.Visible;
                         MainDataGrid.Children.Clear();
                         MainDataGrid.ColumnDefinitions.Clear();
                         MainDataGrid.RowDefinitions.Clear();
@@ -1405,11 +1224,9 @@ namespace UI
                         InfoImage1.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoImage1.Margin = new Thickness(-90, 90, 0, 0);
                         MainTemp.Children.Add(InfoImage1);
-                        //Grid.SetRow(InfoImage1, 0);
                         TextBlock InfoTb1 = new TextBlock();
                         InfoTb1.Text = "You can show all running app in child divices";
                         InfoTb1.FontSize = 16;
-                        //InfoTb2.FontFamily = new FontFamily("Freestyle Script");
                         InfoTb1.VerticalAlignment = VerticalAlignment.Top;
                         InfoTb1.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoTb1.Foreground = new SolidColorBrush(Colors.Black);
@@ -1424,11 +1241,9 @@ namespace UI
                         InfoImage0.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoImage0.Margin = new Thickness(-345, 170, 0, 0);
                         MainTemp.Children.Add(InfoImage0);
-                        //Grid.SetRow(InfoImage1, 0);
                         TextBlock InfoTb0 = new TextBlock();
                         InfoTb0.Text = "For close an running application please select one of them in blow list then Click Action button";
                         InfoTb0.FontSize = 16;
-                        //InfoTb2.FontFamily = new FontFamily("Freestyle Script");
                         InfoTb0.VerticalAlignment = VerticalAlignment.Top;
                         InfoTb0.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoTb0.Foreground = new SolidColorBrush(Colors.Black);
@@ -1437,18 +1252,6 @@ namespace UI
                         GridView RunningAppsGV = new GridView();
                         RunningAppsGV.Columns.Add(new GridViewColumn { Header = "Application Name", Width = 130, DisplayMemberBinding = new Binding("Name") });
                         RunningAppsGV.Columns.Add(new GridViewColumn { Header = "Start Time", Width = 150, DisplayMemberBinding = new Binding("StartTime") });
-                        //RowDefinition RunningRow0 = new RowDefinition();
-                        //RowDefinition RunningRow1 = new RowDefinition();
-                        //ColumnDefinition RunningCol0 = new ColumnDefinition();
-                        //ColumnDefinition RunningCol1 = new ColumnDefinition();
-                        //RunningRow0.Height = new GridLength(1, GridUnitType.Star);
-                        //RunningRow1.Height = new GridLength(1, GridUnitType.Star);
-                        //RunningCol0.Width = new GridLength(1, GridUnitType.Star);
-                        //RunningCol1.Width = new GridLength(0.3, GridUnitType.Star);
-                        //MainDataGrid.RowDefinitions.Add(RunningRow0);
-                        //MainDataGrid.RowDefinitions.Add(RunningRow1);
-                        //MainDataGrid.ColumnDefinitions.Add(RunningCol0);
-                        //MainDataGrid.ColumnDefinitions.Add(RunningCol1);
                         ListView RunningAppsList = new ListView();
                         RunningAppsList.Uid = "RunningAppList";
                         RunningAppsList.View = RunningAppsGV;
@@ -1472,8 +1275,6 @@ namespace UI
                         ReLoad.Elapsed += ReloadTimerElipced;
                         ReLoad.Start();
                         MainTemp.Children.Add(RunningAppsList);
-                        //Grid.SetColumn(RunningAppsList, 0);
-                        //Grid.SetRow(RunningAppsList, 0);
                         TextBlock RunningAppsBlock = new TextBlock();
                         RunningAppsBlock.Text = "Action Type:";
                         RunningAppsBlock.Margin = new Thickness(-100, 280, 5, 10);
@@ -1481,19 +1282,14 @@ namespace UI
                         RunningAppsBlock.VerticalAlignment = VerticalAlignment.Top;
                         MainTemp.Children.Add(RunningAppsBlock);
 
-
                         ComboBox RunningAppAct = new ComboBox();
                         RunningAppAct.Margin = new Thickness(-100, 300, 5, 10);
                         RunningAppAct.Items.Add("Close");
-                        //RunningAppAct.Items.Add("Block");
-                        //RunningAppAct.Items.Add("Block with Show Message");
                         RunningAppAct.SelectionChanged += RunningAppsActSelectionChange;
                         RunningAppAct.MinWidth = 100;
                         RunningAppAct.VerticalAlignment = VerticalAlignment.Top;
                         RunningAppAct.HorizontalAlignment = HorizontalAlignment.Left;
                         MainTemp.Children.Add(RunningAppAct);
-                        //Grid.SetColumn(RunningAppAct, 1);
-                        //Grid.SetRow(RunningAppAct, 0);
                         ImageBrush ActionImage = new ImageBrush();
                         ActionImage.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/action-64.ico"));
                         Button RunningAppsAction = new Button();
@@ -1508,12 +1304,7 @@ namespace UI
                         RunningAppsAction.Margin = new Thickness(10, 340, 10, 10);
                         RunningAppsAction.VerticalAlignment = VerticalAlignment.Top;
                         RunningAppsAction.HorizontalAlignment = HorizontalAlignment.Left;
-                        //RunningAppsAction.Content = "Action";
-                        //RunningAppsAction.MinWidth = 70;
                         MainTemp.Children.Add(RunningAppsAction);
-                        //Grid.SetColumn(RunningAppsAction, 1);
-                        //Grid.SetRow(RunningAppsAction, 0);
-                        
                         Expander RunnigAppHistoryExpander = new Expander();
                         RunnigAppHistoryExpander.VerticalAlignment = VerticalAlignment.Top;
                         RunnigAppHistoryExpander.HorizontalAlignment = HorizontalAlignment.Left;
@@ -1522,10 +1313,6 @@ namespace UI
                         RunnigAppHistoryExpander.Collapsed += RunnigAppHistoryExpander_Collapsed;
                         RunnigAppHistoryExpander.Expanded += RunnigAppHistoryExpander_Expanded;
                         MainTemp.Children.Add(RunnigAppHistoryExpander);
-                        
-                        //Grid.SetColumn(RunningAppsBlock, 1);
-                        //Grid.SetRow(RunningAppsBlock, 0);
-                        //PageTitle.Text = "Running Apps";
                     }
                     break;
                 case 7:
@@ -1559,11 +1346,9 @@ namespace UI
                         InfoImage0.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoImage0.Margin = new Thickness(30, 20, 0, 0);
                         MainTemp.Children.Add(InfoImage0);
-                        //Grid.SetRow(InfoImage1, 0);
                         TextBlock InfoTb0 = new TextBlock();
                         InfoTb0.Text = "You can show all visited URLs in blow list and more options in this page";
                         InfoTb0.FontSize = 16;
-                        //InfoTb2.FontFamily = new FontFamily("Freestyle Script");
                         InfoTb0.VerticalAlignment = VerticalAlignment.Top;
                         InfoTb0.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoTb0.Foreground = new SolidColorBrush(Colors.Black);
@@ -1595,48 +1380,8 @@ namespace UI
                             new Thickness(50, 20, 15, 10), new Thickness(0), 12, 16, ColumnsName, null, "HistoryURLList",
                            300);
                         MainTemp.Children.Add(border);
-                        //MoreUrls.Add(border);
-
-
-
-
-
-
-                        //ListView HistoryURLView = new ListView();
-                        //GridView HGV = new GridView();
-                        //HGV.Columns.Add(new GridViewColumn { Header = "Date", DisplayMemberBinding = new Binding("Date") });
-                        //HGV.Columns.Add(new GridViewColumn { Header = "Domain",Width = 900, DisplayMemberBinding = new Binding("URL") });
-                        ////HGV.Columns.Add(new GridViewColumn { Header = "Category", DisplayMemberBinding = new Binding("Category") });
-                        //HGV.Columns.Add(new GridViewColumn { Header = "Browser", DisplayMemberBinding = new Binding("Browser") });
-                        //RowDefinition URLRow0 = new RowDefinition();
-                        //HistoryURLView.View = HGV;
-                        //HistoryURLView.VerticalAlignment = VerticalAlignment.Top;
-                        //HistoryURLView.MinHeight = 320;
-                        //HistoryURLView.MaxHeight = 320;
-                        //if(MainWindow.DS.Tables.Contains("HistoryURL") == true)
-                        //{
-                        //    MainWindow.DS.Tables.Remove("HistoryURL");
-                        //}
-                        //MainWindow.DataBaseAgent.SelectDataWithCommand("Select * From HistoryURL where ChildID='" + ChildUser + "' order by Date desc",ref MainWindow.DS, "HistoryURL");
-                        //foreach (System.Data.DataRow Row in MainWindow.DS.Tables["HistoryURL"].Rows)
-                        //{
-                        //    HistoryURLView.Items.Add(new HistoryURL
-                        //    {
-                        //        Date = (DateTime)Row["Date"],
-                        //        URL = Row["URL"].ToString(),
-                        //        //Category = Row["Category"].ToString()
-                        //        
-                        //        Browser = Row["Browser"].ToString()
-                        //    });
-                        //}
                         MainWindow.DS.Tables.Remove("HistoryURL");
                         HistoryURLSemaphore.Release();
-                        //URLRow0.Height = new GridLength(0.1, GridUnitType.Star);
-                        //URLRow0.MinHeight = 300;
-                        ////MainTemp.RowDefinitions.Add(URLRow0);
-                        //HistoryURLView.Margin = new Thickness(30, 120, 20, 30);
-                        //Grid.SetRow(HistoryURLView, 0);
-                        //MainTemp.Children.Add(HistoryURLView);
                         Expander MoreURLs = new Expander();
                         MoreURLs.Header = "More Details";
                         MoreURLs.HorizontalAlignment = HorizontalAlignment.Left;
@@ -1645,8 +1390,6 @@ namespace UI
                         MoreURLs.Expanded += MoreURLs_Expanded;
                         MoreURLs.Collapsed += MoreURLs_Collapsed;
                         MainTemp.Children.Add(MoreURLs);
-                        //Grid.SetRow(MoreURLs, 0);
-                        //PageTitle.Text = "URLs";
                     }
                     break;
                 case 8:
@@ -1687,11 +1430,9 @@ namespace UI
                         InfoImage0.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoImage0.Margin = new Thickness(10, 80, 0, 0);
                         MainTemp.Children.Add(InfoImage0);
-                        //Grid.SetRow(InfoImage1, 0);
                         TextBlock InfoTb0 = new TextBlock();
                         InfoTb0.Text = "You can show all screen shots and take screen shot in this page ";
-                        InfoTb0.FontSize = 16;
-                        //InfoTb2.FontFamily = new FontFamily("Freestyle Script");
+                        InfoTb0.FontSize = 16; 
                         InfoTb0.VerticalAlignment = VerticalAlignment.Top;
                         InfoTb0.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoTb0.Foreground = new SolidColorBrush(Colors.Black);
@@ -1717,11 +1458,9 @@ namespace UI
                         ScreenShotImage = new Image();
                         Border ScreenShotBorder = new Border();
                         ScreenShotBorder.VerticalAlignment = VerticalAlignment.Top;
-                        //ScreenShotBorder.HorizontalAlignment = HorizontalAlignment.Left;
+
                         ScreenShotBorder.Margin = new Thickness(200,150,200,0);
                         ScreenShotBorder.BorderBrush = new SolidColorBrush(Colors.LightGray);
-                        //ScreenShotBorder.CornerRadius = new CornerRadius(10);
-                        //ScreenShotBorder.Width = 600;
                         ScreenShotBorder.Height = 500;
                         ScreenShotBorder.BorderThickness = new Thickness(1);
                         ScreenShotBorder.Child = ScreenShotImage;
@@ -1743,13 +1482,6 @@ namespace UI
                         ImageListBorder.BorderThickness = new Thickness(1);
                         ImageListSV.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
                         ImageListSV.Template = SV.Template;
-                        //ListView ImagesList = new ListView();
-                        //ImagesList.Uid = "ScreenShotList";
-                        //ImagesList.Margin = new Thickness(20, 20, 20, 5);
-                        //ImagesList.View = ScreenGV;
-                        //ImagesList.HorizontalAlignment = HorizontalAlignment.Left;
-                        //ImagesList.Width = 250;
-                        //ImagesList.SelectionChanged += ImagesList_SelectionChanged;
                         ScerrenShots = new List<Image>();
                         int NumberSC = 0;
                         ScreenShotSemaphore.WaitOne();
@@ -1792,7 +1524,6 @@ namespace UI
                         ImageBrush RTakeImage = new ImageBrush();
                         RTakeImage.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/screenshot-red64.ico"));
                         Button RemoveImageBtn = new Button();
-                        //RemoveImageBtn.Content = "Remove";
                         RemoveImageBtn.BorderThickness = new Thickness(0);
                         RemoveImageBtn.Template = MBtn.Template;
                         RemoveImageBtn.Height = 40;
@@ -1802,7 +1533,6 @@ namespace UI
                         RemoveImageBtn.Background = RemoveImage;
                         RemoveImageBtn.Uid = "RemoveImageBtn";
                         RemoveImageBtn.Cursor = Cursors.Hand;
-                        //RemoveImageBtn.IsEnabled = false;
                         RemoveImageBtn.Click += RemoveImageClick;
                         RemoveImageBtn.Margin = new Thickness(50, 260, 20, 15);
                         RemoveImageBtn.HorizontalAlignment = HorizontalAlignment.Left;
@@ -1813,7 +1543,6 @@ namespace UI
                         ImageBrush TakeImage = new ImageBrush();
                         TakeImage.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/screenshot-red64.ico"));
                         Button Take = new Button();
-                        //Take.Content = "Take ScreenShot";
                         Take.Click += TackeScreenShot;
                         Take.Template = MBtn.Template;
                         Take.Height = 40;
@@ -1837,11 +1566,8 @@ namespace UI
                         Grid.SetRow(TitleTB1, 2);
                         Border WebCamBorder = new Border();
                         WebCamBorder.VerticalAlignment = VerticalAlignment.Top;
-                        //ScreenShotBorder.HorizontalAlignment = HorizontalAlignment.Left;
                         WebCamBorder.Margin = new Thickness(200, 90, 200, 0);
                         WebCamBorder.BorderBrush = new SolidColorBrush(Colors.LightGray);
-                        //ScreenShotBorder.CornerRadius = new CornerRadius(10);
-                        //ScreenShotBorder.Width = 600;
                         WebCamBorder.Height = 500;
                         WebCamBorder.BorderThickness = new Thickness(1);
                         WebCamBorder.Child = WebcamImage;
@@ -1864,13 +1590,6 @@ namespace UI
                         WebImageListSV.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
                         WebImageListSV.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
                         WebImageListSV.Template = SV.Template;
-                        //ListView ImagesList = new ListView();
-                        //ImagesList.Uid = "ScreenShotList";
-                        //ImagesList.Margin = new Thickness(20, 20, 20, 5);
-                        //ImagesList.View = ScreenGV;
-                        //ImagesList.HorizontalAlignment = HorizontalAlignment.Left;
-                        //ImagesList.Width = 250;
-                        //ImagesList.SelectionChanged += ImagesList_SelectionChanged;
                         List <Image> WebPicss = new List<Image>();
                         WebCamTableSemaphore.WaitOne();
                         int NumberWeb = 0;
@@ -1888,9 +1607,6 @@ namespace UI
                             stackPanel.Background = new SolidColorBrush(Colors.Transparent);
                             stackPanel.Margin = new Thickness(5);
                             Image image = new Image();
-                            //MemoryStream ms;
-                            //
-                            //ms = new MemoryStream(PicData);
                             try
                             {
                                 byte[] PicData = Convert.FromBase64String((string)Row["Pic"]);
@@ -1930,7 +1646,6 @@ namespace UI
                         ImageBrush RTakeWebImage = new ImageBrush();
                         RTakeWebImage.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/screenshot-red64.ico"));
                         Button RemoveWebImageBtn = new Button();
-                        //RemoveImageBtn.Content = "Remove";
                         RemoveWebImageBtn.BorderThickness = new Thickness(0);
                         RemoveWebImageBtn.Template = MBtn.Template;
                         RemoveWebImageBtn.Height = 40;
@@ -1940,12 +1655,10 @@ namespace UI
                         RemoveWebImage.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/trash-can.ico"));
                         RemoveWebImageBtn.Background = RemoveWebImage;
                         RemoveWebImageBtn.Uid = "RemoveWebImageBtn";
-                        //RemoveWebImageBtn.IsEnabled = false;
                         RemoveWebImageBtn.Click += RemoveWebImageClick;
                         RemoveWebImageBtn.Margin = new Thickness(50, 820, 20, 15);
                         RemoveWebImageBtn.HorizontalAlignment = HorizontalAlignment.Left;
                         Button TakeWeb = new Button();
-                        //Take.Content = "Take ScreenShot";
                         TakeWeb.Click += TackeWeb;
                         TakeWeb.Template = MBtn.Template;
                         TakeWeb.Height = 40;
@@ -1960,7 +1673,6 @@ namespace UI
                         MainTemp.Children.Add(TakeWeb);
                         Grid.SetRow(TakeWeb, 2);
                         UpDateUIData = new ParameterizedThreadStart(PictureUpDate);
-                        //PageTitle.Text = "Screen Shots";
                     }
                     break;
                 case 9:
@@ -1984,36 +1696,6 @@ namespace UI
                         BG.VerticalAlignment = VerticalAlignment.Top;
                         NetworkWrapPanel.Margin = new Thickness(0, 0, 0, 0);
                         NetworkWrapPanel.Background = new SolidColorBrush(Colors.Transparent);
-                        //Image NetworkTitleImage = new Image();
-                        //NetworkTitleImage.Width = 15;
-                        //NetworkTitleImage.Height = 15;
-                        //NetworkTitleImage.Source = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/if_ic_keyboard_voice_48px_352475.ico"));
-                        //NetworkTitleImage.HorizontalAlignment = HorizontalAlignment.Left;
-                        //NetworkTitleImage.VerticalAlignment = VerticalAlignment.Top;
-                        //NetworkTitleImage.Margin = new Thickness(20, 16, 0, 0);
-                        //TextBlock NetworkTitleImageTB = new TextBlock();
-                        //NetworkTitleImageTB.Text = "Network";
-                        //NetworkTitleImageTB.Foreground = new SolidColorBrush(Colors.Black);
-                        //NetworkTitleImageTB.FontSize = 12;
-                        //NetworkTitleImageTB.FontWeight = FontWeights.Bold;
-                        //NetworkTitleImageTB.HorizontalAlignment = HorizontalAlignment.Left;
-                        //NetworkTitleImageTB.VerticalAlignment = VerticalAlignment.Top;
-                        //NetworkTitleImageTB.Margin = new Thickness(5, 15, 0, 0);
-                        //Line NetworkSepratorLine = new Line();
-                        //NetworkSepratorLine.VerticalAlignment = VerticalAlignment.Top;
-                        //NetworkSepratorLine.HorizontalAlignment = HorizontalAlignment.Left;
-                        //NetworkSepratorLine.Margin = new Thickness(10, 2, 15, 0);
-                        ////NetworkSepratorLinenenenenene.Fill = new SolidColorBrush(Colors.Black);
-                        //NetworkSepratorLine.Stroke = new SolidColorBrush(Colors.LightGray);
-                        //NetworkSepratorLine.Opacity = 70;
-                        //NetworkSepratorLine.StrokeThickness = 1;
-                        //NetworkSepratorLine.X1 = 5;
-                        //NetworkSepratorLine.Y1 = 10;
-                        //NetworkSepratorLine.X2 = 1400;
-                        //NetworkSepratorLine.Y2 = 10;
-                        //NetworkWrapPanel.Children.Add(NetworkTitleImage);
-                        //NetworkWrapPanel.Children.Add(NetworkTitleImageTB);
-                        //NetworkWrapPanel.Children.Add(NetworkSepratorLine);
                         TextBlock TitleTB = new TextBlock();
                         TitleTB.Text = "Network Adapters";
                         TitleTB.FontSize = 24;
@@ -2056,38 +1738,6 @@ namespace UI
                             Colors.White, Colors.Black, Color.FromArgb(255, 42, 180, 192), Colors.LightGray, Colors.Transparent, MainWindow.DS.Tables["NetworkAdaptor"],
                             new Thickness(100, 20, 15, 10),new Thickness(0), 12, 16, ColumnsName , NetworkAdaptorList_SelectionChanged , "NetworkAdaptorList",
                            (double) MainWindow.DS.Tables["NetworkAdaptor"].Rows.Count * (ItemSize.Height + 5)));
-                        //GridView NetworkAdabtorGV = new GridView();
-                        ////NetworkAdabtorGV.Columns.Add(new GridViewColumn { Header = "Child", DisplayMemberBinding = new Binding("ChildID") });
-                        //NetworkAdabtorGV.Columns.Add(new GridViewColumn { Header = "Device Name",Width = 250, DisplayMemberBinding = new Binding("DeviceName") });
-                        //NetworkAdabtorGV.Columns.Add(new GridViewColumn { Header = "Interface Name",Width = 350, DisplayMemberBinding = new Binding("InterfaceName") });
-                        //NetworkAdabtorGV.Columns.Add(new GridViewColumn { Header = "Status", Width = 100, DisplayMemberBinding = new Binding("Status") });
-                        //ListView NetworkAdaptorList = new ListView();
-                        //NetworkAdaptorList.View = NetworkAdabtorGV;
-                        //NetworkAdaptorList.Uid = "NetworkAdaptorList";
-                        //NetworkAdaptorList.Margin = new Thickness(250, 150, 250, 10);
-                        //NetworkAdaptorList.VerticalAlignment = VerticalAlignment.Top;
-                        ////NetworkAdaptorList.HorizontalAlignment = HorizontalAlignment.Left;
-                        ////NetworkAdaptorList.Width = 550;
-                        //NetworkAdaptorList.Height = 230;
-                        //NetworkAdaptorList.SelectionChanged += NetworkAdaptorList_SelectionChanged;
-                        //NetAdaptor = new System.Timers.Timer();
-                        //NetAdaptor.Elapsed += NetAdaptorReloadElipced;
-                        //NetAdaptor.Interval = 1000;
-                        //NetworkAdaptorList.VerticalAlignment = VerticalAlignment.Top;
-                        //MainTemp.Children.Add(NetworkAdaptorList);
-                        //Grid.SetColumn(NetworkAdaptorList, 0);
-                        //Grid.SetRow(NetworkAdaptorList, 0);
-
-                        //foreach (System.Data.DataRow Row in .Rows)
-                        //{
-                        //    NetworkAdaptorList.Items.Add(new NetworkAdaptor
-                        //    {
-                        //        //ChildID = Row["ChildID"].ToString(),
-                        //        DeviceName = Row["DeviceName"].ToString(),
-                        //        InterfaceName = Row["InterfaceName"].ToString(),
-                        //        Status = Row["Status"].ToString()
-                        //    });
-                        //}
                         MainWindow.DS.Tables.Remove("NetworkAdaptor");
                         NetworkAdaptorSemaphor.Release();
                         Button EnNetBtn = new Button();
@@ -2118,7 +1768,6 @@ namespace UI
                         InfoImage1.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoImage1.Margin = new Thickness(-390, 50, 0, 0);
                         NetworkWrapPanel.Children.Add(InfoImage1);
-                        //Grid.SetRow(InfoImage0, 0);
                         TextBlock InfoTb1 = new TextBlock();
                         InfoTb1.Text = "   For enable or disable adapter please select one of them in list then click on disable or enable button";
                         InfoTb1.FontSize = 16;
@@ -2135,12 +1784,8 @@ namespace UI
                         NetworkExpander.Expanded += NetworkExpander_Expanded;
                         NetworkExpander.Margin = new Thickness(-950, 110, 0, 20);
                         NetworkWrapPanel.Children.Add(NetworkExpander);
-                        //NetworkWrapPanel.Children.Add(NetworkTitleImage);
-                        //NetworkWrapPanel.Children.Add(NetworkTitleImageTB);
-                        //NetworkWrapPanel.Children.Add(NetworkSepratorLine);
                         BG.Child = NetworkWrapPanel;
                         MainDataGrid.Children.Add(BG);
-                        //PageTitle.Text = "Network";
                     }
                     break;
                 case 10:
@@ -2201,7 +1846,6 @@ namespace UI
                         Bord = new Border();
                         Monitor.Margin = new Thickness(0);
                         Bord.VerticalAlignment = VerticalAlignment.Top;
-                        //Bord.HorizontalAlignment = HorizontalAlignment.Left;
                         Bord.Height = 350;
                         Bord.Width = 600;
                         Monitor.Source = BITIM;
@@ -2220,8 +1864,6 @@ namespace UI
                         StartEndMonitorBtn.BorderThickness = new Thickness(0);
                         StartEndMonitorBtn.Click += StartEndMonitorBtnClicked;
                         StartEndMonitorBtn.Template = MaxBtn.Template;
-                        //StartEndMonitorBtn.Content = "Start";
-                        //StartEndMonitorBtn.MinWidth = 80;
                         StartEndMonitorBtn.Width = 60;
                         StartEndMonitorBtn.Height = 60;
                         StartEndMonitorBtn.HorizontalAlignment = HorizontalAlignment.Center;
@@ -2229,7 +1871,6 @@ namespace UI
                         StartEndMonitorBtn.Margin = new Thickness(0, 0, 0, 10);
                         MainTemp.Children.Add(StartEndMonitorBtn);
                         Grid.SetRow(StartEndMonitorBtn, 1);
-                        //PageTitle.Text = "Real Time Monitor";
                         Image InfoImage1 = new System.Windows.Controls.Image();
                         InfoImage1.Source = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/if_info-blog_46810.ico"));
                         InfoImage1.Width = 30;
@@ -2262,7 +1903,6 @@ namespace UI
                         Border NewBord = new Border();
                         WebcamMonitor.Margin = new Thickness(0);
                         NewBord.VerticalAlignment = VerticalAlignment.Top;
-                        //Bord.HorizontalAlignment = HorizontalAlignment.Left;
                         NewBord.Height = 350;
                         NewBord.Width = 600;
                         WebcamMonitor.Source = WebCamBITIM;
@@ -2281,8 +1921,6 @@ namespace UI
                         StartEndWebCamMonitorBtn.BorderThickness = new Thickness(0);
                         StartEndWebCamMonitorBtn.Click += StartEndWebcamMonitorBtnClicked;
                         StartEndWebCamMonitorBtn.Template = MaxBtn.Template;
-                        //StartEndWebCamMonitorBtntn.Content = "Start";
-                        //StartEndWebCamMonitorBtntn.MinWidth = 80;
                         StartEndWebCamMonitorBtn.Width = 60;
                         StartEndWebCamMonitorBtn.Height = 60;
                         StartEndWebCamMonitorBtn.HorizontalAlignment = HorizontalAlignment.Center;
@@ -2297,15 +1935,6 @@ namespace UI
                         MainDataGrid.ColumnDefinitions.Clear();
                         MainDataGrid.RowDefinitions.Clear();
                         Grid wrapPanel = new Grid();
-                        //RowDefinition UnRow0 = new RowDefinition();
-                        //RowDefinition UnRow1 = new RowDefinition();
-                        //RowDefinition UnRow2 = new RowDefinition();
-                        //UnRow0.Height = new GridLength(0.2,GridUnitType.Star);
-                        //UnRow1.Height = new GridLength(1,GridUnitType.Star);
-                        //UnRow2.Height = new GridLength(2, GridUnitType.Star);
-                        //MainDataGrid.RowDefinitions.Add(UnRow0);
-                        //MainDataGrid.RowDefinitions.Add(UnRow1);
-                        //MainDataGrid.RowDefinitions.Add(UnRow2);
                         Ellipse CertificateElipc = new Ellipse();
                         CertificateElipc.Fill = new SolidColorBrush(Colors.Red);
                         CertificateElipc.Height = 10;
@@ -2314,21 +1943,17 @@ namespace UI
                         CertificateElipc.VerticalAlignment = VerticalAlignment.Top;
                         CertificateElipc.Margin = new Thickness(10, 50, 0, 0);
                         wrapPanel.Children.Add(CertificateElipc);
-                        //Grid.SetRow(CertificateElipc, 0);
                         TextBlock CertifcateText = new TextBlock();
                         CertifcateText.Text = "Are you sure you want to Uninstall the Child application?";
                         CertifcateText.HorizontalAlignment = HorizontalAlignment.Left;
                         CertifcateText.VerticalAlignment = VerticalAlignment.Top;
                         CertifcateText.Margin = new Thickness(35, 45 ,0, 0);
                         CertifcateText.FontSize = 16;
-                        //CertifcateText.FontFamily = new FontFamily("Freestyle Script");
                         CertifcateText.Foreground = new SolidColorBrush(Colors.Black);
                         wrapPanel.Children.Add(CertifcateText);
-                        //Grid.SetRow(CertifcateText, 0);
                         ImageBrush YesImage = new ImageBrush();
                         YesImage.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/Untitled-1.ico"));
                         Button YesBtn = new Button();
-                        //YesBtn.Content = "Yes";
                         YesBtn.Background = YesImage;
                         YesBtn.Uid = "UninstallYesBtn";
                         YesBtn.HorizontalAlignment = HorizontalAlignment.Left;
@@ -2340,11 +1965,9 @@ namespace UI
                         YesBtn.BorderThickness = new Thickness(0);
                         YesBtn.Click += UninstallYesBtnClicked;
                         wrapPanel.Children.Add(YesBtn);
-                        //Grid.SetRow(YesBtn, 1);
                         ImageBrush NoImage = new ImageBrush();
                         NoImage.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/Untitled-2.ico"));
                         Button NoBtn = new Button();
-                        //NoBtn.Content = "No";
                         NoBtn.Background = NoImage;
                         NoBtn.Uid = "UninstallNoBtn";
                         NoBtn.Template = MaxBtn.Template;
@@ -2355,7 +1978,6 @@ namespace UI
                         NoBtn.Width = 60;
                         NoBtn.Click += UninstallNoBtnClicked;
                         wrapPanel.Children.Add(NoBtn);
-                        //Grid.SetRow(NoBtn, 1);
                         PageTitle.Text = "Uninstall Child";
                         MainDataGrid.Children.Add(wrapPanel);
 
@@ -2365,7 +1987,6 @@ namespace UI
                         MainDataGrid.Children.Clear();
                         MainDataGrid.ColumnDefinitions.Clear();
                         MainDataGrid.RowDefinitions.Clear();
-                        
                         TextBlock TitleTB = new TextBlock();
                         TitleTB.Text = "key Logs";
                         TitleTB.FontSize = 24;
@@ -2399,9 +2020,7 @@ namespace UI
                         KeyLoggerTitleImageTB.Margin = new Thickness(5, 15, 0, 0);
                         Line KeyLoggerSepratorLine = new Line();
                         KeyLoggerSepratorLine.VerticalAlignment = VerticalAlignment.Top;
-                        //KeyLoggerSepratorLine.HorizontalAlignment = HorizontalAlignment.Left;
                         KeyLoggerSepratorLine.Margin = new Thickness(10, 2, 15, 0);
-                        //KeyLoggerSepratorLinenenene.Fill = new SolidColorBrush(Colors.Black);
                         KeyLoggerSepratorLine.Stroke = new SolidColorBrush(Colors.LightGray);
                         KeyLoggerSepratorLine.Opacity = 70;
                         KeyLoggerSepratorLine.StrokeThickness = 1;
@@ -2414,8 +2033,6 @@ namespace UI
                         KeyLoggerWrap.Children.Add(KeyLoggerSepratorLine);
                         Border KeysListBorder = new Border();
                         KeysListBorder.Background = new SolidColorBrush(Colors.Transparent);
-                        //KeysListBorder.BorderThickness = new Thickness(0.5);
-                        //KeysListBorder.BorderBrush = new SolidColorBrush(Colors.LightGray);
                         KeysListBorder.Margin = new Thickness(20,20,15,0);
                         StackPanel KeysParentSP = new StackPanel();
                         StackPanel Headers = new StackPanel();
@@ -2553,7 +2170,6 @@ namespace UI
                         VoiceSepratorLine.VerticalAlignment = VerticalAlignment.Top;
                         VoiceSepratorLine.HorizontalAlignment = HorizontalAlignment.Left;
                         VoiceSepratorLine.Margin = new Thickness(10, 2, 15, 0);
-                        //VoiceSepratorLinenenenene.Fill = new SolidColorBrush(Colors.Black);
                         VoiceSepratorLine.Stroke = new SolidColorBrush(Colors.LightGray);
                         VoiceSepratorLine.Opacity = 70;
                         VoiceSepratorLine.StrokeThickness = 1;
@@ -2583,7 +2199,6 @@ namespace UI
                         VoiceMidelLine.VerticalAlignment = VerticalAlignment.Top;
                         VoiceMidelLine.HorizontalAlignment = HorizontalAlignment.Left;
                         VoiceMidelLine.Margin = new Thickness(15, 2, 15, 20);
-                        //VoiceMidelLinenenenenene.Fill = new SolidColorBrush(Colors.Black);
                         VoiceMidelLine.Stroke = new SolidColorBrush(Colors.LightGray);
                         VoiceMidelLine.Opacity = 70;
                         VoiceMidelLine.StrokeThickness = 2;
@@ -2630,9 +2245,7 @@ namespace UI
                                 stackPanel.Orientation = Orientation.Horizontal;
                                 stackPanel.Margin = new Thickness(0, 20, 0, 0);
                                 stackPanel.Width = 640;
-                                //stackPanel.FlowDirection = FlowDirection.RightToLeft;
                                 VoiceRect voiceRect = new VoiceRect();
-                                //
                                 Image Pic = new Image();
                                 Pic.Source = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/if_human_1216577.ico"));
                                 Pic.Width = 50;
@@ -2664,10 +2277,6 @@ namespace UI
                         VoiceWrap.Children.Add(VoiceMidelLine);
                         VoiceWrap.Children.Add(ShowVoiceStackL);
                         VoiceWrap.Children.Add(ShowVoiceStackR);
-                        //VoiceWrap.Children.Add(StackPanelLeftBorder);
-                        //VoiceWrap.Children.Add(StackPanelRightBorder);
-
-
                         VoiceBoard.Child = VoiceWrap;
                         MainDataGrid.Children.Add(VoiceBoard);
                         UpDateUIData = new ParameterizedThreadStart(VoiceUpDate);
@@ -2690,15 +2299,6 @@ namespace UI
                 }),System.Windows.Threading.DispatcherPriority.Background);
             });
             
-            
-            //Thread WebBrowserThread = new Thread(() =>
-            //{
-            //
-            //    
-            //
-            //});
-            //WebBrowserThread.SetApartmentState(ApartmentState.STA);
-            //WebBrowserThread.Start();
 
         }
 
@@ -2756,9 +2356,7 @@ namespace UI
                 stackPanel.Orientation = Orientation.Horizontal;
                 stackPanel.Margin = new Thickness(0, 20, 0, 0);
                 stackPanel.Width = 640;
-                //stackPanel.FlowDirection = FlowDirection.RightToLeft;
                 VoiceRect voiceRect = new VoiceRect();
-                //
                 Image Pic = new Image();
                 Pic.Source = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/if_human_1216577.ico"));
                 Pic.Width = 50;
@@ -2818,7 +2416,7 @@ namespace UI
             DataRow Row = (DataRow)obj;
             if (Row.Table.TableName.Contains("Screen") == true)
             {
-                //Border A = ((Border)((Grid)((Border)MainDataGrid.Children[1]).Child).Children.Cast<UIElement>().First(x => x.Uid == "ImageListBorder"));
+               
                 StackPanel Target = (StackPanel)((ScrollViewer)((Border)((Grid)((Border)MainDataGrid.Children[1]).Child).Children.Cast<UIElement>().First(x => x.Uid == "ImageListBorder")
                 ).Child).Content;
                 StackPanel stackPanel = new StackPanel();
@@ -2844,17 +2442,14 @@ namespace UI
                 BImage.EndInit();
                 Main.ScreenShotImage.Source = BImage;
                 image.Source = BImage;
-                //NumberSC++;
                 stackPanel.Children.Add(image);
                 Target.Children.Add(stackPanel);
-                //Target.Children.Add(stackPanel);
             }
             if (Row.Table.TableName.Contains("WebCam") == true)
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    //WebcamImage = new Image();
-                    //Border A = ((Border)((Grid)((Border)MainDataGrid.Children[1]).Child).Children.Cast<UIElement>().First(x => x.Uid == "ImageListBorder"));
+                    
                     StackPanel Target = (StackPanel)((ScrollViewer)((Border)((Grid)((Border)MainDataGrid.Children[1]).Child).Children.Cast<UIElement>().First(x => x.Uid == "WebImageListBorder")
                     ).Child).Content;
                     StackPanel stackPanel = new StackPanel();
@@ -2866,7 +2461,6 @@ namespace UI
                     textBlock.Text = Row["Date"].ToString();
                     textBlock.Foreground = new SolidColorBrush(Colors.Blue);
                     textBlock.FontSize = 12;
-                    
                     Image image = new Image();
                     MemoryStream ms;
                     byte[] PicData = Convert.FromBase64String((string)Row["Pic"]);
@@ -2886,8 +2480,7 @@ namespace UI
                     stackPanel.Children.Add(textBlock);
                     Target.Children.Add(stackPanel);
                 });
-                
-                //Target.Children.Add(stackPanel);
+
             }
 
         }
@@ -2919,11 +2512,8 @@ namespace UI
             MainData.Data = Data;
             MainData.PPacket = Pack.ToString(ProSC);
             string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
-            
-            //MainWindow.Connection.TakeScreenShot(ScreenShotImage);
             MainWindow.Connection.SendDataSM.WaitOne();
             MainWindow.Connection.SendToServer(MainStrData);
-            //MainWindow.Connection.SendToServer(Data);
             MainWindow.Connection.SendDataSM.Release();
         }
 
@@ -2969,7 +2559,6 @@ namespace UI
                     WebPicSelected = Index;
                     SelectedWebPic = ((SolidColorBrush)Target.Background).Color;
                     Target.Background = new SolidColorBrush(Colors.LightBlue);
-                    //Image image = new Image();
                     MemoryStream ms;
                     WebCamTableSemaphore.WaitOne();
                     string Row = (string)MainWindow.DataBaseAgent.ExequteWithCommandScaler("Select Pic From WebCamTable where Date ='" + TargetDate.Text + "' And ChildID ='"+ ChildsCombo.SelectedItem.ToString() + "'");
@@ -3022,7 +2611,6 @@ namespace UI
                 NetWorkTools NetTool = new NetWorkTools();
                 string IP = NetTool.GetConnectionInterfaceName();
                 Real.IP = IP;
-                //Real.IP = "127.0.0.1";
                 Real.Port = 8805;
                 MainWindow.Connection.RealTimeMonitoringWebCam(Real.IP, Real.Port, Monitor);
                 Real.DeviceType = true;
@@ -3039,17 +2627,15 @@ namespace UI
                 Thread.Sleep(1000);
                 MainWindow.Connection.SendDataSM.WaitOne();
                 MainWindow.Connection.SendToServer(MainStrData);
-                //MainWindow.Connection.SendToServer(Data);
                 MainWindow.Connection.SendDataSM.Release();
                 Monitor.Source = WebCamBITIM;
-                //Target.Content = "End";
+
             }
             else
             {
                 StartReal = false;
                 MainWindow.Connection.RealWebTimeEnd();
                 Target.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/video-play-3-64.ico")));
-                //Target.Content = "Start";
             }
         }
 
@@ -3097,43 +2683,6 @@ namespace UI
                 new Thickness(30, 50, 15, 20), new Thickness(0), 12, 16, ColumnsName, null, "ProcessHistoryList", 500);
             MainTemp.Children.Add(border);
             HistoryApps.Add(border);
-
-
-
-
-
-
-            //ListView HistoryAppsUseageList = new ListView();
-            //HistoryAppsUseageList.VerticalAlignment = VerticalAlignment.Top;
-            //HistoryAppsUseageList.Margin = new Thickness();
-            //GridView HistoryAppsGV = new GridView();
-            //HistoryAppsGV.Columns.Add(new GridViewColumn { Header = "Name", DisplayMemberBinding = new Binding("ProcessName") });
-            //HistoryAppsGV.Columns.Add(new GridViewColumn { Header = "Start Time", DisplayMemberBinding = new Binding("StartTime") });
-            //HistoryAppsGV.Columns.Add(new GridViewColumn { Header = "End Time", DisplayMemberBinding = new Binding("EndTime") });
-            //HistoryAppsGV.Columns.Add(new GridViewColumn { Header = "Executable Path", DisplayMemberBinding = new Binding("ExecutablePath") });
-            //HistoryAppsGV.Columns.Add(new GridViewColumn { Header = "OS", DisplayMemberBinding = new Binding("OSName") });
-            //HistoryAppsUseageList.View = HistoryAppsGV;
-            //HistoryAppsUseageList.MinHeight = 250;
-            //HistoryAppsUseageList.MaxHeight = 350;
-            //MainTemp.Children.Add(HistoryAppsUseageList);
-            //HistoryApps.Add(HistoryAppsUseageList);
-            //if(MainWindow.DS.Tables.Contains("Process") == true)
-            //{
-            //    MainWindow.DS.Tables.Remove("Process");
-            //}
-
-            //MainWindow.DataBaseAgent.SelectData("Process", ref MainWindow.DS, "Process");
-            //foreach (System.Data.DataRow Row in MainWindow.DS.Tables["Process"].Rows)
-            //{
-            //    HistoryAppsUseageList.Items.Add(new Process
-            //    {
-            //        ProcessName = Row["ProcessName"].ToString(),
-            //        StartTime = (Row["StartTime"].ToString()),
-            //        EndTime = Row["EndTime"].ToString(),
-            //        ExecutablePath = Row["ExecutablePath"].ToString(),
-            //        OSName = Row["OSName"].ToString()
-            //    });
-            //}
             MainWindow.DS.Tables.Remove("Process");
         }
 
@@ -3177,18 +2726,15 @@ namespace UI
             InfoImage1.Margin = new Thickness(30, 30, 0, 0);
             MainTemp.Children.Add(InfoImage1);
             MoreApps.Add(TitleTB0);
-            //Grid.SetRow(InfoImage1, 2);
             MoreApps.Add(InfoImage1);
             TextBlock InfoTb2 = new TextBlock();
             InfoTb2.Text = "   You can show all applications categores and application in each add or remove category or application that you want";
             InfoTb2.FontSize = 16;
-            //InfoTb2.FontFamily = new FontFamily("Freestyle Script");
             InfoTb2.VerticalAlignment = VerticalAlignment.Top;
             InfoTb2.HorizontalAlignment = HorizontalAlignment.Left;
             InfoTb2.Foreground = new SolidColorBrush(Colors.Black);
             InfoTb2.Margin = new Thickness(50, 0, 0, 0);
             MainTemp.Children.Add(InfoTb2);
-            //Grid.SetRow(InfoTb2, 2);
             MoreApps.Add(InfoTb2);
             StackPanel ListStP = new StackPanel();
             ListStP.Orientation = Orientation.Horizontal;
@@ -3206,11 +2752,8 @@ namespace UI
             Catborder.HorizontalAlignment = HorizontalAlignment.Left;
             ListStP.Children.Add(Catborder);
             MainWindow.DS.Tables.Remove("AppCategory");
-            
-            //Grid.SetRow(CatList, 2);
             MoreApps.Add(Catborder);
             CategoryAppAppList = new ColorList();
-            //ListPinters.Add(&CategoryAppAppList);
             Size AppItemSize = new Size(0, 25);
             Size AppListSize = new Size(200, 0);
             double[] CategoryAppColumnWidth = { 200 };
@@ -3226,11 +2769,9 @@ namespace UI
             ListStP.Children.Add(CatAppborder);
             MainTemp.Children.Add(ListStP);
             MoreApps.Add(ListStP);
-
             StackPanel CatBtnsStP = new StackPanel();
             CatBtnsStP.Orientation = Orientation.Horizontal;
             Button NewCat = new Button();
-            //NewCat.Content = "New Category";
             ImageBrush NweBtnImage = new ImageBrush();
             NweBtnImage.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/add_to_folder_9lM_icon.ico"));
             NewCat.Click += NewCatClicked;
@@ -3245,12 +2786,9 @@ namespace UI
             NewCat.HorizontalAlignment = HorizontalAlignment.Left;
             NewCat.VerticalAlignment = VerticalAlignment.Top;
             CatBtnsStP.Children.Add(NewCat);
-            //Grid.SetRow(NewCat, 2);
-            //MoreApps.Add(NewCat);
             ImageBrush NewAppImage = new ImageBrush();
             NewAppImage.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/archive_insert.ico"));
             Button NewApp = new Button();
-            //NewApp.Content = "Add Application ";
             NewApp.Background = NewAppImage;
             NewApp.Click += NewAppClicked;
             NewApp.Loaded += NewApp_Loaded;
@@ -3265,10 +2803,7 @@ namespace UI
             NewApp.HorizontalAlignment = HorizontalAlignment.Left;
             NewApp.VerticalAlignment = VerticalAlignment.Top;
             CatBtnsStP.Children.Add(NewApp);
-            //Grid.SetRow(NewApp, 2);
-            //MoreApps.Add(NewApp);
             Button DelCat = new Button();
-            //NewCat.Content = "New Category";
             ImageBrush DelBtnImage = new ImageBrush();
             DelBtnImage.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/add_to_folder2_Hm8_icon.ico"));
             DelCat.Click += DeletCatClicked;
@@ -3286,12 +2821,9 @@ namespace UI
             DelCat.VerticalAlignment = VerticalAlignment.Top;
             CatBtnsStP.Children.Add(DelCat);
             CatBtnsStP.Uid = "CatBtnsStP";
-            //Grid.SetRow(DelCat, 2);
-            //MoreApps.Add(DelCat);
             ImageBrush DelAppBtnImage = new ImageBrush();
             DelAppBtnImage.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/archive_remove(1).ico"));
             Button DelApp = new Button();
-            //DelApp.Content = "Delete Application ";
             DelApp.Background = DelAppBtnImage;
             DelApp.Cursor = Cursors.Hand;
             DelApp.BorderThickness = new Thickness(0);
@@ -3307,7 +2839,6 @@ namespace UI
             DelApp.VerticalAlignment = VerticalAlignment.Top;
             CatBtnsStP.Children.Add(DelApp);
             CatBtnsStP.Margin = new Thickness(70, 20, 15, 15);
-            //Grid.SetRow(DelApp, 2);
             MainTemp.Children.Add(CatBtnsStP);
             MoreApps.Add(CatBtnsStP);
             Image InfoImage2 = new System.Windows.Controls.Image();
@@ -3318,19 +2849,14 @@ namespace UI
             InfoImage2.HorizontalAlignment = HorizontalAlignment.Left;
             InfoImage2.Margin = new Thickness(50, 0, 0, 0);
             ListStP.Children.Add(InfoImage2);
-            //Grid.SetRow(InfoImage2, 2);
-            //MoreApps.Add(InfoImage2);
             TextBlock InfoTb3 = new TextBlock();
             InfoTb3.Text = "If you have not any category\nwe cant show applications data\nin chart.";
             InfoTb3.FontSize = 16;
-            //InfoTb3.FontFamily = new FontFamily("Freestyle Script");
             InfoTb3.VerticalAlignment = VerticalAlignment.Top;
             InfoTb3.HorizontalAlignment = HorizontalAlignment.Left;
             InfoTb3.Foreground = new SolidColorBrush(Colors.Black);
             InfoTb3.Margin = new Thickness(0, 20, 0, 0);
             ListStP.Children.Add(InfoTb3);
-            //Grid.SetRow(InfoTb3, 2);
-            //MoreApps.Add(InfoTb3);
             TextBlock TitleTB1 = new TextBlock();
             TitleTB1.Text = "Blocking";
             TitleTB1.FontSize = 24;
@@ -3339,7 +2865,6 @@ namespace UI
             TitleTB1.VerticalAlignment = VerticalAlignment.Top;
             TitleTB1.HorizontalAlignment = HorizontalAlignment.Left;
             MainTemp.Children.Add(TitleTB1);
-            //Grid.SetRow(InfoTb3, 2);
             MoreApps.Add(TitleTB1);
             BlockingAppList = new ColorList();
             Size BlockAppItemSize = new Size(0, 25);
@@ -3355,14 +2880,12 @@ namespace UI
             BlockAppborder.HorizontalAlignment = HorizontalAlignment.Left;
             MainWindow.DS.Tables.Remove("BlockApps");
             MainTemp.Children.Add(BlockAppborder);
-            //Grid.SetRow(BlockAppList, 2);
             MoreApps.Add(BlockAppborder);
             StackPanel BlockingBtnsStP = new StackPanel();
             BlockingBtnsStP.Orientation = Orientation.Horizontal;
             BlockingBtnsStP.Margin = new Thickness(50, 20, 0, 15);
             ImageBrush AddBlockListBtnImage = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/Double-J-Design-Origami-Colored-Pencil-Red-document-plus.ico")));
             Button AddBlock = new Button();
-            //AddBlock.Content = "Add App";
             AddBlock.Uid = "AddBlockAppBtn";
             AddBlock.BorderThickness = new Thickness(0);
             AddBlock.Width = 40;
@@ -3375,11 +2898,8 @@ namespace UI
             AddBlock.Click += AddBlock_Click;
             AddBlock.Margin = new Thickness(15, 0, 15, 0);
             BlockingBtnsStP.Children.Add(AddBlock);
-            //Grid.SetRow(AddBlock, 2);
-            //MoreApps.Add(AddBlock);
             ImageBrush DeleteBlockListBtnImage = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/Double-J-Design-Origami-Colored-Pencil-Red-document-cross.ico")));
             Button DeleteBlock = new Button();
-            //DeleteBlock.Content = "delete App";
             DeleteBlock.BorderThickness = new Thickness(0);
             DeleteBlock.Cursor = Cursors.Hand;
             DeleteBlock.Template = MaxBtn.Template;
@@ -3394,11 +2914,8 @@ namespace UI
             DeleteBlock.Margin = new Thickness(15,0,15,0);
             BlockingBtnsStP.Children.Add(DeleteBlock);
             BlockingBtnsStP.Uid = "BlockingBtnsStP";
-            //Grid.SetRow(DeleteBlock, 2);
             MainTemp.Children.Add(BlockingBtnsStP);
             MoreApps.Add(BlockingBtnsStP);
-
-
 
             List<KeyValuePair<string, float>> PIValue = new List<KeyValuePair<string, float>>();
             
@@ -3409,7 +2926,7 @@ namespace UI
             }
             MainWindow.DS.Tables.Remove("AppUsage");
             List<Charts.TriadPairs> ChartData = new List<Charts.TriadPairs>();
-            //MainWindow.DataBaseAgent.SelectData("AppCategory", ref MainWindow.DS, "*", "AppCategory", ChildsCombo.SelectedItem.ToString().ToString(), "ChildID");
+          
             foreach (System.Data.DataRow Row in MainWindow.DS.Tables["AppCategory"].Rows)
             {
                 Charts.TriadPairs Data = new Charts.TriadPairs();
@@ -3439,7 +2956,6 @@ namespace UI
                 PieChartBackground.Height = 200;
                 PieChartBackground.Margin = new Thickness(30, 40, 0, 20);
                 MainTemp.Children.Add(PieChartBackground);
-                //Grid.SetRow(PieChartBackground, 3);
                 MoreApps.Add(PieChartBackground);
                 Charts PiChart = new Charts();
                 PiChart.DrawPieChart(ref PieChartBackground, ChartData, new Point(100, 100), 50, 100, new SolidColorBrush(Colors.Transparent), 0,
@@ -3493,7 +3009,6 @@ namespace UI
                 string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
                 MainWindow.Connection.SendDataSM.WaitOne();
                 MainWindow.Connection.SendToServer(MainStrData);
-                //MainWindow.Connection.SendToServer(Data);
                 MainWindow.Connection.SendDataSM.Release();
             }
             MainWindow.DataBaseAgent.ExequteWithCommand("Delete From BlockApps where AppName ='" + ((BlockApp)Target.SelectedItem).AppName + "'");
@@ -3514,7 +3029,7 @@ namespace UI
             WrapPanel MainTemp = (WrapPanel)((Border)MainDataGrid.Children[1]).Child;
             if (SelctedToAdd != null)
             {
-                //ListView Target = (ListView)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "BlockAppList");
+                
                 MainWindow.DataBaseAgent.SelectData("BlockApps", ref MainWindow.DS, "*", "BlockApps", ChildsCombo.SelectedItem.ToString().ToString(), "ChildID");
                 DataRow Row = MainWindow.DS.Tables["BlockApps"].NewRow();
                 Row["AppName"] = SelctedToAdd.AppName.ToString();
@@ -3575,7 +3090,6 @@ namespace UI
                     string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
                     MainWindow.Connection.SendDataSM.WaitOne();
                     MainWindow.Connection.SendToServer(MainStrData);
-                    //MainWindow.Connection.SendToServer(Data);
                     MainWindow.Connection.SendDataSM.Release();
                 }
                 
@@ -3589,7 +3103,6 @@ namespace UI
             {
                 WrapPanel MainTemp = (WrapPanel)((Border)MainDataGrid.Children[1]).Child;
                 StackPanel stackPanel = (StackPanel)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "BlockingBtnsStP");
-                //ListView Target = sender as ListView;
                 Button Remove = (Button)stackPanel.Children.Cast<UIElement>().First(x => x.Uid == "deleteBlockAppBtn");
                 if (BlockingAppList.SelectedIndex > -1)
                 {
@@ -3615,8 +3128,6 @@ namespace UI
                 {
                     MainWindow.DataBaseAgent.ExequteWithCommand("Delete from UsedColor where Name ='" + TargetDS.Tables[0].Rows[0][0].ToString() + "'");
                     MainWindow.DataBaseAgent.ExequteWithCommand("Delete from AppCategory where Name ='" + Target.SelectedItem.ToString() + "'");
-                    //TargetDS.Tables[0].Rows.RemoveAt(0);
-                    //MainWindow.DataBaseAgent.UpdateData(TargetDS.Tables[0]);
                 }
                 Target.Items.RemoveAt(Target.SelectedIndex);
             }
@@ -3651,8 +3162,6 @@ namespace UI
 
                 WrapPanel MainTemp = (WrapPanel)((Border)MainDataGrid.Children[1]).Child;
                 StackPanel stackPanel = (StackPanel)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "CatBtnsStP");
-                //ListBox Target = (ListBox)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "CategoryList");
-                //ListBox Des = (ListBox)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "AppsList");
                 Button Remove = (Button)stackPanel.Children.Cast<UIElement>().First(x => x.Uid == "DeleteInstaledAppCatBtn");
                 Button AddApp = (Button)stackPanel.Children.Cast<UIElement>().First(x => x.Uid == "NewAppInCatBtn");
                 Button RemoveApp = (Button)stackPanel.Children.Cast<UIElement>().First(x => x.Uid == "DeleteInstalledAppinCatBtn");
@@ -3689,17 +3198,6 @@ namespace UI
 
 
 
-
-                //WrapPanel MainTemp = (WrapPanel)((Border)MainDataGrid.Children[1]).Child;
-                //Button Uninstall = (Button)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "UninstallInstallAppBtn");
-                //if (((SolidColorBrush)Target.Background).Color == Colors.Cornsilk)
-                //{
-                //    Uninstall.IsEnabled = true;
-                //}
-                //else
-                //{
-                //    Uninstall.IsEnabled = false;
-                //}
             });
 
         }
@@ -3709,30 +3207,7 @@ namespace UI
             MainDataGrid.Dispatcher.Invoke(() =>
             {
 
-                /*Grid MainTemp = (Grid)((Border)MainDataGrid.Children[1]).Child;
-                ListBox Target = sender as ListBox;
-                Button RemoveApp = (Button)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "DeleteInstalledAppinCatBtn");
-                if (Target.SelectedIndex > -1)
-                {
-                    RemoveApp.IsEnabled = true;
-                }
-                else
-                {
-                    RemoveApp.IsEnabled = false;
-                }
 
-
-                Border Target = sender as Border;
-                Grid MainTemp = (Grid)((Border)MainDataGrid.Children[1]).Child;
-                Button Uninstall = (Button)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "UninstallInstallAppBtn");
-                if (((SolidColorBrush)Target.Background).Color == Colors.Cornsilk)
-                {
-                    Uninstall.IsEnabled = true;
-                }
-                else
-                {
-                    Uninstall.IsEnabled = false;
-                }*/
             });
 
         }
@@ -3807,51 +3282,9 @@ namespace UI
                 new Thickness(30, 20, 15, 10), new Thickness(0), 12, 16, ColumnsName, null, "NetworkConnectionsList", 300);
             MainTemp.Children.Add(NetworkConnectionListBorder);
             MoreNetwork.Add(NetworkConnectionListBorder);
-            //GridView ConnectionGV = new GridView();
-            ////ConnectionGV.Columns.Add(new GridViewColumn { Header = "Child", DisplayMemberBinding = new Binding("ChildID") });
-            //ConnectionGV.Columns.Add(new GridViewColumn { Header = "Device Name", DisplayMemberBinding = new Binding("DivaceName") });
-            //ConnectionGV.Columns.Add(new GridViewColumn { Header = "Connection Interface", DisplayMemberBinding = new Binding("ConnectionInterface") });
-            //ConnectionGV.Columns.Add(new GridViewColumn { Header = "Modem Name", DisplayMemberBinding = new Binding("ModemName") });
-            //ConnectionGV.Columns.Add(new GridViewColumn { Header = "IPv6", DisplayMemberBinding = new Binding("IPv6") });
-            //ConnectionGV.Columns.Add(new GridViewColumn { Header = "IPv4", DisplayMemberBinding = new Binding("IPv4") });
-            //ConnectionGV.Columns.Add(new GridViewColumn { Header = "Status", DisplayMemberBinding = new Binding("Status") });
-            //ConnectionGV.Columns.Add(new GridViewColumn { Header = "Date", DisplayMemberBinding = new Binding("ID") });
-            //ListView ConnectionList = new ListView();
-            //ConnectionList.View = ConnectionGV;
-            //ConnectionList.MaxHeight = 250;
-            //ConnectionList.VerticalAlignment = VerticalAlignment.Top;
-            ////ConnectionList.HorizontalAlignment = HorizontalAlignment.Left;
-            //ConnectionList.Margin = new Thickness(100, 50, 100, 20);
-            //ConnectionList.MinHeight = 250;
-            //ConnectionList.Width = 550;
-            //ConnectionList.Margin = new Thickness(25, 15, 25, 10);
-            //MainWindow.DataBaseAgent.SelectData("Network", ref MainWindow.DS, "*", "Network", ChildUser, "ChildID");
-            /*oreach (System.Data.DataRow Row in MainWindow.DS.Tables["Network"].Rows)
-            {
-                try
-                {
-                    ConnectionList.Items.Add(new Network
-                    {
-                        //ChildID = Row["ChildID"].ToString(),
-                        DivaceName = Row["DivaceName"].ToString(),
-                        ConnectionInterface = Row["ConnectionInterface"].ToString(),
-                        ModemName = Row["ModemName"].ToString(),
-                        IPv6 = Row["IPv6"].ToString(),
-                        IPv4 = Row["IPv4"].ToString(),
-                        Status = Row["Status"].ToString(),
-                        ID = Row["ID"].ToString()
-                    });
-                }
-                catch(Exception E)
-                {
-
-                }
-                
-            }*/
+          
             MainWindow.DS.Tables.Remove("Network");
             NetworkSemaphore.Release();
-            //MainTemp.Children.Add(ConnectionList);
-            //MoreNetwork.Add(ConnectionList);
             TextBlock VPNTitleTB = new TextBlock();
             VPNTitleTB.Text = "VPN";
             VPNTitleTB.FontSize = 24;
@@ -3867,7 +3300,6 @@ namespace UI
             double[] VPNColumnWidth = { 325, 180, 100, 200, 100, 150, 150 };
             string[] VPNHeadersName = { "Status", "Date"};
             string[] VPNColumnsName = { "Status", "StartVPN"};
-            //ColorList VPNList = new ColorList();
             Size VPNItemSize = new Size(0, 25);
             Size VPNListSize = new Size(500, 20 * (ItemSize.Height + 5));
             Border VPNListBorder = NetworkList.Draw(VPNColumnWidth, 30, VPNHeadersName, null, VPNListSize, VPNItemSize,
@@ -3876,33 +3308,8 @@ namespace UI
                 , 12, 16, VPNColumnsName, null, "VPNList", 300);
             MainTemp.Children.Add(VPNListBorder);
 
-
-
-
-
-
-
-            //GridView VPNGV = new GridView();
-            ////VPNGV.Columns.Add(new GridViewColumn { Header = "Child", DisplayMemberBinding = new Binding("ID") });
-            //VPNGV.Columns.Add(new GridViewColumn { Header = "Date", DisplayMemberBinding = new Binding("StartVPN") });
-            //VPNGV.Columns.Add(new GridViewColumn { Header = "Status", DisplayMemberBinding = new Binding("Status") });
-            //ListView VPNList = new ListView();
-            //VPNList.View = VPNGV;
-            //VPNList.MinHeight = 100;
-            //VPNList.Margin = new Thickness(100, 90 , 400, 20);
-            //MainWindow.DataBaseAgent.SelectData("VPN", ref MainWindow.DS, "*", "VPN", ChildsCombo.SelectedItem.ToString().ToString(), "ChildID");
-            //foreach (System.Data.DataRow Row in MainWindow.DS.Tables["VPN"].Rows)
-            //{
-            //    VPNList.Items.Add(new VPN
-            //    {
-            //        //ID = Row["ID"].ToString(),
-            //        StartVPN = Row["StartVPN"].ToString(),
-            //        Status = Row["Status"].ToString()
-            //    });
-            //}
             MainWindow.DS.Tables.Remove("VPN");
             VPNSemaphore.Release();
-            //MainTemp.Children.Add(VPNList);
             MoreNetwork.Add(VPNListBorder);
         }
 
@@ -3917,7 +3324,6 @@ namespace UI
 
         private void GoogleMap_LoadCompleted(object sender, NavigationEventArgs e)
         {
-            //throw new NotImplementedException();
         }
 
         private void MoreURLs_Collapsed(object sender, RoutedEventArgs e)
@@ -3927,10 +3333,6 @@ namespace UI
             {
                 MainTemp.Children.Remove((UIElement)var);
             }
-            //MainTemp.ColumnDefinitions.Clear();
-            //MainTemp.RowDefinitions.RemoveAt(1);
-            //MainTemp.RowDefinitions.RemoveAt(2);
-            //MainTemp.RowDefinitions.RemoveAt(3);
         }
 
         private void MoreURLs_Expanded(object sender, RoutedEventArgs e)
@@ -3945,12 +3347,9 @@ namespace UI
             InfoImage0.HorizontalAlignment = HorizontalAlignment.Left;
             InfoImage0.Margin = new Thickness(30, 30, 0, 0);
             MainTemp.Children.Add(InfoImage0);
-            //Grid.SetRow(InfoImage0, 1);
-            //Grid.SetRow(InfoImage1, 0);
             TextBlock InfoTb0 = new TextBlock();
             InfoTb0.Text = "You can show all Blocked URLs and add or delete URLs in block list";
             InfoTb0.FontSize = 16;
-            //InfoTb2.FontFamily = new FontFamily("Freestyle Script");
             InfoTb0.VerticalAlignment = VerticalAlignment.Top;
             InfoTb0.HorizontalAlignment = HorizontalAlignment.Left;
             InfoTb0.Foreground = new SolidColorBrush(Colors.Black);
@@ -3987,9 +3386,6 @@ namespace UI
             Catborder.VerticalAlignment = VerticalAlignment.Top;
             URLCateStP.Children.Add(Catborder);
             URLCateStP.Uid = "URLCateStP";
-            //URLCategoryList.SelectedIndex = 0;
-            // MainWindow.DataBaseAgent.SelectDataWithCommand("Select URLs From URLCategury where Name ='" + MainWindow.DS.Tables["URLCategury"].Rows[0]["Name"].ToString() + "' And ChildID = '"+
-            //     ChildsCombo.SelectedItem.ToString().ToString() + "'", ref MainWindow.DS,"URLsInCategury");
             MainWindow.DS.Tables.Remove("URLCategury");
             string[] URLCatHeadersName = { "URL" };
             string[] URLCatColumnsName = { "URLs" };
@@ -4004,8 +3400,6 @@ namespace UI
             URLborder.VerticalAlignment = VerticalAlignment.Top;
             URLborder.HorizontalAlignment = HorizontalAlignment.Left;
             URLCateStP.Children.Add(URLborder);
-            //MainTemp.Children.Add(Catborder);
-            //MoreUrls.Add(Catborder);
             StackPanel CatAndURLControlStP = new StackPanel();
             CatAndURLControlStP.Orientation = Orientation.Vertical;
             CatAndURLControlStP.Margin = new Thickness(50, 50, 0, 0);
@@ -4057,7 +3451,6 @@ namespace UI
             AddCategury.Margin = new Thickness(0, 10, 0, 0);
             AddCategury.VerticalAlignment = VerticalAlignment.Top;
             AddCategury.HorizontalAlignment = HorizontalAlignment.Left;
-            //MainTemp.Children.Add(AddCategury);
             AddCategury.Height = 50;
             AddCategury.Width = 60;
             CategoryControlBtnsStP.Children.Add(AddCategury);
@@ -4076,7 +3469,6 @@ namespace UI
             DeleteCategury.Margin = new Thickness(30, 10, 0, 0);
             DeleteCategury.VerticalAlignment = VerticalAlignment.Top;
             DeleteCategury.HorizontalAlignment = HorizontalAlignment.Left;
-            //MainTemp.Children.Add(DeleteCategury);
             DeleteCategury.MinHeight = 25;
             DeleteCategury.MinWidth = 60;
             CategoryControlBtnsStP.Children.Add(DeleteCategury);
@@ -4117,7 +3509,6 @@ namespace UI
             URLsNameErrorTB.VerticalAlignment = VerticalAlignment.Top;
             URLsNameErrorTB.HorizontalAlignment = HorizontalAlignment.Left;
             URLsControlWrapPanel.Children.Add(URLsNameErrorTB);
-            
             StackPanel URLsControlBtnsStP = new StackPanel();
             URLsControlBtnsStP.Orientation = Orientation.Horizontal;
             URLsControlBtnsStP.Uid = "URLsControlBtnsStP";
@@ -4133,7 +3524,6 @@ namespace UI
             AddURL.Margin = new Thickness(0, 10, 0, 0);
             AddURL.VerticalAlignment = VerticalAlignment.Top;
             AddURL.HorizontalAlignment = HorizontalAlignment.Left;
-            //AddURLChildren.Add(AddCategury);
             AddURL.Height = 50;
             AddURL.Width = 60;
             URLsControlBtnsStP.Children.Add(AddURL);
@@ -4152,7 +3542,6 @@ namespace UI
             DeleteURL.Margin = new Thickness(30, 10, 0, 0);
             DeleteURL.VerticalAlignment = VerticalAlignment.Top;
             DeleteURL.HorizontalAlignment = HorizontalAlignment.Left;
-            //DeleteURLldren.Add(DeleteCategury);
             DeleteURL.MinHeight = 25;
             DeleteURL.MinWidth = 60;
             URLsControlBtnsStP.Children.Add(DeleteURL);
@@ -4279,7 +3668,6 @@ namespace UI
             AddBlockURL.Margin = new Thickness(0, 10, 0, 0);
             AddBlockURL.VerticalAlignment = VerticalAlignment.Top;
             AddBlockURL.HorizontalAlignment = HorizontalAlignment.Left;
-            //AddBlockURLRLChildren.Add(AddCategury);
             AddBlockURL.Height = 50;
             AddBlockURL.Width = 60;
             URLsBlockBtnsStP.Children.Add(AddBlockURL);
@@ -4355,9 +3743,6 @@ namespace UI
             HistoryURLSemaphore.Release();
             if (URLCategury.Count > 0)
             {
-                //URLRow3.Height = new GridLength(1, GridUnitType.Star);
-                //URLRow3.MinHeight = 400;
-                //MainTemp.RowDefinitions.Add(URLRow3);
                 Image InfoImage3 = new System.Windows.Controls.Image();
                 InfoImage3.Source = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/if_info-blog_46810.ico"));
                 InfoImage3.Width = 30;
@@ -4385,7 +3770,6 @@ namespace UI
                 NumberOfURLinCat.VerticalAlignment = VerticalAlignment.Top;
                 NumberOfURLinCat.Margin = new Thickness(30, 70, 0, 0);
                 MainTemp.Children.Add(NumberOfURLinCat);
-                //MoreUrls.Add(NumberOfURLinCat);
                 Grid.SetRow(NumberOfURLinCat, 3);
                 Charts CatChart = new Charts();
                 CatChart.DrawPieChart(ref NumberOfURLinCat, URLCategury, new Point(100, 100), 50, 100, new SolidColorBrush(Colors.Transparent),
@@ -4438,7 +3822,6 @@ namespace UI
                     string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
                     MainWindow.Connection.SendDataSM.WaitOne();
                     MainWindow.Connection.SendToServer(MainStrData);
-                    //MainWindow.Connection.SendToServer(Data);
                     MainWindow.Connection.SendDataSM.Release();
                 }
             });
@@ -4615,9 +3998,6 @@ namespace UI
                 MainTemp = (WrapPanel)stackPanel.Children[1];
                 stackPanel = (StackPanel)MainTemp.Children[1];
                 MainTemp = (WrapPanel)stackPanel.Children[1];
-                
-                
-
                 ComboBox Target = (ComboBox)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "URLCateguryCombo");
                 URLsList.Clear();
                 Target.Items.RemoveAt(Target.Items.IndexOf(URLCategoryList.GetDataAt(URLCategoryList.SelectedIndex)[0]));
@@ -4643,12 +4023,10 @@ namespace UI
         {
             MainDataGrid.Dispatcher.Invoke(() =>
             {
-                //ListView Target = sender as ListView;
                 WrapPanel MainTemp = (WrapPanel)((Border)MainDataGrid.Children[1]).Child;
                 StackPanel stackPanel = (StackPanel)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "BlockURLStP");
                 MainTemp = (WrapPanel)stackPanel.Children[1];
                 stackPanel = (StackPanel)MainTemp.Children[2];
-                //MainTemp = (WrapPanel)stackPanel.Children[1];
                 Button Remove = (Button)stackPanel.Children[1];
                 if (BlockURLList.SelectedIndex > -1)
                 {
@@ -4671,7 +4049,6 @@ namespace UI
             ImageBrush RemoveImage = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/x-mark-4-64.ico")));
             Button RemoveLimitBtn = new Button();
             RemoveLimitBtn.Click += RemoveLimitBtnClick;
-            //RemoveLimitBtn.Content = "LimitRemoveBtn";
             RemoveLimitBtn.Background = RemoveImage;
             RemoveLimitBtn.Template = MaxBtn.Template;
             RemoveLimitBtn.BorderThickness = new Thickness(0);
@@ -4702,7 +4079,6 @@ namespace UI
             ImageBrush AddImage = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/add-64.ico")));
             Button AddLimitBtn = new Button();
             AddLimitBtn.Uid = "LimitAddBtn";
-            //AddLimitBtn.Content = "Add";
             AddLimitBtn.Height = 40;
             AddLimitBtn.Width = 40;
             AddLimitBtn.Template = MaxBtn.Template;
@@ -4719,7 +4095,6 @@ namespace UI
             ImageBrush EditImage = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/edit-8-64.ico")));
             Button EditLimitBtn = new Button();
             EditLimitBtn.Uid = "LimitEditBtn";
-            //EditLimitBtn.Content = "Edit";
             EditLimitBtn.Click += EditLimitaionBtnClick;
             EditLimitBtn.Margin = new Thickness(AddLimitBtn.MinWidth + 70 + AddLimitBtn.Margin.Left, AddLimitBtn.Margin.Top, 0, 0);
             EditLimitBtn.Width = 40;
@@ -4729,10 +4104,6 @@ namespace UI
             EditLimitBtn.Background = EditImage;
             EditLimitBtn.VerticalAlignment = VerticalAlignment.Top;
             EditLimitBtn.HorizontalAlignment = HorizontalAlignment.Left;
-            //MainDataGrid.Children.Add(EditLimitBtn);
-            //LimitExpand.Add(EditLimitBtn);
-            
-            
         }
 
         private void RemoveLimitBtn_Click(object sender, RoutedEventArgs e)
@@ -4774,7 +4145,6 @@ namespace UI
                                 string MainStrData = PC.ToString<Packet.MainPacket>(MainData);
                                 MainWindow.Connection.SendDataSM.WaitOne();
                                 MainWindow.Connection.SendToServer(MainStrData);
-                                //MainWindow.Connection.SendToServer(Data);
                                 MainWindow.Connection.SendDataSM.Release();
                                 MainWindow.DataBaseAgent.ExequteWithCommand("Delete From SystemLimit where ChildID ='" + ChildsCombo.SelectedItem.ToString().ToString() + "' AND ID ='" + ((SystemLimit)TargetList.SelectedItems).ID + "'");
                                 TargetList.Items.RemoveAt(TargetList.SelectedIndex);
@@ -4803,7 +4173,6 @@ namespace UI
                                 Packet.AppLimition3Time SYSData = new Packet.AppLimition3Time();
                                 SYSData.Start = (TimeSpan)NewRow["StartTime"];
                                 SYSData.End = (TimeSpan)NewRow["EndTime"];
-                                //SYSData.Duration = NewLimit.Duration;
                                 SYSData.Act = (short)Packet.AppLimitAct.Disable;
                                 SYSData.AppName = NewRow["ID"].ToString();
                                 Packet.PSProPacket ProSys = new Packet.PSProPacket();
@@ -4819,7 +4188,6 @@ namespace UI
                                 string MainStrData = PC.ToString<Packet.MainPacket>(MainData);
                                 MainWindow.Connection.SendDataSM.WaitOne();
                                 MainWindow.Connection.SendToServer(MainStrData);
-                                //MainWindow.Connection.SendToServer(Data);
                                 MainWindow.Connection.SendDataSM.Release();
                                 MainWindow.DataBaseAgent.ExequteWithCommand("Delete From AppsLimit where ChildID ='" + ChildsCombo.SelectedItem.ToString().ToString() + "' AND ID ='" + ((SystemLimit)TargetList.SelectedItems).ID + "'");
                                 TargetList.Items.RemoveAt(TargetList.SelectedIndex);
@@ -4849,7 +4217,6 @@ namespace UI
                                 SYSData.Command = NewRow["ID"].ToString();
                                 SYSData.Command += ("$" + NewRow["StartTime"].ToString()+"$");
                                 SYSData.Command += (TimeSpan)NewRow["EndTime"];
-                                //SYSData.Duration = NewLimit.Duration;
                                 SYSData.Type = (short)Packet.NetworkCommandsType.DisableWithTime;
                                 Packet.PSProPacket ProSys = new Packet.PSProPacket();
                                 string Data = PC.ToString(SYSData);
@@ -4864,7 +4231,6 @@ namespace UI
                                 string MainStrData = PC.ToString<Packet.MainPacket>(MainData);
                                 MainWindow.Connection.SendDataSM.WaitOne();
                                 MainWindow.Connection.SendToServer(MainStrData);
-                                //MainWindow.Connection.SendToServer(Data);
                                 MainWindow.Connection.SendDataSM.Release();
                                 MainWindow.DataBaseAgent.ExequteWithCommand("Delete From NetworkLimit where ChildID ='" + ChildsCombo.SelectedItem.ToString().ToString() + "' AND ID ='" + ((SystemLimit)TargetList.SelectedItems).ID + "'");
                                 TargetList.Items.RemoveAt(TargetList.SelectedIndex);
@@ -4906,11 +4272,9 @@ namespace UI
                 InfoImage0.HorizontalAlignment = HorizontalAlignment.Left;
                 InfoImage0.Margin = new Thickness(Target.Margin.Left + Target.Width + 50, Target.Margin.Top, 0, 0);
                 MainTemp.Children.Add(InfoImage0);
-                //Grid.SetRow(InfoImage0, 0);
                 TextBlock InfoTb0 = new TextBlock();
                 InfoTb0.Text = "Please Fill \"Start Time\"\n and \"End Time\" in 24h\n and hh:mm:ss format";
                 InfoTb0.FontSize = 16;
-                //InfoTb2.FontFamily = new FontFamily("Freestyle Script");
                 InfoTb0.VerticalAlignment = VerticalAlignment.Top;
                 InfoTb0.HorizontalAlignment = HorizontalAlignment.Left;
                 InfoTb0.Foreground = new SolidColorBrush(Colors.Black);
@@ -5069,7 +4433,7 @@ namespace UI
                         AppsLimit NewLimit = new AppsLimit();
                         try
                         {
-                            //NewLimit.Act = (short)ActCombo.SelectedIndex;
+                            
                             NewLimit.AppName = Name.Text;
                             NewLimit.StartTime = Convert.ToDateTime(Start.Text) - Base;
                             NewLimit.EndTime = Convert.ToDateTime(End.Text) - Base;
@@ -5087,7 +4451,6 @@ namespace UI
                         NetworkLimit NewLimit = new NetworkLimit();
                         try
                         {
-                            //NewLimit.Act = (short)ActCombo.SelectedIndex;
                             NewLimit.Name = Name.Text;
                             NewLimit.StartTime = Convert.ToDateTime(Start.Text) - Base;
                             NewLimit.EndTime = Convert.ToDateTime(End.Text) - Base;
@@ -5153,7 +4516,6 @@ namespace UI
             Grid MainTemp = (Grid)((Border)MainDataGrid.Children[1]).Child;
             Border ListTarget = (Border)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "ShowLimitList");
             Button Target = sender as Button;
-            //Target.Margin = new Thickness(ListTarget.ActualWidth + 10, 140, 10, 0);
         }
 
         private void InfoImage3_Loaded(object sender, RoutedEventArgs e)
@@ -5248,7 +4610,6 @@ namespace UI
             string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
             MainWindow.Connection.SendDataSM.WaitOne();
             MainWindow.Connection.SendToServer(MainStrData);
-            //MainWindow.Connection.SendToServer(Data);
             MainWindow.Connection.SendDataSM.Release();
         }
 
@@ -5300,8 +4661,6 @@ namespace UI
             WrapPanel MainTemp = (WrapPanel)((Border)MainDataGrid.Children[1]).Child;
             if (AddAppName != null)
             {
-                //ListBox Target = (ListBox)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "CategoryList");
-                //ListBox TargetApp = (ListBox)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "AppsList");
                 MainWindow.DataBaseAgent.SelectData("AppCategory", ref MainWindow.DS, "*", "AppCategory", ChildsCombo.SelectedItem.ToString().ToString(), "ChildID");
                 if(MainWindow.DS.Tables["AppCategory"].Rows.Count > 0)
                 {
@@ -5322,7 +4681,6 @@ namespace UI
                 MainWindow.DataBaseAgent.UpdateData(MainWindow.DS.Tables["AppCategory"]);
                 MainWindow.DS.Tables.Remove("AppCategory");
                 CategoryAppAppList.AddNewItem(AddAppName);
-                //Target.Items.Add(AddAppName);
             }
            
         }
@@ -5368,7 +4726,6 @@ namespace UI
             string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
             MainWindow.Connection.SendDataSM.WaitOne();
             MainWindow.Connection.SendToServer(MainStrData);
-            //MainWindow.Connection.SendToServer(Data);
             MainWindow.Connection.SendDataSM.Release();
             NetworkAdaptorSemaphor.WaitOne();
             MainWindow.DataBaseAgent.SelectData("NetworkAdaptor", ref MainWindow.DS, "*", "NetworkAdaptor", ChildsCombo.SelectedItem.ToString().ToString(), "ChildID");
@@ -5383,12 +4740,7 @@ namespace UI
             NetworkAdaptorSemaphor.Release();
             Button Target = sender as Button;
             Target.IsEnabled = false;
-            //int Index = Target.SelectedIndex;
-            //NetworkAdaptor ChangedAdaptor = new NetworkAdaptor();
-            //ChangedAdaptor = (NetworkAdaptor)Target.SelectedItem;
-            //ChangedAdaptor.Status = "Disable";
-            //Target.Items.RemoveAt(Index);
-            //Target.Items.Insert(Index, ChangedAdaptor);
+
         }
 
         private void TackeScreenShot(object sender, RoutedEventArgs e)
@@ -5405,17 +4757,13 @@ namespace UI
             ProSC.ID = MainWindow.DS.Tables["Data"].Rows[2]["DataContent"].ToString();
             ProSC.Reciver = ChildsCombo.SelectedItem.ToString().ToString();
             ProSC.TotalSize = Encoding.Unicode.GetBytes(Data).Length;
-            //MainWindow.Connection.TakeScreenShot(ScreenShotImage);
             Packet.MainPacket MainData = new Packet.MainPacket();
             MainData.Data = Data;
             MainData.PPacket = Pack.ToString(ProSC);
             string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
             MainWindow.Connection.SendDataSM.WaitOne();
             MainWindow.Connection.SendToServer(MainStrData);
-            //MainWindow.Connection.SendToServer(Data);
             MainWindow.Connection.SendDataSM.Release();
-
-            //MainWindow.Connection.RealTimeMonitoring()
         }
 
         private void NetAdaptorReloadElipced(object sender, ElapsedEventArgs e)
@@ -5461,7 +4809,6 @@ namespace UI
                 {
                     Target.Items.Add(new NetworkAdaptor
                     {
-                        //ChildID = Row["ChildID"].ToString(),
                         DeviceName = Row["DeviceName"].ToString(),
                         InterfaceName = Row["InterfaceName"].ToString(),
                         Status = Row["Status"].ToString()
@@ -5501,11 +4848,10 @@ namespace UI
                     NewRow["ChildID"] = Main.ChildUser;
                     NewRow["Color"] = Main.SelectColor();
                     URLCategoryList.AddNewItem(NewRow);
-                    //AllUsedURLCat.Items.Add(NewRow["Name"].ToString());
                     MainWindow.DS.Tables["URLCategury"].Rows.Add(NewRow);
                     MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["URLCategury"]);
                     TargetTB.Text = "";
-                    //MainWindow.DataBaseAgent.ExequteWithCommand("Insert into URLCategury (Name,ID) Values (N'" + TargetTxB.Text.ToString() + "' , )");
+                    
                     stackPanel = (StackPanel)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "BlockURLStP");
                     WrapPanel Temp = (WrapPanel)stackPanel.Children[1];
                     stackPanel = (StackPanel)Temp.Children[1];
@@ -5549,17 +4895,14 @@ namespace UI
                 string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
                 MainWindow.Connection.SendDataSM.WaitOne();
                 MainWindow.Connection.SendToServer(MainStrData);
-                //MainWindow.Connection.SendToServer(Data);
                 MainWindow.Connection.SendDataSM.Release();
                 Monitor.Source = BITIM;
-                //Target.Content = "End";
             }
             else
             {
                 StartReal = false;
                 MainWindow.Connection.RealTimeEnd();
                 Target.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/video-play-3-64.ico")));
-                //Target.Content = "Start";
             }
         }
 
@@ -5585,8 +4928,6 @@ namespace UI
             string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
             MainWindow.Connection.SendDataSM.WaitOne();
             MainWindow.Connection.SendToServer(MainStrData);
-            
-            //MainWindow.Connection.SendToServer(Data);
             MainWindow.Connection.SendDataSM.Release();
             NetworkAdaptorSemaphor.WaitOne();
             MainWindow.DataBaseAgent.SelectData("NetworkAdaptor", ref MainWindow.DS, "*", "NetworkAdaptor", ChildsCombo.SelectedItem.ToString().ToString(), "ChildID");
@@ -5601,12 +4942,6 @@ namespace UI
             NetworkAdaptorSemaphor.Release();
             Button Target = sender as Button;
             Target.IsEnabled = false;
-            //int Index = Target.SelectedIndex;
-            //NetworkAdaptor ChangedAdaptor = new NetworkAdaptor();
-            //ChangedAdaptor = (NetworkAdaptor)Target.SelectedItem;
-            //ChangedAdaptor.Status = "Enable";
-            //Target.Items.RemoveAt(Index);
-            //Target.Items.Insert(Index, ChangedAdaptor);
         }
 
         private void RunningActBtnClicked(object sender, RoutedEventArgs e)
@@ -5634,7 +4969,6 @@ namespace UI
             string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
             MainWindow.Connection.SendDataSM.WaitOne();
             MainWindow.Connection.SendToServer(MainStrData);
-            //MainWindow.Connection.SendToServer(Data);
             MainWindow.Connection.SendDataSM.Release();
         }
 
@@ -5682,11 +5016,9 @@ namespace UI
             InfoImage0.HorizontalAlignment = HorizontalAlignment.Left;
             InfoImage0.Margin = new Thickness(Target.Margin.Left + Target.MinWidth + 100 + 40, Target.Margin.Top, 0, 0);
             MainTemp.Children.Add(InfoImage0);
-            //Grid.SetRow(InfoImage0, 0);
             TextBlock InfoTb0 = new TextBlock();
             InfoTb0.Text = "   Please Fill \"Start Time\" , \"End Time\" and \n\"Duration\" in 24h and hh:mm:ss format";
             InfoTb0.FontSize = 16;
-            //InfoTb2.FontFamily = new FontFamily("Freestyle Script");
             InfoTb0.VerticalAlignment = VerticalAlignment.Top;
             InfoTb0.HorizontalAlignment = HorizontalAlignment.Left;
             InfoTb0.Foreground = new SolidColorBrush(Colors.Black);
@@ -5828,10 +5160,6 @@ namespace UI
                 case 0:
                     {
                         ActTypeLimit.Items.Add("Shut Down");
-                        //ActTypeLimit.Items.Add("Reboot");
-                        //ActTypeLimit.Items.Add("Sleep");
-                        //ActTypeLimit.Items.Add("Log Off");
-                        //ActTypeLimit.Items.Add("Lock");
                     };break;
                 case 1:
                     {
@@ -5859,11 +5187,8 @@ namespace UI
                         AppsList.MaxHeight = 150;
                         AppsList.Margin = new Thickness(20, Target.Margin.Top + 200 + 40, 10, 10);
                         AppsList.SelectionChanged += InstalledAppLimitSelectionChenge;
-                        //AppsList.Margin = new Thickness(20, 10, 10, 10);
                         MainTemp.Children.Add(AppsList);
                         MoreLimitExpand.Add(AppsList);
-                        //Grid.SetColumn(AppsList, 0);
-                        //Grid.SetRow(AppsList, 2);
                         InstalledAppsSemaphore.WaitOne();
                         MainWindow.DataBaseAgent.SelectData("InstalledApps", ref MainWindow.DS, "*", "InstalledApps", ChildsCombo.SelectedItem.ToString().ToString(), "ChildID");
                         foreach (System.Data.DataRow Row in MainWindow.DS.Tables["InstalledApps"].Rows)
@@ -5885,7 +5210,7 @@ namespace UI
                         OkNewLimit.Margin = new Thickness(30, Target.Margin.Top + 200 + 200, 0, 30);
                         ActTypeLimit.Items.Add("Disable");
                         GridView NetworkAdabtorGV = new GridView();
-                        //NetworkAdabtorGV.Columns.Add(new GridViewColumn { Header = "Child", DisplayMemberBinding = new Binding("ChildID") });
+                       
                         NetworkAdabtorGV.Columns.Add(new GridViewColumn { Header = "Device Name", DisplayMemberBinding = new Binding("DeviceName") });
                         NetworkAdabtorGV.Columns.Add(new GridViewColumn { Header = "Interface Name", DisplayMemberBinding = new Binding("InterfaceName") });
                         NetworkAdabtorGV.Columns.Add(new GridViewColumn { Header = "Status", DisplayMemberBinding = new Binding("Status") });
@@ -5911,7 +5236,6 @@ namespace UI
                         {
                             NetworkAdaptorList.Items.Add(new NetworkAdaptor
                             {
-                                //ChildID = Row["ChildID"].ToString(),
                                 DeviceName = Row["DeviceName"].ToString(),
                                 InterfaceName = Row["InterfaceName"].ToString(),
                                 Status = Row["Status"].ToString()
@@ -5932,16 +5256,6 @@ namespace UI
             ActTypeLimitBlock.HorizontalAlignment = HorizontalAlignment.Left;
             MainTemp.Children.Add(ActTypeLimitBlock);
             MoreLimitExpand.Add(ActTypeLimitBlock);
-            
-            //foreach (UIElement var in MainDataGrid.Children)
-            //{
-            //    if ((var is ComboBox) && ((ComboBox)var).Uid == "LimitTypeCombo")
-            //    {
-            //        
-            //    }
-            //}
-            //switch ()
-            //LimitList.Items.Add()
         }
 
         private void OkNewLimit_Click(object sender, RoutedEventArgs e)
@@ -6064,7 +5378,6 @@ namespace UI
                                     string MainStrData = PC.ToString<Packet.MainPacket>(MainData);
                                     MainWindow.Connection.SendDataSM.WaitOne();
                                     MainWindow.Connection.SendToServer(MainStrData);
-                                    //MainWindow.Connection.SendToServer(Data);
                                     MainWindow.Connection.SendDataSM.Release();
                                 }
                                 else
@@ -6147,7 +5460,6 @@ namespace UI
                                     string MainStrData = PC.ToString<Packet.MainPacket>(MainData);
                                     MainWindow.Connection.SendDataSM.WaitOne();
                                     MainWindow.Connection.SendToServer(MainStrData);
-                                    //MainWindow.Connection.SendToServer(Data);
                                     MainWindow.Connection.SendDataSM.Release();
                                 }
                                 else
@@ -6204,8 +5516,6 @@ namespace UI
                                     SYSData.Command += ("$" + NewLimit.StartTime.ToString() + "$");
                                     SYSData.Command += NewLimit.EndTime.ToString();
                                     SYSData.Type = (short)Packet.NetworkCommandsType.EnableWithTime;
-                                    //SYSData.Duration = NewLimit.Duration;
-                                    //SYSData.Act = (short)(ActCombo.SelectedIndex + 1);
                                     Packet.PSProPacket ProSys = new Packet.PSProPacket();
                                     string Data = PC.ToString(SYSData);
                                     ProSys.ID = MainWindow.DS.Tables["Data"].Rows[2]["DataContent"].ToString();
@@ -6219,7 +5529,6 @@ namespace UI
                                     string MainStrData = PC.ToString<Packet.MainPacket>(MainData);
                                     MainWindow.Connection.SendDataSM.WaitOne();
                                     MainWindow.Connection.SendToServer(MainStrData);
-                                    //MainWindow.Connection.SendToServer(Data);
                                     MainWindow.Connection.SendDataSM.Release();
                                 }
                                 else
@@ -6268,7 +5577,6 @@ namespace UI
                         string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
                         MainWindow.Connection.SendDataSM.WaitOne();
                         MainWindow.Connection.SendToServer(MainStrData);
-                        //MainWindow.Connection.SendToServer(Data);
                         MainWindow.Connection.SendDataSM.Release();
                         MainWindow.DS.Tables["SystemLimit"].Rows.RemoveAt(LimitList.SelectedIndex);
                         MainWindow.DataBaseAgent.UpdateData(MainWindow.DS.Tables["SystemLimit"]);
@@ -6297,7 +5605,6 @@ namespace UI
                         string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
                         MainWindow.Connection.SendDataSM.WaitOne();
                         MainWindow.Connection.SendToServer(MainStrData);
-                        //MainWindow.Connection.SendToServer(Data);
                         MainWindow.Connection.SendDataSM.Release();
                         MainWindow.DS.Tables["AppsLimit"].Rows.RemoveAt(LimitList.SelectedIndex);
                         MainWindow.DataBaseAgent.UpdateData(MainWindow.DS.Tables["AppsLimit"]);
@@ -6324,7 +5631,6 @@ namespace UI
                         string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
                         MainWindow.Connection.SendDataSM.WaitOne();
                         MainWindow.Connection.SendToServer(MainStrData);
-                        //MainWindow.Connection.SendToServer(Data);
                         MainWindow.Connection.SendDataSM.Release();
                         MainWindow.DS.Tables["NetworkLimit"].Rows.RemoveAt(LimitList.SelectedIndex);
                         MainWindow.DataBaseAgent.UpdateData(MainWindow.DS.Tables["NetworkLimit"]);
@@ -6339,12 +5645,10 @@ namespace UI
         {
             ComboBox Target = sender as ComboBox;
             
-            //TextBox Temp = ((TextBox)MainDataGrid.Children.Cast<UIElement>().First(x => x.Uid == "NameLimitInctance"));
-            //Temp.IsEnabled = true;
             Grid MainTemp = (Grid)Target.Parent;
             TextBlock textBlock = (TextBlock)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "LimitaionTypeTxt");
             MainTemp.Children.Remove(MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "ShowLimitList"));
-            switch (Target.SelectedItem)
+            switch (Target.SelectedItem.ToString())
             {
                 
                 case "System Limitaion":
@@ -6376,15 +5680,6 @@ namespace UI
                         }
                         Target.Margin = new Thickness(650, Target.Margin.Top, Target.Margin.Right, Target.Margin.Bottom);
                         textBlock.Margin = new Thickness(650, textBlock.Margin.Top, textBlock.Margin.Right, textBlock.Margin.Bottom);
-                        //((TextBox)MainDataGrid.Children.Cast<UIElement>().First(x=>x.Uid == "NameLimitInctance")).IsEnabled = false;
-                        //foreach (UIElement var in MainDataGrid.Children)
-                        //{
-                        //    if ((var is TextBox) && ((TextBox)var).Uid == "NameLimitInctance")
-                        //    {
-                        //        var.IsEnabled = false;
-                        //    }
-                        //}
-                        //Grid MainTemp = (Grid)((Border)MainDataGrid.Children[1]).Child;
                         foreach (UIElement var in MainTemp.Children)
                         {
                             if ((var is ComboBox) && ((ComboBox)var).Uid == "LImitActCombo")
@@ -6401,15 +5696,6 @@ namespace UI
                         {
                             "Close","Close With Show Message"
                         };
-                        //GridView LimitGV = new GridView();
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "Name", Width = 90, DisplayMemberBinding = new Binding("AppName") });
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "Start Time", Width = 90, DisplayMemberBinding = new Binding("StartTime") });
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "End Time", Width = 90, DisplayMemberBinding = new Binding("EndTime") });
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "Duration", Width = 90, DisplayMemberBinding = new Binding("Duratin") });
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "Action", Width = 90, DisplayMemberBinding = new Binding("Act") });
-                        //LimitList.View = LimitGV;
-
-
                         if (MainWindow.DS.Tables.Contains("AppsLimit") == true)
                         {
                             MainWindow.DS.Tables.Remove("AppsLimit");
@@ -6433,33 +5719,6 @@ namespace UI
                         }
                         Target.Margin = new Thickness(650, Target.Margin.Top, Target.Margin.Right, Target.Margin.Bottom);
                         textBlock.Margin = new Thickness(650, textBlock.Margin.Top, textBlock.Margin.Right, textBlock.Margin.Bottom);
-
-                        //MainWindow.DataBaseAgent.SelectData("AppsLimit", ref MainWindow.DS, "*", "AppsLimit", ChildsCombo.SelectedItem.ToString().ToString(), "ChildID");
-                        //foreach (System.Data.DataRow Row in MainWindow.DS.Tables["AppsLimit"].Rows)
-                        //{
-                        //    LimitList.Items.Add(new AppsLimit
-                        //    {
-                        //        AppName = Row["AppName"].ToString(),
-                        //        StartTime = (TimeSpan)Row["StartTime"],
-                        //        EndTime = (TimeSpan)Row["EndTime"],
-                        //        Duratin = (TimeSpan)Row["Duratin"],
-                        //        Act = Row["Act"].ToString()
-                        //    });
-                        //}
-                        //MainWindow.DS.Tables.Remove("AppsLimit");
-
-                        //MainWindow.DS.Tables.Remove("InstalledApps");
-                        //foreach (UIElement var in MainDataGrid.Children)
-                        //{
-                        //    if ((var is ComboBox) && ((ComboBox)var).Uid == "LImitActCombo")
-                        //    {
-                        //        ((ComboBox)var).ItemsSource = Acts;
-                        //        ((ComboBox)var).SelectedIndex = 0;
-                        //    }
-                        //}
-                        //
-                        //
-                        //
                     }; break;
                 case "Network Limitaion":
                     {
@@ -6467,17 +5726,6 @@ namespace UI
                         {
                             "Disable" , "Disable With Show Message"
                         };
-                        //GridView LimitGV = new GridView();
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "Name", DisplayMemberBinding = new Binding("ID") });
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "Device", DisplayMemberBinding = new Binding("Name") });
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "Start Time", DisplayMemberBinding = new Binding("StartTime") });
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "End Time", DisplayMemberBinding = new Binding("EndTime") });
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "Duration", DisplayMemberBinding = new Binding("Duration") });
-                        //LimitGV.Columns.Add(new GridViewColumn { Header = "Action", DisplayMemberBinding = new Binding("Act") });
-                        //LimitList.View = LimitGV;
-
-
-
                         if (MainWindow.DS.Tables.Contains("NetworkLimit") == true)
                         {
                             MainWindow.DS.Tables.Remove("NetworkLimit");
@@ -6502,31 +5750,6 @@ namespace UI
 
                         Target.Margin = new Thickness(850, Target.Margin.Top, Target.Margin.Right, Target.Margin.Bottom);
                         textBlock.Margin = new Thickness(850, textBlock.Margin.Top, textBlock.Margin.Right, textBlock.Margin.Bottom);
-
-                        //MainWindow.DataBaseAgent.SelectData("NetworkLimit", ref MainWindow.DS, "*", "NetworkLimit", ChildsCombo.SelectedItem.ToString().ToString(), "ChildID");
-                        //foreach (System.Data.DataRow Row in MainWindow.DS.Tables["NetworkLimit"].Rows)
-                        //{
-                        //    LimitList.Items.Add(new NetworkLimit
-                        //    {
-                        //        Name = Row["Name"].ToString(),
-                        //        StartTime = (TimeSpan)Row["StartTime"],
-                        //        EndTime = (TimeSpan)Row["EndTime"],
-                        //        Duration = (TimeSpan)Row["Duration"],
-                        //        Act = Row["Act"].ToString()
-                        //    });
-                        //}
-                        //MainWindow.DS.Tables.Remove("NetworkLimit");
-                        //Grid.SetRow(NetworkAdaptorList, 2);
-                        //Grid.SetColumn(NetworkAdaptorList, 0);
-
-                        //foreach (UIElement var in MainDataGrid.Children)
-                        //{
-                        //    if ((var is ComboBox) && ((ComboBox)var).Uid == "LImitActCombo")
-                        //    {
-                        //        ((ComboBox)var).ItemsSource = Acts;
-                        //        ((ComboBox)var).SelectedIndex = 0;
-                        //    }
-                        //}
                     }; break;
             }
 
@@ -6545,15 +5768,6 @@ namespace UI
             {
                 TargetBtn.IsEnabled = false;
             }
-            //foreach (UIElement var in MainDataGrid.Children)
-            //{
-            //    if ((var is TextBox) && ((TextBox)var).Uid == "NameLimitInctance")
-            //    {
-            //        
-            //        NetworkAdaptor Target = (NetworkAdaptor)TargetList.SelectedItem;
-            //        ((TextBox)var).Text = (Target.ChildID + "," + Target.DeviceName + "," + Target.InterfaceName);
-            //    }
-            //}
         }
 
         private void InstalledAppLimitSelectionChenge(object sender, SelectionChangedEventArgs e)
@@ -6614,11 +5828,9 @@ namespace UI
         {
             WrapPanel MainTemp = (WrapPanel)((Border)MainDataGrid.Children[1]).Child;
             Border Target= (Border)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "InstalledAppsList");
-            //Target.Items.RemoveAt(Target.SelectedIndex);
             Packet Pack = new Packet();
             Packet.Apps Uninstall = new Packet.Apps();
             StackPanel SP = (StackPanel) Target.Child;
-            //InstalledApp TargetApp = (InstalledApp)Target.Items[Target.SelectedIndex];
             InstalledAppsSemaphore.WaitOne();
             string AppID = MainWindow.DataBaseAgent.ExequteWithCommandScaler("Select AppID From InstalledApps where ChildID ='" + ChildsCombo.SelectedItem.ToString() + "'And DisplayName='" + SP.Children[0] + "' And InstallDate ='" + SP.Children[1] + "'").ToString();
             InstalledAppsSemaphore.Release();
@@ -6735,26 +5947,17 @@ namespace UI
             string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
             MainWindow.Connection.SendDataSM.WaitOne();
             MainWindow.Connection.SendToServer(MainStrData);
-            //MainWindow.Connection.SendToServer(Data);
             MainWindow.Connection.SendDataSM.Release();
             MainWindow.DataBaseAgent.ExequteWithCommand("Delete From BlockUrls where ChildID ='" + ChildUser + "' And URL='" + BlockURL.Address + "'");
-            //MainWindow.DS.Tables["BlockUrls"].Rows.RemoveAt(Target.SelectedIndex);
-            //MainWindow.DataBaseAgent.UpdateData(MainWindow.DS.Tables["BlockUrls"]);
             Target.Items.RemoveAt(Target.SelectedIndex);
             MainWindow.DS.Tables.Remove("BlockUrls");
         }
-        //public void ShowPic(BitmapImage Input)
-        //{
-        //    this.Dispatcher.BeginInvoke(new Action(() =>
-        //        Monitor.Source = Input));
-        //}
 
         private void ExpanderHistoryClick(object sender, RoutedEventArgs e)
         {
             
             WrapPanel MainTemp = (WrapPanel)((Border)MainDataGrid.Children[1]).Child;
             Expander Target = sender as Expander;
-            //WebBrowser WebTarget = (WebBrowser)MainTemp.Children.Cast<UIElement>().First(x => x.Uid == "Google");
             if (Target.IsExpanded == true)
             {
                 MoreLocation = new List<object>();
@@ -6767,7 +5970,6 @@ namespace UI
                 TitleTB0.HorizontalAlignment = HorizontalAlignment.Left;
                 MainTemp.Children.Add(TitleTB0);
                 MoreLocation.Add(TitleTB0);
-                //WebTarget.Height = 200;
                 Image InfoImage1 = new System.Windows.Controls.Image();
                 InfoImage1.Source = new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/if_info-blog_46810.ico"));
                 InfoImage1.Width = 30;
@@ -6777,13 +5979,10 @@ namespace UI
                 InfoImage1.Margin = new Thickness(-170, 150, 0,  20);
                 MainTemp.Children.Add(InfoImage1);
                 MoreLocation.Add(InfoImage1);
-                //Grid.SetRow(InfoImage1, 0);
                 TextBlock InfoTb1 = new TextBlock();
                 InfoTb1.Text = "For show location please Select one location from blow list";
                 InfoTb1.FontSize = 16;
-                //InfoTb2.FontFamily = new FontFamily("Freestyle Script");
                 InfoTb1.VerticalAlignment = VerticalAlignment.Top;
-                //InfoTb1.HorizontalAlignment = HorizontalAlignment.Left;
                 InfoTb1.Foreground = new SolidColorBrush(Colors.Black);
                 InfoTb1.Margin = new Thickness(-140, 180, 0, 0);
                 MainTemp.Children.Add(InfoTb1);
@@ -6806,47 +6005,13 @@ namespace UI
                    300);
                 MainTemp.Children.Add(LocationListBorder);
                 MoreLocation.Add(LocationListBorder);
-
-                /*
-                ShowLocation = new ListView();
-                GridView GV = new GridView();
-                GV.Columns.Add(new GridViewColumn { Header = "Date", DisplayMemberBinding = new Binding("Date") });
-                GV.Columns.Add(new GridViewColumn { Header = "Child", DisplayMemberBinding = new Binding("ChildID") });
-                GV.Columns.Add(new GridViewColumn { Header = "Latitude", DisplayMemberBinding = new Binding("Latitude") });
-                GV.Columns.Add(new GridViewColumn { Header = "Longitude", DisplayMemberBinding = new Binding("Longitude") });
-                ShowLocation.View = GV;
-                ShowLocation.SelectionChanged += LocationSelectionChange;
-                ShowLocation.VerticalAlignment = VerticalAlignment.Top;
-                ShowLocation.HorizontalAlignment = HorizontalAlignment.Left;
-                MoreLocation.Add(ShowLocation);
-                MainWindow.DataBaseAgent.SelectData("Location", ref MainWindow.DS, "*", "Location", ChildsCombo.SelectedItem.ToString().ToString(), "ChildID");
-                foreach (System.Data.DataRow Row in MainWindow.DS.Tables["Location"].Rows)
-                {
-                    ShowLocation.Items.Add(new Location { Date = (string)Row["Date"], Latitude = Row["Latitude"].ToString(), Longitude = Row["Longitude"].ToString()
-                        , ChildID = Row["ChildID"].ToString() });
-                }*/
                 MainWindow.DS.Tables.Remove("Location");
                 LocationSemapore.Release();
-                //MainDataGrid.RowDefinitions[0].Height = new GridLength(0.5, GridUnitType.Star);
-                //MainDataGrid.RowDefinitions[1].Height = new GridLength(0.5, GridUnitType.Star);
                 History.VerticalAlignment = VerticalAlignment.Top;
-                //History.Margin = new Thickness();
-                //Grid.SetRow(ShowLocation, 1);
-                //Target.VerticalAlignment = VerticalAlignment.Top;
-                //Target.Margin = new Thickness(0, 260, 0, 0);
-                //ShowLocation.Margin = new Thickness(30, 680, 20, 20);
-                //ShowLocation.MinHeight = 50;
-                //ShowLocation.MaxHeight = 150;
-                //ShowLocation.Width = 500;
-                //MainTemp.Children.Add(ShowLocation);
 
             }
             else
             {
-                //MainDataGrid.RowDefinitions[1].Height = new GridLength(30.4, GridUnitType.Pixel);
-                //MainDataGrid.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Star);
-                //Target.Margin = new Thickness(0);
-                //WebTarget.Height = 370;
                 foreach( object var in MoreLocation)
                 {
                     MainTemp.Children.Remove((UIElement)var);
@@ -6882,7 +6047,6 @@ namespace UI
             {
                 this.WindowState = OldWindowsState;
                 MaxBtn.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/UI;component/Files/maximize.png")));
-                //ChildListBorder.Width = 400;
             }
             
         }
@@ -6894,13 +6058,10 @@ namespace UI
 
         private void Border_MouseEnter(object sender, MouseEventArgs e)
         {
-           // SV.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
         }
 
         private void Border_MouseLeave(object sender, MouseEventArgs e)
         {
-            //SV.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
-            
         }
 
         private void MainW_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -6922,9 +6083,6 @@ namespace UI
 
         private void MainW_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            //Grid MainTemp = (Grid)((Border)MainDataGrid.Children[1]).Child;
-            //TextBlock Target = (TextBlock)BMain.Children.Cast<UIElement>().First(x => x.Uid == "PageTitle");
-            //Target.Margin = new Thickness((MainTemp.ActualWidth / 2) - 60, 0, 0, 0);
         }
 
         public static  string SelectColor()
@@ -6965,7 +6123,6 @@ namespace UI
 
         private void MainW_Loaded(object sender, RoutedEventArgs e)
         {
-            //ChildListBorder.Margin = new Thickness(Panel.ActualWidth , 2, 0, 2);
         }
 
         public class ListItems
@@ -7090,10 +6247,6 @@ namespace UI
                     SepratorLine.FlowDirection = FlowDirection.LeftToRight;
                     SepratorLine.HorizontalAlignment = HorizontalAlignment.Right;
                     PlayBtn.Cursor = Cursors.Hand;
-                    //AppTextBlok.HorizontalAlignment = HorizontalAlignment.Right;
-                    //AppTextBlok.Margin = new Thickness(0, 10, 20, 0);
-                    //PlayBtn.HorizontalAlignment = HorizontalAlignment.Left;
-                    //PlayBtn.Margin = new Thickness(20, -60, 20, 0);
                 }
                 AppTextBlok.Foreground = new SolidColorBrush(Colors.Black);
                 AppTextBlok.FontSize = 16;
@@ -7120,9 +6273,7 @@ namespace UI
                 SepratorLine.VerticalAlignment = VerticalAlignment.Top;
                 
                 SepratorLine.Margin = new Thickness(10, 55, 15, 0);
-                //SepratorLinenenenenene.Fill = new SolidColorBrush(Colors.Black);
                 SepratorLine.Stroke = new SolidColorBrush(Color.FromArgb(255, 211, 215, 233));
-                //SepratorLine.Opacity = 70;
                 SepratorLine.StrokeThickness = 1;
                 SepratorLine.X1 = 5;
                 SepratorLine.Y1 = 10;
@@ -7133,7 +6284,6 @@ namespace UI
                 DateTextBlock.FontSize = 12;
                 DateTextBlock.FontWeight = FontWeights.Bold;
                 DateTextBlock.Text = Date;
-                //DateTextBlock.Margin = new Thickness(20, 80, 0, 0);
                 wrapPanel.Children.Add(DateTextBlock);
                 OutBorder.Child = wrapPanel;
                 return OutBorder;
@@ -7288,7 +6438,6 @@ namespace UI
                 this.ItemsForeground = ItemsForeground;
                 this.ItemFontSize = ItemFontSize;
                 ListOuterBorder.Width = ListSize.Width;
-                //ListOuterBorder.Height = ListSize.Height;
                 ListOuterBorder.MaxHeight = MaxHeight;
                 ListOuterBorder.Background = new SolidColorBrush(Colors.Transparent);
                 ListOuterBorder.Margin = ListMargin;
@@ -7321,7 +6470,6 @@ namespace UI
                 MainStackPanel.Children.Add(HeaderStackPanel);
                 ScrollViewer Scroll = new ScrollViewer();
                 Scroll.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-                //Scroll.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
                 ItemListStackPanel = new StackPanel();
                 for (int i = 0; ItemData != null &&  i < ItemData.Rows.Count; i++)
                 {
@@ -7377,12 +6525,6 @@ namespace UI
                 Scroll.Content = ItemListStackPanel;
                 MainStackPanel.Children.Add(Scroll);
                 ListOuterBorder.Child = MainStackPanel;
-                //TextBlock TbDataNumber = new TextBlock();
-                //TbDataNumber.Text = "Total : " + Number.ToString();
-                //TbDataNumber.Uid = TotalTextBlockUID;
-                //TbDataNumber.Margin = new Thickness(20, 15, 0, 20);
-                //TbDataNumber.Foreground = new SolidColorBrush(Colors.Black);
-                //TbDataNumber.FontSize = 12;
                 return ListOuterBorder;
             }
 
@@ -7392,7 +6534,6 @@ namespace UI
                 int ItemFontSize, int HeaderFontSize, string[] ColumnNames, SelectionChangedEventHandler SelectionChangeEvent, string UID, double MaxHeight , List<string> AllPosibleComboData,
                 List<string> DefaultComboData , out List<ComboBox> AllCombo)
             {
-                //Event = SelectionChangeEvent;
                 Border ListOuterBorder = new Border();
                 AllCombo = new List<ComboBox>();
                 this.FirstColor = FirstColor;
@@ -7404,7 +6545,6 @@ namespace UI
                 this.ItemsForeground = ItemsForeground;
                 this.ItemFontSize = ItemFontSize;
                 ListOuterBorder.Width = ListSize.Width;
-                //ListOuterBorder.Height = ListSize.Height;
                 ListOuterBorder.MaxHeight = MaxHeight;
                 ListOuterBorder.Background = new SolidColorBrush(Colors.Transparent);
                 ListOuterBorder.Margin = ListMargin;
@@ -7437,7 +6577,6 @@ namespace UI
                 MainStackPanel.Children.Add(HeaderStackPanel);
                 ScrollViewer Scroll = new ScrollViewer();
                 Scroll.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-                //Scroll.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
                 ItemListStackPanel = new StackPanel();
                 for (int i = 0; ItemData != null && i < ItemData.Count; i++)
                 {
@@ -7519,12 +6658,6 @@ namespace UI
                 Scroll.Content = ItemListStackPanel;
                 MainStackPanel.Children.Add(Scroll);
                 ListOuterBorder.Child = MainStackPanel;
-                //TextBlock TbDataNumber = new TextBlock();
-                //TbDataNumber.Text = "Total : " + Number.ToString();
-                //TbDataNumber.Uid = TotalTextBlockUID;
-                //TbDataNumber.Margin = new Thickness(20, 15, 0, 20);
-                //TbDataNumber.Foreground = new SolidColorBrush(Colors.Black);
-                //TbDataNumber.FontSize = 12;
                 return ListOuterBorder;
             }
 
@@ -7560,7 +6693,6 @@ namespace UI
                         
                     }
                     SelectedIndex = ((StackPanel)Target.Parent).Children.IndexOf((UIElement)Target);
-                    //SelectColor = ListItemHover;
                     Target.Background = new SolidColorBrush(Colors.Cornsilk);
                 }
                 Task.Run(() =>
@@ -7616,7 +6748,6 @@ namespace UI
         {
             MouseButtonEventArgs E = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
             E.RoutedEvent = StackPanel.MouseLeftButtonDownEvent;
-            //ChildsSV.Children[0].RaiseEvent(new RoutedEventArgs( MouseLeftButtonDownEvent));
             Panel.Children[0].RaiseEvent(E);
         }
 
@@ -7680,9 +6811,6 @@ namespace UI
                 }
             }
             SelectedLicense.Add("");
-            //List<string> A = new List<string>();
-            //A.Add("AS");
-            //A.Add("dass");
             List<string> Childs = new List<string>();
             AllCombo = new List<ComboBox>();
             Border border = NetworkList.DrawWithCombo(ColumnWidth, 30, HeadersName, null, ListSize, ItemSize, Color.FromArgb(255, 238, 241, 245), Colors.Transparent,
@@ -7691,16 +6819,6 @@ namespace UI
             border.VerticalAlignment = VerticalAlignment.Top;
             border.HorizontalAlignment = HorizontalAlignment.Left;
             MainTemp.Children.Add(border);
-            //foreach (System.Data.DataRow Row in MainWindow.DS.Tables["InstalledApps"].Rows)
-            //{
-            //    InstalledApp.Items.Add(new InstalledApp
-            //    {
-            //        DisplayName = Row["DisplayName"].ToString(),
-            //        DisplayVersion = Row["DisplayVersion"].ToString(),
-            //        InstallDate = Row["InstallDate"].ToString(),
-            //        Publisher = Row["Publisher"].ToString()
-            //    });
-            //}
             double[] LicenseColumnWidth = { 250, 350 };
             string[] LicenseHeadersName = { "Child ID", "License" };
             string[] LicenseColumnsName = { "ID", "LicenseID" };
@@ -7734,43 +6852,6 @@ namespace UI
                 }
             }
         }
-
-
-
-
-        //private void DrawGeometry(StreamGeometryContext context , double CentreX , double CentreY , double RotationAngle , double InnerRadius , double WedgeAngle,
-        //    double Radius)
-        //{
-        //    Point startPoint = new Point(CentreX, CentreY);
-        //
-        //    Point innerArcStartPoint =
-        //      Utils.ComputeCartesianCoordinate(RotationAngle, InnerRadius);
-        //    innerArcStartPoint.Offset(CentreX, CentreY);
-        //
-        //    Point innerArcEndPoint =
-        //      Utils.ComputeCartesianCoordinate(RotationAngle + WedgeAngle, InnerRadius);
-        //    innerArcEndPoint.Offset(CentreX, CentreY);
-        //
-        //    Point outerArcStartPoint =
-        //      Utils.ComputeCartesianCoordinate(RotationAngle, Radius);
-        //    outerArcStartPoint.Offset(CentreX, CentreY);
-        //
-        //    Point outerArcEndPoint =
-        //      Utils.ComputeCartesianCoordinate(RotationAngle + WedgeAngle, Radius);
-        //    outerArcEndPoint.Offset(CentreX, CentreY);
-        //
-        //    bool largeArc = WedgeAngle > 180.0;
-        //
-        //    Size outerArcSize = new Size(Radius, Radius);
-        //    Size innerArcSize = new Size(InnerRadius, InnerRadius);
-        //
-        //    context.BeginFigure(innerArcStartPoint, true, true);
-        //    context.LineTo(outerArcStartPoint, true, true);
-        //    context.ArcTo(outerArcEndPoint, outerArcSize, 0, largeArc,
-        //                  SweepDirection.Clockwise, true, true);
-        //    context.LineTo(innerArcEndPoint, true, true);
-        //    context.ArcTo(innerArcStartPoint, innerArcSize, 0, largeArc,
-        //                  SweepDirection.Counterclockwise, true, true);
-        //}
+   
     }
 }

@@ -14,8 +14,8 @@ namespace SpareWF
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            Application.EnableVisualStyles();//Enables visual styles for the application.
+            Application.SetCompatibleTextRenderingDefault(false);//Sets the program to the UseCompatibleTextRendering attribute defined in specific controls. Which is disabled here
             Application.Run(new Form1());
         }
     }

@@ -62,7 +62,6 @@ namespace UI
                 string MainStrData = packet.ToString<Packet.MainPacket>(MainData);
                 MainWindow.Connection.SendDataSM.WaitOne();
                 MainWindow.Connection.SendToServer(MainStrData);
-                //MainWindow.Connection.SendToServer(Data);
                 MainWindow.Connection.SendDataSM.Release();
                 MessageBox.Show("Voice recird request Sucessfully Send");
             }

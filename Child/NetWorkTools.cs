@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Management;
-using System.Net.NetworkInformation;
-using System.Security.Principal;
+using System.Net.NetworkInformation;//Provides access to network traffic data, network address information, and notification of address changes for the local computer. 
+using System.Security.Principal;//Defines a principal object that represents the security context under which code is running. 
 using System.Text;
 using NativeWifi;
 using System.Threading.Tasks;
 using System.Net;
-using Microsoft.Win32;
+using Microsoft.Win32;//Provides two types of classes: those that handle events raised by the operating system and those that manipulate the system registry.
 
 namespace Child
 {
@@ -170,11 +170,7 @@ namespace Child
             try
             {
                 string InterFaceName = "";
-                NetworkInterface[] AV = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces();
-                //foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
-                //{
-                //    ni.NetworkInterfaceType.ToString();
-                //}
+                NetworkInterface[] AV = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces();      
                 WlanClient Client = new WlanClient();
                 try
                 {
@@ -182,7 +178,6 @@ namespace Child
                     {
                         Wlan.WlanConnectionAttributes ConnectionInfo = var.CurrentConnection;
                         String strHostName = Dns.GetHostName();
-                        // Find host by name
                         IPHostEntry iphostentry = Dns.GetHostEntry(strHostName);
                         ModemIP = iphostentry.AddressList[1].ToString();
                         if (ConnectionInfo.isState == Wlan.WlanInterfaceState.Connected)

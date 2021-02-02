@@ -11,13 +11,14 @@ namespace Child
 {
     class Browsers
     {
-        //public AutomationPropertyChangedEventHandler UIAeventHandler; // For IE Change Title Event 
+        // For IE Change Title Event 
         public List<AutomationElement> ElementSubscribePage;
         public List<AutomationPropertyChangedEventHandler> UIAeventHandler;
-        // --------------- Set Event On Title Page -----------------
-        // When Page Content is Change Event Called;
-        // When Page Content Is Change , Page Title is Change , When We Set Event to Watch to the Title Page 
-        //we Can Find out When Page change and handler them.
+        /* --------------- Set Event On Title Page -----------------
+         // When Page Content is Change Event Called;
+         // When Page Content Is Change , Page Title is Change , When We Set Event to Watch to the Title Page 
+         //we Can Find out When Page change and handler them */
+
         public Browsers()
         {
             UIAeventHandler = new List<AutomationPropertyChangedEventHandler>(5);
@@ -51,10 +52,10 @@ namespace Child
             Process[] ChromProcess = Process.GetProcessesByName("chrome");// Find All chrome Procces 
             foreach (Process P in ChromProcess)
             {
-                if ((P.MainWindowHandle.ToInt32() > 0) && (P.MainWindowTitle != ""))// Check Active Procces to Find Usage Page . when MainWindowHandle.ToInt32()
-                                                                                    // More than 0 , Page is Active and we can use to find URL
-                                                                                    // When Page Have Valid MainWindowHandle.ToInt32() but Not Trust page 
-                                                                                    //Becuse use MainWindowTitle to Find Trust Page 
+                if ((P.MainWindowHandle.ToInt32() > 0) && (P.MainWindowTitle != ""))/* Check Active Procces to Find Usage Page . when MainWindowHandle.ToInt32()
+                                                                                     More than 0 , Page is Active and we can use to find URL
+                                                                                     When Page Have Valid MainWindowHandle.ToInt32() but Not Trust page 
+                                                                                     Becuse use MainWindowTitle to Find Trust Page */
                 {
                     AutomationElement Page = AutomationElement.FromHandle(P.MainWindowHandle);// Get chrome Main Window From Pointer 
                     SubscribeToInvoke(Page, AutomationElement.NameProperty,ref ChromeHandler );// Set Event To Name Property ,to Find when Page has change 
@@ -63,18 +64,16 @@ namespace Child
             }
         }
 
-        // Event Handler for when Chrome Page Name Has Change 
-        //this Event must use out the this Class
+        /* Event Handler for when Chrome Page Name Has Change 
+        this Event must use out the this Class*/
         public void ChromeHandler(object src, AutomationEventArgs e)
         {
             AutomationElement Page = src as AutomationElement;// Find Page that Send Event
             AutomationElement EditBox;
             EditBox = Page.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.NameProperty, "Address and search bar"))[0];// find Edit box that 
-            // Name is "Address and search bar"
             ValuePattern Value = (ValuePattern)EditBox.GetCurrentPattern(ValuePattern.Pattern);// Get String that have Url In this.
             string URL = Value.Current.Value;
         }
-
         //----------- End--------------------
 
         //-------------- For firefox Browser -------------------
@@ -83,85 +82,36 @@ namespace Child
         {
             try
             {
-                // Validate arguments / initial setup
-                //if (value == null)
-                //    throw new ArgumentNullException(
-                //        "String parameter must not be null.");
-                //
-                //if (element == null)
-                //    throw new ArgumentNullException(
-                //        "AutomationElement parameter must not be null");
-                //
-                // A series of basic checks prior to attempting an insertion.
-                //
-                // Check #1: Is control enabled?
-                // An alternative to testing for static or read-only controls 
-                // is to filter using 
-                // PropertyCondition(AutomationElement.IsEnabledProperty, true) 
-                // and exclude all read-only text controls from the collection.
-                //if (!element.Current.IsEnabled)
-                //{
-                //    throw new InvalidOperationException(
-                //        "The control with an AutomationID of "
-                //        + element.Current.AutomationId.ToString()
-                //        + " is not enabled.\n\n");
-                //}
-
-                // Check #2: Are there styles that prohibit us 
-                //           from sending text to this control?
-                //if (!element.Current.IsKeyboardFocusable)
-                //{
-                //    throw new InvalidOperationException(
-                //        "The control with an AutomationID of "
-                //        + element.Current.AutomationId.ToString()
-                //        + "is read-only.\n\n");
-                //}
-
-
                 // Once you have an instance of an AutomationElement,  
                 // check if it supports the ValuePattern pattern.
                 object valuePattern = null;
 
-                // Control does not support the ValuePattern pattern 
-                // so use keyboard input to insert content.
-                //
-                // NOTE: Elements that support TextPattern 
-                //       do not support ValuePattern and TextPattern
-                //       does not support setting the text of 
-                //       multi-line edit or document controls.
-                //       For this reason, text input must be simulated
-                //       using one of the following methods.
-                //       
+                /* Control does not support the ValuePattern pattern 
+                 so use keyboard input to insert content.
+                 NOTE: Elements that support TextPattern 
+                       do not support ValuePattern and TextPattern
+                       does not support setting the text of 
+                       multi-line edit or document controls.
+                       For this reason, text input must be simulated
+                       using one of the following methods.*/
+                       
                 if (!element.TryGetCurrentPattern(
                     ValuePattern.Pattern, out valuePattern))
                 {
-                    //feedbackText.Append("The control with an AutomationID of ")
-                    //    .Append(element.Current.AutomationId.ToString())
-                    //    .Append(" does not support ValuePattern.")
-                    //    .AppendLine(" Using keyboard input.\n");
-                    //
+                  
                     // Set focus for input functionality and begin.
                     element.SetFocus();
 
-                    // Pause before sending keyboard input.
-                    //Thread.Sleep(100);
-
-                    // Delete existing content in the control and insert new content.
+                    /* Pause before sending keyboard input.
+                     Delete existing content in the control and insert new content.*/
                     SendKeys.SendWait("^{HOME}");   // Move to start of control
                     SendKeys.SendWait("^+{END}");   // Select everything
                     SendKeys.SendWait("{DEL}");     // Delete selection
-                    //SendKeys.SendWait(value );
-                    //SendKeys.SendWait("AAAAA");
                 }
-                // Control supports the ValuePattern pattern so we can 
-                // use the SetValue method to insert content.
+                /* Control supports the ValuePattern pattern so we can 
+                  use the SetValue method to insert content.*/
                 else
                 {
-                    //feedbackText.Append("The control with an AutomationID of ")
-                    //    .Append(element.Current.AutomationId.ToString())
-                    //    .Append((" supports ValuePattern."))
-                    //    .AppendLine(" Using ValuePattern.SetValue().\n");
-
                     // Set focus for input functionality and begin.
                     element.SetFocus();
 
@@ -171,15 +121,15 @@ namespace Child
             }
             catch (ArgumentNullException exc)
             {
-                //feedbackText.Append(exc.Message);
+                
             }
             catch (InvalidOperationException exc)
             {
-                //feedbackText.Append(exc.Message);
+                
             }
             finally
             {
-                //Feedback(feedbackText.ToString());
+                
             }
         }
         public void FireFox(AutomationPropertyChangedEventHandler firefoxHandler)
@@ -187,10 +137,10 @@ namespace Child
             Process[] ChromProcess = Process.GetProcessesByName("firefox");// Find All firefox Procces 
             foreach (Process P in ChromProcess)
             {
-                if ((P.MainWindowHandle.ToInt32() > 0) && (P.MainWindowTitle != ""))// Check Active Procces to Find Usage Page . when MainWindowHandle.ToInt32()
-                                                                                    // More than 0 , Page is Active and we can use to find URL
-                                                                                    // When Page Have Valid MainWindowHandle.ToInt32() but Not Trust page 
-                                                                                    //Becuse use MainWindowTitle to Find Trust Page 
+                if ((P.MainWindowHandle.ToInt32() > 0) && (P.MainWindowTitle != ""))/* Check Active Procces to Find Usage Page . when MainWindowHandle.ToInt32()
+                                                                                     More than 0 , Page is Active and we can use to find URL
+                                                                                     When Page Have Valid MainWindowHandle.ToInt32() but Not Trust page 
+                                                                                     Becuse use MainWindowTitle to Find Trust Page*/ 
                 {
                     AutomationElement Page = AutomationElement.FromHandle(P.MainWindowHandle);// Get firefox Main Window From Pointer 
                     SubscribeToInvoke(Page, AutomationElement.NameProperty,ref firefoxHandler );// Set Event To Name Property ,to Find when Page has change 
@@ -199,8 +149,8 @@ namespace Child
             }
         }
 
-        // Event Handler for when firefox Page Name Has Change 
-        //this Event must use out the this Class
+        /* Event Handler for when firefox Page Name Has Change 
+        this Event must use out the this Class*/
         public void firefoxHandler(object src, AutomationEventArgs e)
         {
             AutomationElement Page = src as AutomationElement;// Find Page that Send Event
@@ -221,10 +171,10 @@ namespace Child
             Process[] IEProcces = Process.GetProcessesByName("iexplore");// Find All IE Procces 
             foreach (Process P in IEProcces)
             {
-                if ((P.MainWindowHandle.ToInt32() > 0) && (P.MainWindowTitle != ""))// Check Active Procces to Find Usage Page . when MainWindowHandle.ToInt32()
-                                                                                    // More than 0 , Page is Active and we can use to find URL
-                                                                                    // When Page Have Valid MainWindowHandle.ToInt32() but Not Trust page 
-                                                                                    //Becuse use MainWindowTitle to Find Trust Page 
+                if ((P.MainWindowHandle.ToInt32() > 0) && (P.MainWindowTitle != ""))/* Check Active Procces to Find Usage Page . when MainWindowHandle.ToInt32()
+                                                                                     More than 0 , Page is Active and we can use to find URL
+                                                                                     When Page Have Valid MainWindowHandle.ToInt32() but Not Trust page 
+                                                                                     Becuse use MainWindowTitle to Find Trust Page*/ 
                 {
                     AutomationElement Page = AutomationElement.FromHandle(P.MainWindowHandle); // Get IE Main Window From Pointer 
                     SubscribeToInvoke(Page, AutomationElement.NameProperty,ref IEHandler );// Set Event To Name Property ,to Find when Page has change 
@@ -267,8 +217,8 @@ namespace Child
             }
         }
 
-        // Event Handler for when opera Page Name Has Change 
-        //this Event must use out the this Class
+        /* Event Handler for when opera Page Name Has Change 
+         this Event must use out the this Class*/
 
         public void OperaHandler(object src, AutomationEventArgs e)
         {
@@ -292,10 +242,10 @@ namespace Child
             Process[] EdgeProcess = Process.GetProcessesByName("ApplicationFrameHost");// Find All Edge Procces 
             foreach (Process P in EdgeProcess)
             {
-                if ((P.MainWindowHandle.ToInt32() > 0) && (P.MainWindowTitle != ""))// Check Active Procces to Find Usage Page . when MainWindowHandle.ToInt32()
-                                                                                    // More than 0 , Page is Active and we can use to find URL
-                                                                                    // When Page Have Valid MainWindowHandle.ToInt32() but Not Trust page 
-                                                                                    // Becuse use MainWindowTitle to Find Trust Page 
+                if ((P.MainWindowHandle.ToInt32() > 0) && (P.MainWindowTitle != ""))/* Check Active Procces to Find Usage Page . when MainWindowHandle.ToInt32()
+                                                                                     More than 0 , Page is Active and we can use to find URL
+                                                                                     When Page Have Valid MainWindowHandle.ToInt32() but Not Trust page 
+                                                                                     Becuse use MainWindowTitle to Find Trust Page */
                 {
                     AutomationElement Page = AutomationElement.FromHandle(P.MainWindowHandle);// Get Edge Main Window From Pointer 
                     SubscribeToInvoke(Page, AutomationElement.NameProperty,ref EdgeHandler );// Set Event To Name Property ,to Find when Page has change 
@@ -305,16 +255,16 @@ namespace Child
         }
 
 
-        // Event Handler for when Edge Page Name Has Change 
-        //this Event must use out the this Class
+        /* Event Handler for when Edge Page Name Has Change 
+        this Event must use out the this Class*/
         public void EdgeHandler(object src, AutomationEventArgs e)
         {
             AutomationElement Page = src as AutomationElement;// Find Page that Send Event
             AutomationElementCollection EditBox;
-            EditBox = Page.FindAll(TreeScope.Descendants, PropertyCondition.TrueCondition);// find Edit box that 
-                                                                                           // Name is "Address and search bar"
-                                                                                           //ValuePattern Value = (ValuePattern)EditBox.GetCurrentPattern(ValuePattern.Pattern);// Get String that have Url In this.
-                                                                                           //string URL = Value.Current.Value;
+            EditBox = Page.FindAll(TreeScope.Descendants, PropertyCondition.TrueCondition);/* find Edit box that 
+                                                                                           Name is "Address and search bar"
+                                                                                           ValuePattern Value = (ValuePattern)EditBox.GetCurrentPattern(ValuePattern.Pattern);// Get String that have Url In this.
+                                                                                           string URL = Value.Current.Value;*/
         }
         //----------------- END -----------------
     }

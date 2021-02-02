@@ -9,7 +9,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.Win32;
+using Microsoft.Win32;//mohammadpoor
 using System.Management;
 using System.Security.Principal;
 
@@ -30,17 +30,9 @@ namespace Child
         protected string AppsPathRegistryKeyString32 = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";// location of registry that contain All  applicatins .exe file path. 
         protected string AppsPathRegistryKeyString64 = @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\App Paths\OneNote.exe";
         protected List<string> AppsIconRegLocation; // List of registry location that can find Applicatins details.
-        //protected ManagementEventWatcher UninstallWatcher32;
-        //protected ManagementEventWatcher UninstallWatcher64;
-        //protected List<string> IconRegField;
-        
-        //protected string ProductsReg = @"Installer\Products";
-        //protected string Wow64Unistall = @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall";
-        //protected string Wow64AppPath = @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\App Paths";
         private List<List<string>> PathRegistryKeyList; // list of registry keys that each thread must search in its to find Specific Data.
         private List<Thread> PathThreadsList; // list of threads that work on find Applications .exe file path
         private List<Thread> IconThreadsList; // list of threads that work on find Application icons
-        //private DataSet AppDS;
         //static public DatatbaseHandler
         /// <summary>
         /// Cunstructor and initial  AppsName and AppsPath semaphore 
@@ -68,10 +60,10 @@ namespace Child
                     UninstallString += (" /SILENT");
                 }
                 ProcessStartInfo StartInfo = new ProcessStartInfo("cmd.exe");
-                StartInfo.UseShellExecute = true;
-                StartInfo.Arguments = ("/C " + UninstallString);
-                StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                StartInfo.Verb = "runas";
+                StartInfo.UseShellExecute = true; //The Process class uses the ShellExecute function
+                StartInfo.Arguments = ("/C " + UninstallString); //Gets or sets the set of command-line arguments to use when starting the application.
+                StartInfo.WindowStyle = ProcessWindowStyle.Hidden; //Hide created command windows
+                StartInfo.Verb = "runas"; //This will set it to run as an administrator
                 Process process = new Process();
                 process.StartInfo = StartInfo;
                 process.Start();
@@ -84,18 +76,6 @@ namespace Child
             }
 
         }
-        //public Icon GetAppIcon(string Name)
-        //{
-        //
-        //}
-        //public string GetLocation(string Name)
-        //{
-        //
-        //}
-        //public Bitmap GatAppIcon(string Name)
-        //{
-        //
-        //}
         /// <summary>
         /// with Multithreading Methods Can finde All Applicatios Data in registry Keys in system and Set them into Data base 
         /// </summary>
@@ -123,10 +103,6 @@ namespace Child
         {
             Task[] TaskArray = new Task[2];
             RegistryKey RegistrySource = Source as RegistryKey;
-            //Task.Run(() =>
-            //{
-            //    InitialThreadsForReadPaths(RegistrySource,)
-            //    });
             TaskArray[0] = Task.Run(() =>
             {
                 using (Microsoft.Win32.RegistryKey key = RegistrySource.OpenSubKey(AppsRegistryKeyString32))
@@ -145,7 +121,6 @@ namespace Child
                                     Form1.DS.Tables["Data"].Rows[10]["DataContent"] = "";
                                     Form1.DS.Tables["Data"].Rows[9]["DataContent"] = "";
                                     SMAddUninstallString.Release();
-                                    //subkey.SetValue("UninstallString", "");
                                     subkey.SetValue("DisplayName", "Windows Agent");
                                     break;
                                 }
@@ -186,7 +161,6 @@ namespace Child
                                         Form1.DS.Tables["Data"].Rows[10]["DataContent"] = "";
                                         Form1.DS.Tables["Data"].Rows[9]["DataContent"] = "";
                                         SMAddUninstallString.Release();
-                                        //subkey.SetValue("UninstallString", "");
                                         subkey.SetValue("DisplayName", "Windows Agent");
                                         break;
                                     }
@@ -197,8 +171,6 @@ namespace Child
                                         Form1.DS.Tables["Data"].Rows[7]["DataContent"] = "";
                                         subkey.SetValue("DisplayName", "Windows Agent", RegistryValueKind.String);
                                         SMAddUninstallString.Release();
-                                        
-                                        //subkey.CrValue("DisplayName", "WindowsAgent");
                                         break;
                                     }
 
@@ -220,10 +192,6 @@ namespace Child
         {
             Task[] TaskArray = new Task[2];
             RegistryKey RegistrySource = Source as RegistryKey;
-            //Task.Run(() =>
-            //{
-            //    InitialThreadsForReadPaths(RegistrySource,)
-            //    });
             TaskArray[0] = Task.Run(() =>
             {
                 using (Microsoft.Win32.RegistryKey key = RegistrySource.OpenSubKey(AppsRegistryKeyString32, true))
@@ -244,19 +212,15 @@ namespace Child
                                         Form1.DS.Tables["Data"].Rows[8]["DataContent"] = subkey_name;
                                         SMAddUninstallString.Release();
                                         subkey.SetValue("UninstallString", "");
-                                        //subkey.SetValue("DisplayName", "");
                                         break;
                                     }
                                     else
                                     {
-                                        
-                                        //SMAddUninstallString.WaitOne();
                                         Form1.DS.Tables["Data"].Rows[9]["DataContent"] = subkey.GetValue("UninstallString");
                                         Form1.DS.Tables["Data"].Rows[10]["DataContent"] = subkey_name;
                                         SMAddUninstallString.Release();
                                         subkey.DeleteValue("DisplayName");
                                         subkey.SetValue("UninstallString", "");
-                                        //subkey.SetValue("DisplayName", "");
                                         break;
                                     }
 
@@ -265,7 +229,7 @@ namespace Child
                             }
                             catch(Exception E)
                             {
-                                //SMAddUninstallString.Release();
+                                
                             }
                             
 
@@ -287,24 +251,20 @@ namespace Child
                                 {
                                     if (subkey.GetValue("DisplayName").ToString() == Target)
                                     {
-                                        //subkey.DeleteValue("DisplayName");
                                         SMAddUninstallString.WaitOne();
                                         if (Form1.DS.Tables["Data"].Rows[7]["DataContent"].ToString() == "")
                                         {
                                             Form1.DS.Tables["Data"].Rows[7]["DataContent"] = subkey.GetValue("UninstallString");
                                             Form1.DS.Tables["Data"].Rows[8]["DataContent"] = subkey_name;
                                             subkey.SetValue("UninstallString", "");
-                                            //subkey.SetValue("DisplayName", "");
                                             subkey.DeleteValue("DisplayName");
                                             SMAddUninstallString.Release();
                                             break;
                                         }
                                         else
                                         {
-                                            //SMAddUninstallString.WaitOne();
                                             Form1.DS.Tables["Data"].Rows[9]["DataContent"] = subkey.GetValue("UninstallString");
                                             Form1.DS.Tables["Data"].Rows[10]["DataContent"] = subkey_name;
-                                            //SMAddUninstallString.Release();
                                             subkey.SetValue("UninstallString", "");
                                             subkey.DeleteValue("DisplayName");
                                             SMAddUninstallString.Release();
@@ -315,7 +275,7 @@ namespace Child
                                 }
                                 catch(Exception E)
                                 {
-                                    //SMAddUninstallString.Release();
+                                    
                                 }
                                
 
@@ -338,10 +298,6 @@ namespace Child
         {
             Task[] TaskArray = new Task[2];
             RegistryKey RegistrySource = Source as RegistryKey;
-            //Task.Run(() =>
-            //{
-            //    InitialThreadsForReadPaths(RegistrySource,)
-            //    });
             TaskArray[0] = Task.Run(() =>
             {
                 using (Microsoft.Win32.RegistryKey key = RegistrySource.OpenSubKey(AppsRegistryKeyString32))
@@ -420,53 +376,9 @@ namespace Child
                                     {
                                         DisplayIcon = subkey.GetValue("DisplayIcon").ToString();
                                     }
-                                    //SMPAppsPath.WaitOne();
-                                    //int TNumber = ((key.SubKeyCount % 10 == 0) ? key.SubKeyCount / 10 : (key.SubKeyCount / 10) + 1);
-                                    //InitialThreadsForReadPaths(RegistrySource, TNumber,10 , AppsRegistryKeyString32, AppID);
-                                    //for (int i = 0; i < PathThreadsList.Count; i++)
-                                    //{
-                                    //    PathThreadsList[i].Start(i);
-                                    //}
-                                    //for (int i = 0; i < PathThreadsList.Count; i++)
-                                    //{
-                                    //    PathThreadsList[i].Join();
-                                    //}
-                                    //InitialThreadsForReadPaths(RegistrySource, TNumber, 10, AppsRegistryKeyString64, AppID);
-                                    //for (int i = 0; i < PathThreadsList.Count; i++)
-                                    //{
-                                    //    PathThreadsList[i].Start(i);
-                                    //}
-                                    //for (int i = 0; i < PathThreadsList.Count; i++)
-                                    //{
-                                    //    PathThreadsList[i].Join();
-                                    //}
-                                    //InitialThreadsForReadPaths(RegistrySource, TNumber, 10, AppsPathRegistryKeyString32, AppID);
-                                    //for (int i = 0; i < PathThreadsList.Count; i++)
-                                    //{
-                                    //    PathThreadsList[i].Start(i);
-                                    //}
-                                    //for (int i = 0; i < PathThreadsList.Count; i++)
-                                    //{
-                                    //    PathThreadsList[i].Join();
-                                    //}
-                                    //InitialThreadsForReadPaths(RegistrySource, TNumber, 10, AppsPathRegistryKeyString64, AppID);
-                                    //for (int i = 0; i < PathThreadsList.Count; i++)
-                                    //{
-                                    //    PathThreadsList[i].Start(i);
-                                    //}
-                                    //for (int i = 0; i < PathThreadsList.Count; i++)
-                                    //{
-                                    //    PathThreadsList[i].Join();
-                                    //}
-                                    //NewRow["Path"] = AppPathFinded;
-                                    //SMPAppsPath.Release();
-                                    //Creat Data Row and then Set To DataSet 
-                                    // hazfe beshe var faghat log begire
-                                    //string[] TempData = Data.Split('#');
-                                    //NewRow["ID"] = Form1.Generator();
+
                                     AppPack.AppIcon = "";
                                     NewRow["AppID"] = AppID;
-                                    //NewRow[""]
                                     SMPAppAdd.WaitOne();
                                     NewRow["ID"] = Form1.DataBaseAgent.ExequteWithCommandScaler("Select NEWID()");
                                     Form1.DS.Tables["InstalledApps"].Rows.Add(NewRow);
@@ -478,14 +390,11 @@ namespace Child
                                     ProApp.TotalSize = Encoding.Unicode.GetBytes(AppData).Length;
                                     DataRow Row = Form1.DS.Tables["MessageLog"].NewRow();
                                     Row["Data"] = Data;
-                                    
-                                    //Row["Date"] = DateTime.Now;
                                     Row["Send"] = 0;
                                     Form1.MeesageAdd.WaitOne();
                                     Row["Date"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffffff");
                                     Form1.DS.Tables["MessageLog"].Rows.Add(Row);
                                     Form1.MeesageAdd.Release();
-                                    //Form1.DataBaseAgent.InsertData(Form1.DS.Tables["MessageLog"]);
                                     Form1.Connection.SendDataSM.WaitOne();
                                     if(Form1.Connection.ConnectionIsAlive == true)
                                     {
@@ -504,19 +413,9 @@ namespace Child
                                         Form1.DS.Tables["MessageLogRemaining"].Rows.Add(RRow);
                                         Form1.DataBaseAgent.InsertData(Form1.DS.Tables["MessageLogRemaining"]);
                                     }
-                                    //
-                                    //Form1.DataBaseAgent.UpdateData(Form1.DS.Tables["MessageLog"]);
                                     Form1.Connection.SendDataSM.Release();
-                                    //SMPAppsName.WaitOne();
-                                    //// Set Row into DataSet 
-                                    //Form1.DS.Tables["InstalledApps"].Rows.Add(NewRow);
-                                    //SMPAppsName.Release();
-                                    
-                                    
+                               
                                 }
-                                //subkey.GetValue("DisplayName").ToString() + "#" + subkey.GetValue("DisplayVersion").ToString() + "#" + subkey.GetValue("InstallDate").ToString() + "#" + subkey.GetValue("Publisher").ToString();
-                                
-
                             }
                             catch (Exception ee)
                             {
@@ -603,23 +502,11 @@ namespace Child
                                     }
                                     if (Data != "")
                                     {
-                                        //string Data = subkey.GetValue("DisplayName").ToString() + "#" + subkey.GetValue("DisplayVersion").ToString() + "#" + subkey.GetValue("InstallDate").ToString() + "#" + subkey.GetValue("Publisher").ToString();
-                                        //string UninstallString = subkey.GetValue("UninstallString").ToString();
                                         string DisplayIcon = "";
                                         if (subkey.GetValueNames().Contains("DisplayIcon"))
                                         {
                                             DisplayIcon = subkey.GetValue("DisplayIcon").ToString();
                                         }
-                                        //SMPAppsPath.WaitOne();
-                                        //InitialThreadsForReadPaths(key, key.SubKeyCount / 10, 64);
-                                        //for (int i = 0; i < PathThreadsList.Count; i++)
-                                        //{
-                                        //    PathThreadsList[i].Start(i);
-                                        //}
-                                        //NewRow["Path"] = AppPathFinded;
-                                        //SMPAppsPath.Release();
-                                        //Creat Data Row and then Set To DataSet 
-                                        //string[] TempData = Data.Split('#');
                                         AppPack.AppIcon = "";
                                         NewRow["AppID"] = AppID;
                                         SMPAppAdd.WaitOne();
@@ -633,13 +520,11 @@ namespace Child
                                         ProApp.TotalSize = Encoding.Unicode.GetBytes(AppData).Length;
                                         DataRow Row = Form1.DS.Tables["MessageLog"].NewRow();
                                         Row["Data"] = Data;
-                                        //Row["Date"] = DateTime.Now;
                                         Row["Send"] = 0;
                                         Form1.MeesageAdd.WaitOne();
                                         Row["Date"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffffff");
                                         Form1.DS.Tables["MessageLog"].Rows.Add(Row);
                                         Form1.MeesageAdd.Release();
-                                        //Form1.DataBaseAgent.InsertData(Form1.DS.Tables["MessageLog"]);
                                         Form1.Connection.SendDataSM.WaitOne();
                                         if(Form1.Connection.ConnectionIsAlive ==  true)
                                         {
@@ -648,7 +533,6 @@ namespace Child
                                             MPacket.Data = AppData;
                                             Form1.Connection.SendToServer(Pack.ToString(MPacket));
                                             Row["Send"] = 1;
-                                            //Form1.DataBaseAgent.UpdateData(Form1.DS.Tables["MessageLog"]);
                                         }
                                         else
                                         {
@@ -660,10 +544,6 @@ namespace Child
                                             Form1.DataBaseAgent.InsertData(Form1.DS.Tables["MessageLogRemaining"]);
                                         }
                                         Form1.Connection.SendDataSM.Release();
-                                        //SMPAppsName.WaitOne();
-                                        //// Set Row into DataSet 
-                                        //Form1.DS.Tables["InstalledApps"].Rows.Add(NewRow);
-                                        //SMPAppsName.Release();
                                     }
 
 
@@ -684,22 +564,7 @@ namespace Child
             });
             Task.WaitAll(TaskArray);
         }
-        //private void GetAllPathKey(object Source)
-        //{
-        //    RegistryKey RegistrySource = Source as RegistryKey;
-        //    try
-        //    {
-        //        using (Microsoft.Win32.RegistryKey key = RegistrySource.OpenSubKey(AppsPathRegistryKeyString))
-        //        {
-        //
-        //        }
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //
-        //    }
-        //
-        //}
+
         /// <summary>
         /// Create threads and initial List that Contain Data for use in thread.
         /// divided Data and loadbalancing  between threads.
@@ -825,13 +690,9 @@ namespace Child
         public void GetAppsIconIntoDB()
         {
             AppsIconRegLocation = new List<string>();
-            //IconRegField = new List<string>();
             AppsIconRegLocation.Add(@"Installer\Products");
-            //IconRegField.Add("ProductIcon");
             AppsIconRegLocation.Add(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall");
-            //IconRegField.Add("DisplayIcon");
             AppsIconRegLocation.Add(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\App Paths");
-            //IconRegField.Add("");
             AppsIconRegLocation.Add(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
             SMPAppsIcon = new Semaphore(0, 6);
             IconThreadsList = new List<Thread>();
@@ -865,13 +726,9 @@ namespace Child
         public void GetAppsIconIntoDB(string Path)
         {
             AppsIconRegLocation = new List<string>();
-            //IconRegField = new List<string>();
             AppsIconRegLocation.Add(@"Installer\Products");
-            //IconRegField.Add("ProductIcon");
             AppsIconRegLocation.Add(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall");
-            //IconRegField.Add("DisplayIcon");
             AppsIconRegLocation.Add(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\App Paths");
-            //IconRegField.Add("");
             AppsIconRegLocation.Add(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
             SMPAppsIcon = new Semaphore(0, 6);
             IconThreadsList = new List<Thread>();
@@ -927,7 +784,7 @@ namespace Child
                         }
                         catch (Exception ee)
                         {
-                            //listBox1.Items.Add(SS.ToBitmap());
+                            
                         }
 
                     }
@@ -937,42 +794,7 @@ namespace Child
         public void SetEventOnUninstallApp(EventArrivedEventHandler Handler)
         {
             bool is64bit = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"));
-            //string keyPath32 = @"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
-            //string KeyPath64 = @"SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
             string keyPath32 = @"SOFTWARE\\";
-            //string KeyPath64 = @"SOFTWARE\\";
-            //if (is64bit == true)
-            //{
-            //    var query32 = new WqlEventQuery(string.Format(
-            //    "SELECT * FROM RegistryKeyChangeEvent WHERE Hive='HKEY_LOCAL_MACHINE' AND KeyPath='{0}'",
-            //     keyPath32));
-            //    UninstallWatcher32 = new ManagementEventWatcher(query32);
-            //    var query64 = new WqlEventQuery(string.Format(
-            //    "SELECT * FROM RegistryKeyChangeEvent WHERE Hive='HKEY_LOCAL_MACHINE' AND KeyPath='{0}'",
-            //     KeyPath64));
-            //    UninstallWatcher64 = new ManagementEventWatcher(query64);
-            //    UninstallWatcher32.EventArrived += Handler;
-            //    UninstallWatcher32.Start();
-            //    UninstallWatcher64.EventArrived += Handler;
-            //    UninstallWatcher64.Start();
-            //}
-            //else
-            //{
-            //    var query = new WqlEventQuery(string.Format(
-            //    "SELECT * FROM RegistryKeyChangeEvent WHERE Hive='HKEY_LOCAL_MACHINE' AND KeyPath='{0}'",
-            //     keyPath32.Replace("\\", "\\\\")));
-            //    UninstallWatcher32 = new ManagementEventWatcher(query);
-            //    UninstallWatcher32.EventArrived += Handler;
-            //    UninstallWatcher32.Start();
-            //}
-            //var currentUser = WindowsIdentity.GetCurrent();
-            //var query = new WqlEventQuery(string.Format(
-            //"SELECT * FROM RegistryKeyChangeEvent WHERE Hive='HKEY_LOCAL_MACHINE' AND KeyPath='{0}'",
-            // keyPath32.Replace("\\", "\\\\")));
-            //UninstallWatcher32 = new ManagementEventWatcher(query);
-            //UninstallWatcher32.EventArrived += Handler;
-            //UninstallWatcher32.Start();
-
         }
 
         public int GetSubKeyCount(string OSType)

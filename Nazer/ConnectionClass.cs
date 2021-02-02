@@ -4,25 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
-using System.Net.Sockets;
-using System.Threading;
+using System.Net.Sockets;//Provides a managed implementation of the Windows Sockets (Winsock) interface for developers who need to tightly control access to the network.
+using System.Threading;//Provides classes and interfaces that enable multithreaded programming.
 using System.Data.SqlClient;
-using System.Net;
+using System.Net;//Provides a simple programming interface for many of the protocols used on networks today.
 using System.IO;
-using System.Drawing;
-using System.Windows.Media.Imaging;
+using System.Drawing;//Provides access to GDI+ basic graphics functionality.
+using System.Windows.Media.Imaging;//Provides types that are used to encode and decode bitmap images.
 using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows;
-using System.Security.Cryptography;
+using System.Security.Cryptography;//Provides cryptographic services, including secure encoding and decoding of data, as well as many other operations, such as hashing, random number generation, and message authentication. 
 
 namespace UI
 {
     public class ConnectionClass
     {
         public Socket ParentSocket;
-        //Socket Real;
         DateTime lastTime;
         byte[] RealData;
         byte[] RealwebData;
@@ -53,7 +52,6 @@ namespace UI
         int SendBuffer;
         public Semaphore SendDataSM;
         ParentClass NewParent;
-        //ScreenShotClass SC;
         Semaphore SendFileDataSM;
         Semaphore ReciveSM;
         Semaphore RealWebSM;
@@ -62,7 +60,6 @@ namespace UI
         int SNumber = 0;
         string IdentifyResult;
         List<DataTable> SendTablesList;
-        //List<DataTable> ReciveTablesList;
         List<string> RecivedMessages;
         List<int> RecivedMessagesIndex;
         List<string> RecivedMessagesFile;
@@ -76,7 +73,6 @@ namespace UI
         Semaphore FileSM1;
         Semaphore FileSM2;
         bool PicCompelit = false;
-        //public Semaphore SingUp;
         string RecivedID;
         TcpListener Real;
         TcpListener RealWeb;
@@ -92,17 +88,13 @@ namespace UI
             ParentSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             Monitor.Enter(ParentSocket);
             Ports = PortNumber.Split(',');
-            //this.IP = Dns.GetHostByName("www.nazerupcs.com").AddressList[0].ToString();
             this.IP = IP;
             SendFileDataSM = new Semaphore(1, 1);
-            //SingUp = new Semaphore(1, 1);
             ReciveData = new byte[SendBuffer];
             ReciveFileData = new byte[2048];
             
             ChildFileSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             int Port = Convert.ToInt32(Ports[0]);
-            //SingUp.WaitOne();
-            //ParentSocket.BeginConnect(IP, Port, ConnectEvent, ParentSocket);
             PassBytes = Convert.FromBase64String(Password);
             this.SendBuffer = SendBuffer;
             SendDataSM = new Semaphore(1, 1);
@@ -119,38 +111,20 @@ namespace UI
                 DataTable Temp = new DataTable();
                 SendTablesList.Add(Temp);
             }
-            //ParentSocket.BeginConnect(IP, Port, ConnectEvent, ParentSocket);
             ParentSocket.Connect(IP, Port);
             ConnectEvent();
-            
-            //ReciveTablesList = new List<DataTable>();
-            //
-            //for (int i = 0; i < 2; i++)
-            //{
-            //    DataTable Temp = Form1.DS.Tables["RecivedCommands"];
-            //    ReciveTablesList.Add(Temp);
-            //    Temp.TableNewRow += Handler;
-            //    Temp.TableName = ("ReciveTable" + (i).ToString());
-            //}
-
         }
         public ConnectionClass(string PortNumber, string IP, int SendBuffer, int NumberOfTables, bool RegisterData)
         {
             ParentSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             Monitor.Enter(ParentSocket);
             Ports = PortNumber.Split(',');
-            //this.IP = Dns.GetHostByName("www.nazerupcs.com").AddressList[0].ToString();
             this.IP = IP;
-            //SingUp = new Semaphore(1, 1);
             ReciveData = new byte[SendBuffer];
             ReciveFileData = new byte[2048];
             int Port = Convert.ToInt32(Ports[0]);
-            //SingUp.WaitOne();
-            //ParentSocket.BeginConnect(IP, Port, ConnectEvent, ParentSocket);
             PassBytes = Encoding.Unicode.GetBytes(Password);
             this.SendBuffer = SendBuffer;
-            
-            //ParentSocket.BeginConnect(IP, Port, ConnectEvent, ParentSocket);
             ParentSocket.Connect(IP, Port);
             
         }
@@ -161,21 +135,6 @@ namespace UI
             SendToServer(Data);
             ParentSocket.BeginReceive(RegisterData, 0, 2048, SocketFlags.None, RegisterDataRecive, ParentSocket);
         }
-        
-
-        //private void ConnectFileEvent(IAsyncResult ar)
-        //{
-        //    try
-        //    {
-        //        Socket ConnectedSocket = (Socket)ar.AsyncState;
-        //        ConnectedSocket.EndConnect(ar);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //
-        //    }
-        //}
-
         private void ConnectEvent()
         {
             try
@@ -213,16 +172,12 @@ namespace UI
                         MainWindow.DataBaseAgent.UpdateData(MainWindow.DS.Tables["Data"]);
                     }
                 }
-
-                //int Port = Convert.ToInt32(Ports[1]);
                 SendIdentifyData(MainWindow.DS.Tables["Data"].Rows[2]["DataContent"].ToString(), MainWindow.DS.Tables["Data"].Rows[4]["DataContent"].ToString(), MainWindow.DS.Tables["Data"].Rows[3]["DataContent"].ToString());
                 int Number = ParentSocket.Receive(ReciveData);
                 byte[] TempData = new byte[Number];
-                //Array.Resize(ref ReciveData, Number);
                 IdentifyResult = Encoding.Unicode.GetString(AES_Decrypt(ReciveData.Take(Number).ToArray(), PassBytes));
                 IdentifyResult = IdentifyResult.Replace("\0", "");
                 string[] REDA = IdentifyResult.Split('$');
-                //PreapringRecive();
                 if (REDA[0] == "True")
                 {
                     ConnectionIsAlive = true;
@@ -243,8 +198,6 @@ namespace UI
                     LoginEventHandler(this, "False");
                     //Cange User Name 
                 }
-
-                //SingUp.Release();
                 ReciveSM.Release();
 
 
@@ -297,14 +250,11 @@ namespace UI
                         MainWindow.DataBaseAgent.UpdateData(MainWindow.DS.Tables["Data"]);
                     }
                 }
-
-                //int Port = Convert.ToInt32(Ports[1]);
                 SendIdentifyData(MainWindow.DS.Tables["Data"].Rows[2]["DataContent"].ToString(), MainWindow.DS.Tables["Data"].Rows[4]["DataContent"].ToString(), MainWindow.DS.Tables["Data"].Rows[3]["DataContent"].ToString());
                 ParentSocket.Receive(ReciveData);
                 IdentifyResult = Encoding.Unicode.GetString(ReciveData);
                 IdentifyResult = IdentifyResult.Replace("\0", "");
                 string[] REDA = IdentifyResult.Split('$');
-                //PreapringRecive();
                 if (REDA[0] == "True")
                 {
                     ConnectionIsAlive = true;
@@ -319,14 +269,10 @@ namespace UI
                     }
                     try
                     {
-                        //ChildFileSocket.BeginConnect(IP, Convert.ToInt32(MainWindow.DS.Tables["Data"].Rows[6]["DataContent"]), ConnectFileEvent, ChildFileSocket);
-                        
                     }
                     catch(Exception E)
                     {
-                        //ChildFileSocket.BeginConnect(IP, Convert.ToInt32(MainWindow.DS.Tables["Data"].Rows[11]["DataContent"]), ConnectFileEvent, ChildFileSocket);
                     }
-                    //Monitor.Exit(ParentSocket);
                     ReciveData = new byte[ReciveData.Length];
                     
                     
@@ -337,8 +283,6 @@ namespace UI
                 {
                     //Cange User Name 
                 }
-                
-                //SingUp.Release();
                 ReciveSM.Release();
 
 
@@ -368,7 +312,6 @@ namespace UI
             Packet.ParentIdentify Identify = new Packet.ParentIdentify();
             Identify.ID = ID;
             this.ID = ID;
-            //Identify.Password = Password;
             Identify.Childrens = Children;
             Identify.Password = Password;
             Packet.PSProPacket ProPack = new Packet.PSProPacket();
@@ -377,17 +320,13 @@ namespace UI
             ProPack.TotalSize = Encoding.Unicode.GetBytes(Data).Length;
             ProPack.ID = ID;
             ProPack.Reciver = "";
-            
             Packet.MainPacket MainData = new Packet.MainPacket();
             MainData.Data = Data;
             MainData.PPacket = Pack.ToString(ProPack);
             string MainStrData = Pack.ToString<Packet.MainPacket>(MainData);
             SendDataSM.WaitOne();
             SendToServer(MainStrData);
-            //SendToServer();
-            //SendToServer(Data);
             SendDataSM.Release();
-            //ChildSocket.BeginReceive(ReciveData, 0, ReciveData.Length, SocketFlags.None, RecivedIdentify, ChildSocket);
         }
 
         public void SendIdentifyFileData(string ID, string Children, string Password)
@@ -396,7 +335,6 @@ namespace UI
             Packet.ParentIdentify Identify = new Packet.ParentIdentify();
             Identify.ID = ID;
             this.ID = ID;
-            //Identify.Password = Password;
             Identify.Childrens = Children;
             Identify.Password = Password;
             Packet.PSProPacket ProPack = new Packet.PSProPacket();
@@ -407,9 +345,7 @@ namespace UI
             ProPack.Reciver = "";
             SendFileDataSM.WaitOne();
             SendFileToServer(Pack.ToString(ProPack));
-            //SendFileToServer(Data);
             SendFileDataSM.Release();
-            //ChildSocket.BeginReceive(ReciveData, 0, ReciveData.Length, SocketFlags.None, RecivedIdentify, ChildSocket);
         }
 
         public void PreapringRecive()
@@ -419,7 +355,6 @@ namespace UI
                 ParentSocket.BeginReceive(ReciveData, 0, ReciveData.Length, SocketFlags.None, RecivedOther, ParentSocket);
                 RecivedMessages = new List<string>();
                 RecivedMessagesIndex = new List<int>();
-                //Actor();
             }
             catch (SocketException)
             {
@@ -435,7 +370,6 @@ namespace UI
                 ChildFileSocket.BeginReceive(ReciveFileData, 0, ReciveFileData.Length, SocketFlags.None, ReciveFile, ChildFileSocket);
                 RecivedMessagesFile = new List<string>();
                 RecivedMessagesIndexFile = new List<int>();
-                //FileActor();
             }
             catch (SocketException)
             {
@@ -449,7 +383,6 @@ namespace UI
             Task.Run(() =>
             {
                 Packet P1 = new Packet();
-                //while (true)
                 {
                     FileSM0.WaitOne();
                     if (RecivedMessagesFile.Count != 0)
@@ -457,39 +390,20 @@ namespace UI
                         if (IsFileStart == true)
                         {
                             IsFileStart = false;
-                            //ReciveSM.Release();
-                            
-                            
-
                             Packet.ProPacket Data;
                             FileProPack = RecivedMessagesFile.First().Replace("\0", "");
                             RecivedMessagesFile.Remove(RecivedMessagesFile.First());
                             RecivedMessagesIndexFile.RemoveAt(0);
                             Data = P1.ToPacket<Packet.ProPacket>(FileProPack);
-                            
                             FilePacketData = "";
-
                             FileRecivedID = Data.ID;
                             FileRemainingData = Data.TotalSize;
                             ReciveFileData = new byte[FileRemainingData];
                             ChildFileSocket.Receive(ReciveFileData, 0, FileRemainingData, SocketFlags.None);
-                            //TcpClient ReciverTCp = new TcpClient();
-                            //ReciverTCp.Client = ChildFileSocket;
-                            //NetworkStream NS = ReciverTCp.GetStream();
-                            //NS.Read(ReciveFileData, 0, FileRemainingData);
                             FileType = Data.Type;
-                            //FilePacketData += RecivedMessagesFile.First();
-                            //RecivedMessagesFile.Remove(RecivedMessagesFile.First());
-                            ////PacketFileData = PacketFileData.Replace("\0", "");
-                            ////FileSM1.Release();
-                            //RecivedMessagesIndexFile.First();
-                            //RecivedMessagesIndexFile.RemoveAt(0);
-                            ////ReciveSM.Release();
-                            //Thread.Sleep(200);
                             FilePacketData = Encoding.Unicode.GetString(ReciveFileData);
                             if ((RecivedMessagesFile.Count == 0))
                             {
-                                //FilePacketData = FilePacketData.Remove(FileRemainingData);
                                 IsFileStart = true;
                                 switch (FileType)
                                 {
@@ -504,18 +418,11 @@ namespace UI
                             }
                             else
                             {
-                                //continue;
                             }
 
                         }
                         else
                         {
-                            //ReciveSM.WaitOne();
-                            //ReciveSM.Release();
-                            //FileSM1.WaitOne();
-                            //Packet P2 = new Packet();
-                            
-
                         }
                     }
                     FileSM0.Release();
@@ -528,19 +435,14 @@ namespace UI
         {
             try
             {
-                //ReciveSM.WaitOne();
                 RecivedFile = ChildFileSocket.EndReceive(ar);
-                //Array.Resize(ref ReciveFileData, RecivedFile);
                 RecivedMessagesFile.Add(Encoding.Unicode.GetString(AES_Decrypt(ReciveFileData.Take(RecivedFile).ToArray(), PassBytes)));
-                //RecivedMessagesFile.Add(Encoding.Unicode.GetString(ReciveFileData));
                 RecivedMessagesIndexFile.Add(RecivedFile);
                 ReciveFileData = new byte[ReciveFileData.Length];
-                //ChildFileSocket.BeginReceive(ReciveFileData, 0, ReciveFileData.Length, SocketFlags.None, ReciveFile, ChildFileSocket);
                 if(RecivedMessagesFile.Count > 0)
                 {
                     FileActor();
                 }
-                //ReciveSM.Release();
             }
             catch (SocketException E)
             {
@@ -563,11 +465,8 @@ namespace UI
             try
             {
                 ReciveSM.WaitOne();
-
-                //string Message = Encoding.Unicode.GetString(AES_Decrypt(ReciveData , PassBytes));
                 string Message = Encoding.Unicode.GetString(ReciveData);
                 ReciveData = new byte[ReciveData.Length];
-                //ChildSocket.BeginReceive(ReciveData, 0, ReciveData.Length, SocketFlags.None, RecivedOther, ChildSocket);
                 ReciveSM.Release();
                 if (IsStart == true)
                 {
@@ -576,30 +475,22 @@ namespace UI
                     SM1.WaitOne();
                     SM2.WaitOne();
                     ProPack = Message.Replace("\0", "");
-                    //RecivedMessages.Remove(RecivedMessages.First());
                     PacketData = "";
                     Data = Pack.ToPacket<Packet.ProPacket>(ProPack);
                     SM2.Release();
                     SM1.Release();
                     RemainingData = Data.TotalSize;
                     Type = Data.Type;
-                    //Child.EndReceive(ar);
-                    //Child.BeginReceive(ReciveData, 0, ReciveData.Length, SocketFlags.None, ReciveISG, Child);
-                    //ProPack = Encoding.Unicode.GetString(ReciveData);
-                    //ReciveSM.Release();
                     ParentSocket.Receive(ReciveData);
 
                 }
                 else
                 {
-                    //ReciveSM.WaitOne();
                     SM2.WaitOne();
                     PacketData += Encoding.Unicode.GetString(ReciveData);
-                    //RecivedMessages.Remove(RecivedMessages.First());
                     SM2.Release();
                     PacketData = PacketData.Replace("\0", "");
                     RemainingData -= Recived;
-                    //ReciveSM.Release();
                     if (RemainingData == 0)
                     {
                         IsStart = true;
@@ -694,17 +585,12 @@ namespace UI
 
         public void SendToServer(string Data)
         {
-            //Task.Run(() =>
-            //{
-            //    
-            //});
             try
             {
                  
                 byte[] ByteData = Encoding.Unicode.GetBytes(Data);
                 ByteData = AES_Encrypt(ByteData, PassBytes);
                 int Counter = 0;
-                //SendDataSM.WaitOne();
                 Counter = ParentSocket.Send(ByteData);
                 while (ByteData.Length != Counter)
                 {
@@ -716,22 +602,14 @@ namespace UI
                 ConnectionIsAlive = false;
                 ParentSocket.BeginConnect(IP, Convert.ToInt32(Ports[0]), ConnectEvent, ParentSocket);
             }
-
-            //SendDataSM.Release();
         }
 
         public void SendFileToServer(string Data)
         {
-            //Task.Run(() =>
-            //{
-            //    
-            //});
             try
             {
                 byte[] ByteData = Encoding.Unicode.GetBytes(Data);
-                //ByteData = AES_Encrypt(ByteData, PassBytes);
                 int Counter = 0;
-                //SendDataSM.WaitOne();
                 Counter = ChildFileSocket.Send(ByteData);
                 while (ByteData.Length != Counter)
                 {
@@ -743,35 +621,12 @@ namespace UI
                 ConnectionIsAlive = false;
                 ChildFileSocket.BeginConnect(IP, Convert.ToInt32(Ports[0]), ConnectEvent, ChildFileSocket);
             }
-
-            //SendDataSM.Release();
         }
 
-        //public void SendFIleToServer(string Data)
-        //{
-        //    try
-        //    {
-        //        byte[] ByteData = Encoding.Unicode.GetBytes(Data);
-        //        int Counter = 0;
-        //        SendFileDataSM.WaitOne();
-        //        Counter = ChildFileSocket.Send(ByteData);
-        //        while (ByteData.Length != Counter)
-        //        {
-        //            Counter += ChildFileSocket.Send(ByteData, Counter, SendBuffer, SocketFlags.None);
-        //        }
-        //        SendFileDataSM.Release();
-        //    }
-        //    catch(SocketException E)
-        //    {
-        //        ConnectionIsAlive = false;
-        //        ChildFileSocket.BeginConnect(IP, Convert.ToInt32(Ports[1]), ConnectFileEvent, ChildSocket);
-        //    }
-        //}
 
         public void ResetConnection()
         {
             ParentSocket.BeginConnect(IP, Convert.ToInt32(Ports[0]), ConnectEvent, ParentSocket);
-            //ChildFileSocket.BeginConnect(IP, Convert.ToInt32(MainWindow.DS.Tables["Data"].Rows[6]["DataContent"]), ConnectFileEvent, ChildFileSocket);
         }
 
         private void RecivedOther(IAsyncResult ar)
@@ -781,15 +636,12 @@ namespace UI
                 Recived = ParentSocket.EndReceive(ar);
                 ReciveSM.WaitOne();
                 RecivedMessagesIndex.Add(Recived);
-                //Array.Resize(ref ReciveData, Recived);
                 RecivedMessages.Add(Encoding.Unicode.GetString(AES_Decrypt(ReciveData.Take(Recived).ToArray(), PassBytes)));
-                //RecivedMessages.Add(Encoding.Unicode.GetString(ReciveData));
                 ReciveData = new byte[ReciveData.Length];
                 ReciveSM.Release();
                 ParentSocket.BeginReceive(ReciveData, 0, ReciveData.Length, SocketFlags.None, RecivedOther, ParentSocket);
                 if(RecivedMessages.Count > 0)
                 {
-                    //ActorIsworking = true;
                     Actor();
                 }
             }
@@ -810,7 +662,6 @@ namespace UI
         {
             Task.Run(() =>
             {
-                //while ((ActorIsworking == true) ||(RecivedMessages.Count > 0))
                 {
                     SM1.WaitOne();
                     if (RecivedMessages.Count != 0)
@@ -819,7 +670,6 @@ namespace UI
                         Packet.MainPacket Data;
                         Packet Pack = new Packet();
                         ProPack = RecivedMessages.First().Replace("\0", "");
-                        
                         RecivedMessages.Remove(RecivedMessages.First());
                         RecivedMessagesIndex.RemoveAt(0);
                         PacketData = "";
@@ -862,19 +712,7 @@ namespace UI
                         {
 
                         }
-                        //Socket Sock = (Socket)ar.AsyncState;
-                        //Authenticate(Pac);
                     }; break;
-                //case (short)Packet.PacketType.Singup:
-                //    {
-                //      Packet.ParentSingup Pac = Packet.ToPacket<Packet.ParentSingup>(e.Row["Data"].ToString());
-                //      //////////$$$$$$$$$$$$$$$$$$
-                //  }; break;
-                //case (short)Packet.PacketType.Goodbay:
-                //    {
-                //        ChildSocket.Close();
-                //    }; break;
-
                 case (short)Packet.PacketType.Location:
                     {
                         Packet Pack = new Packet();
@@ -983,9 +821,6 @@ namespace UI
                                 Main.RunningAppsSemaphore.WaitOne();
                                 MainWindow.DataBaseAgent.ExequteWithCommand("Delete From RunningApps where Name ='" + TPac.Name + "' and ChildID ='" + Main.ChildUser + "'");
                                 Main.RunningAppsSemaphore.Release();
-                                //MainWindow.DataBaseAgent.SelectData("RunningApps", ref MainWindow.DS, "*", "RunningApps", Main.ChildUser, "ChildID");
-
-
                             }
 
                         });
@@ -1015,7 +850,6 @@ namespace UI
                         Main.ScreenShotSemaphore.WaitOne();
                         MainWindow.DataBaseAgent.SelectData("ScreenShot", ref MainWindow.DS, "*", "ScreenShot", Main.ChildUser, "ChildID");
                         DataRow Row = MainWindow.DS.Tables["ScreenShot"].NewRow();
-                        //Row["ID"] = MainWindow.DataBaseAgent.ExequteWithCommandScaler("Select NEWID()");
                         MemoryStream ms;
                         byte[] PicData = Convert.FromBase64String(Data.Split(',')[0]);
                         ms = new MemoryStream(PicData);
@@ -1025,14 +859,8 @@ namespace UI
                         Row["ID"] = Pac.End.ToString();
                         MainWindow.DS.Tables["ScreenShot"].Rows.Add(Row);
                         MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["ScreenShot"]);
-                        
-                        //RealPic.RemoveAt(0);
                         Bitmap BitImage = new Bitmap(ms);
                         BitImage.Save(System.AppDomain.CurrentDomain.BaseDirectory + ScreNumber + "Shot.jpeg");
-                        //File.Delete(System.AppDomain.CurrentDomain.BaseDirectory + FileNum + "Real.jpeg");
-
-                        //System.Drawing.Image returnImage = returnImage = System.Drawing.Image.FromStream(ms);
-                        //returnImage.Save(System.AppDomain.CurrentDomain.BaseDirectory + "Real.jpeg");
                         Main.ScreenShotImage.Dispatcher.Invoke(() =>
                         {
                             var MyBrush = new ImageBrush();
@@ -1041,24 +869,12 @@ namespace UI
                             BImage.UriSource = new Uri(System.AppDomain.CurrentDomain.BaseDirectory + ScreNumber + "Shot.jpeg");
                             BImage.EndInit();
                             Main.ScreenShotImage.Source = BImage;
-                            //DataRow SCRow = MainWindow.DS.Tables["ScreenShot"].NewRow();
-                            //SCRow["Picture"] = RealData;
-                            //SCRow["Date"] = DateTime.Now;
-                            //MainWindow.DS.Tables["ScreenShot"].Rows.Add(SCRow);
-                            //MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["ScreenShot"]);
-                            //MyBrush.ImageSource = Main.Monitor.Source;
-                            //Main.Bord.Background = MyBrush;
                         });
                         ScreNumber++;
                         if (Main.page != 6)
                         {
                             Main.NewLogs[3]++;
                         }
-                        //Row["Date"] = Pac.Start;
-                        //Row["ChildID"] = ID;
-                        //MainWindow.DS.Tables["ScreenShot"].Rows.Add(Row);
-                        //MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["ScreenShot"]);
-                        //MainWindow.DS.Tables.Remove("ScreenShot");
                         Main.ScreenShotSemaphore.Release();
                     }; break;
                 case (short)Packet.PacketType.SystemStart_Down:
@@ -1096,7 +912,6 @@ namespace UI
                                     Row["IPv4"] = IPs[2];
                                     Row["IPv6"] = IPs[1];
                                     Row["ID"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
-                                    //MainWindow.DataBaseAgent.ExequteWithCommand("Delete From Network")
                                     MainWindow.DS.Tables["Network"].Rows.Add(Row);
                                     MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["Network"]);
                                     MainWindow.DS.Tables.Remove("Network");
@@ -1108,16 +923,12 @@ namespace UI
                                     MainWindow.DataBaseAgent.SelectData("NetworkAdaptor", ref MainWindow.DS, "*", "NetworkAdaptor", Main.ChildUser, "ChildID");
                                     DataRow Row = MainWindow.DS.Tables["NetworkAdaptor"].NewRow();
                                     string[] Datas = Pac.Data.Split('#');
-                                    //string[] IPs = Datas[2].Split('$');
                                     Row["ChildID"] = ID;
                                     Row["DeviceName"] = Datas[0];
                                     Row["InterfaceName"] = Datas[1];
-                                    //Row["ModemName"] = Datas[0];
                                     Row["Status"] = "Enable";
                                     Row["Date"] = Pac.Time;
                                     Row["ID"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
-                                    //Row["IPv4"] = IPs[2];
-                                    //Row["IPv6"] = IPs[1];
                                     int ContFind = (int)MainWindow.DataBaseAgent.ExequteWithCommandScaler("select Count(*) From NetworkAdaptor where DeviceName ='" + Datas[0] + "' And ChildID ='" + Main.ChildUser + "'");
                                     if (ContFind != 0)
                                     {
@@ -1127,7 +938,6 @@ namespace UI
                                         Main.NetAdaptor.Interval = 1000;
                                         Main.NetAdaptor.Start();
                                         MainWindow.DS.Tables.Remove("NetworkAdaptor");
-                                        
                                         DateTime Time1 = Convert.ToDateTime(Pac.Time);
                                         lastTime = Time1;
                                         double Between = (DateTime.Now - Time1).TotalHours;
@@ -1149,7 +959,6 @@ namespace UI
                                         MainWindow.DS.Tables.Remove("NetworkAdaptor");
                                     }
                                     Main.NetworkAdaptorSemaphor.Release();
-                                    //MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["NetworkAdaptor"]);
                                 }; break;
                             case (short)Packet.NetworkStatusType.DisConnected:
                                 {
@@ -1157,23 +966,11 @@ namespace UI
                                     MainWindow.DataBaseAgent.SelectData("NetworkAdaptor", ref MainWindow.DS, "*", "NetworkAdaptor", Main.ChildUser, "ChildID");
                                     DataRow Row = MainWindow.DS.Tables["NetworkAdaptor"].NewRow();
                                     string[] Datas = Pac.Data.Split('#');
-                                    //string[] IPs = Datas[2].Split('$');
                                     Row["ChildID"] = ID;
                                     Row["DeviceName"] = Datas[0];
                                     Row["InterfaceName"] = Datas[1];
-                                    //Row["ModemName"] = Datas[0];
                                     Row["Status"] = "Disable";
                                     Row["ID"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
-                                    //Row["IPv4"] = IPs[2];
-                                    //Row["IPv6"] = IPs[1];
-                                    //foreach (DataRow var in MainWindow.DS.Tables["NetworkAdaptor"].Rows)
-                                    //{
-                                    //    if ((var["ChildID"].ToString() == ID) && (var["DivaceName"].ToString() == Datas[0].ToString()) && (var["InterfaceName"].ToString() == Datas[1].ToString()))
-                                    //    {
-                                    //        MainWindow.DS.Tables["NetworkAdaptor"].Rows.Remove(var);
-                                    //        break;
-                                    //    }
-                                    //}
                                     MainWindow.DataBaseAgent.ExequteWithCommand("UpDate  NetworkAdaptor Set Status = Disable , Date =" + Pac.Time + "where DeviceName ='" + Datas[0] + "'And ChildID ='" + Main.ChildUser + "'");
                                     MainWindow.DS.Tables.Remove("NetworkAdaptor");
                                     Main.NetworkAdaptorSemaphor.Release();
@@ -1190,41 +987,9 @@ namespace UI
 
                                     }
 
-                                    //MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["NetworkAdaptor"]);
                                 }; break;
                             case (short)Packet.NetworkStatusType.NoInternet:
                                 {
-                                    //MainWindow.DataBaseAgent.SelectData("Network", ref MainWindow.DS, "*", "Network", Main.ChildUser, "ChildID");
-                                    //DataRow Row = MainWindow.DS.Tables["Network"].NewRow();
-                                    //string[] Datas = Pac.Data.Split('#');
-                                    ////string[] IPs = Datas[2].Split('$');
-                                    //if (Datas[0] != "Erorr")
-                                    //{
-                                    //    Row["ChildID"] = ID;
-                                    //    Row["DivaceName"] = Datas[0];
-                                    //    Row["ConnectionInterface"] = Datas[1];
-                                    //    //Row["ModemName"] = Datas[0];
-                                    //    Row["Status"] = "Network Connection";
-                                    //    Row["Date"] = Pac.Time;
-                                    //    Row["ID"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
-                                    //    //Row["IPv4"] = IPs[2];
-                                    //    //Row["IPv6"] = IPs[1];
-                                    //    //foreach (DataRow var in MainWindow.DS.Tables["NetworkAdaptor"].Rows)
-                                    //    //{
-                                    //    //    if ((var["ChildID"].ToString() == ID) && (var["DivaceName"].ToString() == Datas[0].ToString()) && (var["InterfaceName"].ToString() == Datas[1].ToString()))
-                                    //    //    {
-                                    //    //        MainWindow.DS.Tables["NetworkAdaptor"].Rows.Remove(var);
-                                    //    //        break;
-                                    //    //    }
-                                    //    //}
-                                    //    MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["Network"]);
-                                    //    MainWindow.DS.Tables.Remove("Network");
-                                    //    Main.NetAdaptor.Interval = 1000;
-                                    //    Main.NetAdaptor.Start();
-                                    //}
-
-
-                                    //MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["NetworkAdaptor"]);
                                 }; break;
                             case (short)Packet.NetworkStatusType.VPNOn:
                                 {
@@ -1236,23 +1001,10 @@ namespace UI
 
                                     DataRow Row = MainWindow.DS.Tables["VPN"].NewRow();
                                     string[] Datas = Pac.Data.Split('#');
-                                    //string[] IPs = Datas[2].Split('$');
                                     Row["ChildID"] = ID;
                                     Row["ID"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
-                                    //Row["InterfaceName"] = Datas[1];
-                                    //Row["ModemName"] = Datas[0];
                                     Row["Status"] = "Start Use VPN";
                                     Row["StartVPN"] = Pac.Time;
-                                    //Row["IPv4"] = IPs[2];
-                                    //Row["IPv6"] = IPs[1];
-                                    //foreach (DataRow var in MainWindow.DS.Tables["VPN"].Rows)
-                                    //{
-                                    //    if ((var["ChildID"].ToString() == ID) && (var["DivaceName"].ToString() == Datas[0].ToString()) && (var["InterfaceName"].ToString() == Datas[1].ToString()))
-                                    //    {
-                                    //        MainWindow.DS.Tables["VPN"].Rows.Remove(var);
-                                    //        break;
-                                    //    }
-                                    //}
                                     MainWindow.DS.Tables["VPN"].Rows.Add(Row);
                                     MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["VPN"]);
                                     MainWindow.DS.Tables.Remove("VPN");
@@ -1261,10 +1013,6 @@ namespace UI
                                     {
                                         Main.NewLogs[4]++;
                                     }
-                                    //Main.VPN.Interval = 1000;
-                                    //Main.VPN.Start();
-
-                                    //MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["NetworkAdaptor"]);
                                 }; break;
                             case (short)Packet.NetworkStatusType.VpnOff:
                                 {
@@ -1275,23 +1023,10 @@ namespace UI
                                     }
                                     DataRow Row = MainWindow.DS.Tables["VPN"].NewRow();
                                     string[] Datas = Pac.Data.Split('#');
-                                    //string[] IPs = Datas[2].Split('$');
                                     Row["ChildID"] = ID;
                                     Row["ID"] = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fffff");
-                                    //Row["InterfaceName"] = Datas[1];
-                                    //Row["ModemName"] = Datas[0];
                                     Row["Status"] = "End Use VPN";
                                     Row["StartVPN"] = Pac.Time;
-                                    //Row["IPv4"] = IPs[2];
-                                    //Row["IPv6"] = IPs[1];
-                                    //foreach (DataRow var in MainWindow.DS.Tables["VPN"].Rows)
-                                    //{
-                                    //    if ((var["ChildID"].ToString() == ID) && (var["DivaceName"].ToString() == Datas[0].ToString()) && (var["InterfaceName"].ToString() == Datas[1].ToString()))
-                                    //    {
-                                    //        MainWindow.DS.Tables["VPN"].Rows.Remove(var);
-                                    //        break;
-                                    //    }
-                                    //}
                                     MainWindow.DS.Tables["VPN"].Rows.Add(Row);
                                     MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["VPN"]);
                                     MainWindow.DS.Tables.Remove("VPN");
@@ -1300,10 +1035,6 @@ namespace UI
                                     {
                                         Main.NewLogs[4]++;
                                     }
-                                    //Main.VPN.Interval = 1000;
-                                    //Main.VPN.Start();
-
-                                    //MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["NetworkAdaptor"]);
                                 }; break;
                         }
 
@@ -1404,7 +1135,6 @@ namespace UI
                         Packet.RecordVoice PicPack = new Packet.RecordVoice();
                         PicPack = Pack.ToPacket<Packet.RecordVoice>(Data);
                         byte[] PicData = Convert.FromBase64String(PicPack.Data);
-                        //File.WriteAllBytes(@"E:\TestVoce.mp3", PicData);
                         Main.VoiceSemaphore.WaitOne();
                         MainWindow.DataBaseAgent.SelectData("Voice", ref MainWindow.DS, "Voice");
                         DataRow NewRow = MainWindow.DS.Tables["Voice"].NewRow();
@@ -1557,10 +1287,6 @@ namespace UI
                             RealPic.RemoveAt(0);
                             Bitmap BitImage = new Bitmap(ms);
                             BitImage.Save(System.AppDomain.CurrentDomain.BaseDirectory + Number + "Real.jpeg");
-                            //File.Delete(System.AppDomain.CurrentDomain.BaseDirectory + FileNum + "Real.jpeg");
-
-                            //System.Drawing.Image returnImage = returnImage = System.Drawing.Image.FromStream(ms);
-                            //returnImage.Save(System.AppDomain.CurrentDomain.BaseDirectory + "Real.jpeg");
                             Picture.Dispatcher.Invoke(() =>
                             {
                                 
@@ -1571,18 +1297,7 @@ namespace UI
                                 BImage.UriSource = new Uri(System.AppDomain.CurrentDomain.BaseDirectory+ Number + "Real.jpeg");
                                 BImage.EndInit();
                                 Picture.Source = BImage;
-                                
-                                //DelFileNum = !DelFileNum;
-                                //DataRow Row = MainWindow.DS.Tables["ScreenShot"].NewRow();
-                                //Row["Picture"] = RealData;
-                                //Row["Date"] = DateTime.Now;
-                                //MainWindow.DS.Tables["ScreenShot"].Rows.Add(Row);
-                                //MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["ScreenShot"]);
-                                //MyBrush.ImageSource = Main.Monitor.Source;
-                                //Main.Bord.Background = MyBrush;
                             });
-                            //FileNum = !FileNum;
-                            //File.Delete(System.AppDomain.CurrentDomain.BaseDirectory + FileNum + "Real.jpeg");
                             Number += 0.0001;
                         }
                         catch(Exception E)
@@ -1689,10 +1404,6 @@ namespace UI
                             RealwebPic.RemoveAt(0);
                             Bitmap BitImage = new Bitmap(ms);
                             BitImage.Save(System.AppDomain.CurrentDomain.BaseDirectory + Number + "RealWeb.jpeg");
-                            //File.Delete(System.AppDomain.CurrentDomain.BaseDirectory + FileNum + "Real.jpeg");
-
-                            //System.Drawing.Image returnImage = returnImage = System.Drawing.Image.FromStream(ms);
-                            //returnImage.Save(System.AppDomain.CurrentDomain.BaseDirectory + "Real.jpeg");
                             Picture.Dispatcher.Invoke(() =>
                             {
 
@@ -1703,18 +1414,7 @@ namespace UI
                                 BImage.UriSource = new Uri(System.AppDomain.CurrentDomain.BaseDirectory + Number + "RealWeb.jpeg");
                                 BImage.EndInit();
                                 Picture.Source = BImage;
-
-                                //DelFileNum = !DelFileNum;
-                                //DataRow Row = MainWindow.DS.Tables["ScreenShot"].NewRow();
-                                //Row["Picture"] = RealData;
-                                //Row["Date"] = DateTime.Now;
-                                //MainWindow.DS.Tables["ScreenShot"].Rows.Add(Row);
-                                //MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["ScreenShot"]);
-                                //MyBrush.ImageSource = Main.Monitor.Source;
-                                //Main.Bord.Background = MyBrush;
                             });
-                            //FileNum = !FileNum;
-                            //File.Delete(System.AppDomain.CurrentDomain.BaseDirectory + FileNum + "Real.jpeg");
                             Number += 0.0001;
                         }
                         catch (Exception E)
@@ -1732,13 +1432,6 @@ namespace UI
         {
             Task.Run(() =>
             {
-                //RealSM = new Semaphore(1, 1);
-                //RealData = new byte[1024 * 10];
-                //IPHostEntry HostInfo = Dns.Resolve("127.0.0.1");
-                //IPAddress Address = HostInfo.AddressList[0];
-                //IPEndPoint Point = new IPEndPoint(Address, 8803);
-                //Real = new TcpListener(Point);
-                //Real.Start();
                 ChildTCP = Real.AcceptTcpClient();
                 NetworkStream ST = ChildTCP.GetStream();
                 ST.Read(RealData, 0, 1024);
@@ -1766,8 +1459,6 @@ namespace UI
                     MainWindow.DataBaseAgent.InsertData(MainWindow.DS.Tables["ScreenShot"]);
                     MainWindow.DS.Tables.Remove("ScreenShot");
                     Main.ScreenShotSemaphore.Release();
-                    //MyBrush.ImageSource = Main.Monitor.Source;
-                    //Main.Bord.Background = MyBrush;
                 });
 
             });
@@ -1776,61 +1467,10 @@ namespace UI
 
         private void RealAccept(IAsyncResult ar)
         {
-            //Socket Target = (Socket)ar.AsyncState;
-            //Real = Target.EndAccept(ar);
-            //Real.BeginReceive(RealData, 0, 1024 * 10, SocketFlags.None, RealRecive, Real);
         }
 
         private void RealRecive(IAsyncResult ar)
         {
-
-            //int ResNumber = Real.EndReceive(ar);
-            //RealSM.WaitOne();
-            //string Temp = Encoding.Unicode.GetString(RealData);
-            //RealData = new byte[1024 * 10];
-            //Real.BeginReceive(RealData, 0, 1024 * 10, SocketFlags.None, RealRecive, Real);
-            //RealSM.Release();
-            //if (ResNumber < 1024 * 10 - 1)
-            //{
-            //    PicCompelit = true;
-            //    //Temp = Temp.Replace("\0", "");
-            //    Pic += Temp;
-            //}
-            //if ((Temp != "") && (PicCompelit == false))
-            //{
-            //    Pic += Temp;
-            //}
-            //else
-            //{
-            //
-            //    MemoryStream ms = new MemoryStream(Encoding.Unicode.GetBytes(Pic));
-            //    Image returnImage = Image.FromStream(ms, false);
-            //    BitmapImage BITImage = new BitmapImage();
-            //    BITImage.StreamSource = ms;
-            //    FileStream FS = new FileStream("E:\\WE222.jpeg", FileMode.Create);
-            //    byte[] BA = ms.ToArray();
-            //    FS.Write(BA, 0, BA.Length);
-            //    //returnImage.Save(@"E:\\we12",System.Drawing.Imaging.ImageFormat.Png);
-            //    Main.Monitor.Dispatcher.Invoke(() =>
-            //    {
-            //        var MyBrush = new ImageBrush();
-            //        BitmapImage BImage = new BitmapImage();
-            //        BImage.BeginInit();
-            //        BImage.StreamSource = ms;
-            //        BImage.EndInit();
-            //
-            //        Main.Monitor.Source = BImage;
-            //        MyBrush.ImageSource = Main.Monitor.Source;
-            //        Main.Bord.Background = MyBrush;
-            //        ImageConverter C = new ImageConverter();
-            //    });
-            //
-            //
-            //
-            //
-            //}
-
-
         }
        
       

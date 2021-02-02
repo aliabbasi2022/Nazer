@@ -22,7 +22,7 @@ namespace Child
             
             Task.Run(() =>
             {
-                UpdateConnection.NetworkState = true;
+                UpdateConnection.NetworkState = true; //Makes the network mode equal to the correct one to update the connection
                 UpdateConnection.InitialConnection();
                 bool SendREsult = UpdateConnection.SendData(ProcessName + "••" + CurrentVersion);
                 if(SendREsult)

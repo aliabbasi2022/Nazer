@@ -14,7 +14,7 @@ namespace Child
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
+            Application.EnableVisualStyles(); //Enables visual styles for the application.
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
