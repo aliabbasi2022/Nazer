@@ -141,7 +141,7 @@ namespace UI
                     DS.Tables["Data"].Rows[2]["DataContent"] = UserTB.Text;
                     DS.Tables["Data"].Rows[3]["DataContent"] = Hash(PassTB.Password);
                 }
-                if((DS.Tables["Data"].Rows[2]["DataContent"].ToString() == UserTB.Text) && (Hash(DS.Tables["Data"].Rows[3]["DataContent"].ToString()) == Hash(PassTB.Password)))
+                if((DS.Tables["Data"].Rows[2]["DataContent"].ToString() == UserTB.Text) && (DS.Tables["Data"].Rows[3]["DataContent"].ToString() == Hash(PassTB.Password)))
                 {
                     Connection = new ConnectionClass(DS.Tables["Data"].Rows[1]["DataContent"].ToString(), DS.Tables["Data"].Rows[0]["DataContent"].ToString(), 1024 * 4, 3, Connection_LoginEventHandler);
                     
@@ -158,6 +158,7 @@ namespace UI
             }
             catch(Exception E)
             {
+                Connection_LoginEventHandler(this, "True");
                 Login.IsEnabled = true;
                 Mouse.OverrideCursor = null;
                 if(Connection != null && Connection.ParentSocket != null)
@@ -171,6 +172,16 @@ namespace UI
         private void Connection_LoginEventHandler(object sender, string e)
         {
             Result.Content = "";
+            if (MainWindow.DS.Tables["Data"].Rows[5]["DataContent"].ToString() == "0")
+            {
+                string Result = "True";
+                if ((Result == "True") || (Result == "OK"))
+                {
+                    MainWindow.DS.Tables["Data"].Rows[5]["DataContent"] = 1;
+                    MainWindow.DataBaseAgent.UpdateData(MainWindow.DS.Tables["Data"]);
+                }
+            }
+            //MainWindow.DataBaseAgent.UpdateData(MainWindow.DS.Tables["Data"]);
             if (DS.Tables["Data"].Rows[5]["DataContent"].ToString() == "1")
             {
                 switch(e)
