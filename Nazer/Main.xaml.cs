@@ -931,7 +931,7 @@ namespace UI
                         InfoImage0.VerticalAlignment = VerticalAlignment.Top;
                         InfoImage0.HorizontalAlignment = HorizontalAlignment.Left;
                         InfoImage0.Margin = new Thickness(30, 40, 0, 0);
-                        
+                  
                         MainTemp.Children.Add(InfoImage0);
                         TextBlock InfoTb0 = new TextBlock();
                         InfoTb0.Text = "   You can show all installed application in your child Sysytem and remove Whatever you want";
